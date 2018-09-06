@@ -21,10 +21,10 @@
             <p class="lead text-muted">The Museum of Comparative Zoology was founded in 1859 on the concept that collections are an integral and fundamental component of zoological research and teaching. This more than 150-year-old commitment remains a strong and proud tradition for the MCZ. The present-day MCZ contains over 21-million specimens in collections which comprise one of the world's richest and most varied resources for studying the diversity of life. </p>
             <cfoutput>
                 <p>Access to #getCount.cnt# records.</p>
-            </cfoutput>  
+            </cfoutput>
         </div>
-        
-        
+
+
            <div role="tabpanel" class="tab-pane fade" id="tab1_kws">
             <form class="form-inline" name='myForm' method="post" action="keyword-search-results.cfm">
                 <div class="fields simple_search">
@@ -38,10 +38,10 @@
                 </div>
             </form>
         </div>
-        
-        
+
+
             <div role="tabpanel" class="tab-pane fade" id="tab2_s2c" style="background-color: white;padding-top:17px;">
-            <div class="container" style="padding-bottom: 2em;margin-bottom: 2em;"> 
+            <div class="container" style="padding-bottom: 2em;margin-bottom: 2em;">
                 <!--Search Accordion wrapper-->
                 <div class="accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
@@ -185,12 +185,12 @@
                     </div>
                 </div>
             </div>
-        </div> 
-        
+        </div>
+
         <div role="tabpanel" class="tab-pane fade" id="tab3_qb">
             <div id="builder" style="width: 100%; background-color: white;"><img src="includes/images/jquery_builder_demo.PNG" alt="placeholder for jquery builder"/></div>
         </div>
-        
+
          <div role="tabpanel" class="tab-pane" id="tab4_ba" style="background-color: white;overflow: hidden;">
             <pre id=result> </pre>
             <div class="flowers-wrap"  style="margin-left: 2em;font-size:12px;">
@@ -199,66 +199,66 @@
  <form>
     <div class="checkbox">
      <label for="c1">Fred Parker <input type="checkbox" name="fl-colour" value="fred-parker" id="fred-parker"></label>
-    </div>            
+    </div>
   <div class="checkbox">
   <label for="c2">Stephan G. Tilley <input type="checkbox" name="fl-colour" value="alexander-agassiz" id="alexander-agassiz"></label>
-  </div>                    
+  </div>
   <div class="checkbox">
     <label for="c3">Ernest E. Williams <input type="checkbox" name="fl-colour" value="samuel-henshaw" id="samuel-henshaw"></label>
-  </div> 		
-			
+  </div>
+
 	 <div class="checkbox">
     <label for="c4">James Draper Lazell Jr. <input type="checkbox" name="fl-colour" value="thomas-barbour" id="thomas-barbour"></label>
-  </div> 				
-       
+  </div>
+
    <div class="checkbox">
     <label for="c5">Stephan P. Cover <input type="checkbox" name="fl-colour" value="alred-romer" id="alred-romer" ></label>
-  </div> 		             
-       
+  </div>
+
      <div class="checkbox">
     <label for="c6">David Lubertazzi <input type="checkbox" name="fl-colour" value="ernst-mayr" id="ernst-mayr" ></label>
-  </div>   
-                  
+  </div>
+
    <div class="checkbox">
     <label for="c7">James K. Wetterer <input type="checkbox" name="fl-colour" value="aw-compton" id="awcompton"></label>
-  </div>   
-                
+  </div>
+
   <div class="checkbox">
     <label for="c8">Gary D. Alpert <input type="checkbox" name="fl-colour" value="james-mccarthy" id="james-mccarthy"></label>
-  </div>    
+  </div>
   <div class="checkbox">
     <label for="c8">William Morton Wheeler
  <input type="checkbox" name="fl-colour" value="james-hanken" id="james-hanken"></label>
-  </div>   
+  </div>
    <div class="checkbox">
     <label for="c8">R. Stiles <input type="checkbox" name="fl-colour" value="john-power" id="john-power"></label>
-  </div>  
+  </div>
    <div class="checkbox">
     <label for="c9">R. Stiles <input type="checkbox" name="fl-colour" value="john-power" id="john-power"></label>
-  </div> 
+  </div>
 </form>
-      <div class="flowers-wrap">     
+      <div class="flowers-wrap">
     <h3 style="font-size:14px; font-weight:normal;text-align:center;margin-top: 1em;width: 185px;">Dates</h3>
     <p style="font-size:12px;width: 200px"><strong>Filter records by collection date:</strong></p>
  <form>
   <div class="checkbox">
     <label for="c8">prior to 1900 <input type="checkbox" name="fl-colour" value="prior-1900" id="prior-1900"></label>
-  </div>  
-          
+  </div>
+
   <div class="checkbox">
     <label for="c8">1900-1950 <input type="checkbox" name="fl-colour" value="1900-1950" id="1900-1950"></label>
-  </div>           
-      
+  </div>
+
 <div class="checkbox">
     <label for="c8"> 1951-2000 <input type="checkbox" name="fl-colour" value="1951-2000" id="1951-2000"></label>
-  </div>    
-                   
+  </div>
+
     <div class="checkbox">
     <label for="c8"> 2001-2009 <input type="checkbox" name="fl-colour" value="2001-2009" id="2001-2009"></label>
-  </div>               
+  </div>
   <div class="checkbox">
     <label for="c8">  2010-present <input type="checkbox" name="fl-colour" value=" 2010-present" id=" 2010-present"></label>
-					</div>              
+					</div>
 </form>
             </div>
 			 </div>
@@ -268,27 +268,30 @@
                 <div class="continents" style="font-size:12px;">
                    <div class="checkbox">
     <label for="cc1">Africa <input type="checkbox" name="fl-cont" value="africa" id="africa"></label>
-  </div> 
+  </div>
   <div class="checkbox">
     <label for="cc2">Europe <input type="checkbox" name="fl-cont" value="europe" id="europe"></label>
-  </div> 
-                  
+  </div>
+
   <div class="checkbox">
     <label for="cc3">Asia <input type="checkbox" name="fl-cont" value="asia" id="asia"></label>
-  </div> 
+  </div>
   <div class="checkbox">
     <label for="cc4">North America <input type="checkbox" name="fl-cont" value="north-america" id="north-america"></label>
-  </div> 
+  </div>
    <div class="checkbox">
     <label for="cc4">South America <input type="checkbox" name="fl-cont" value="south-america" id="south-america"></label>
-  </div> 
+  </div>
   <div class="checkbox">
     <label for="cc4">Antarctica <input type="checkbox" name="fl-cont" value="antarctica" id="antarctica"></label>
-  </div>                
+  </div>
        <div class="checkbox">
     <label for="cc4">Oceania <input type="checkbox" name="fl-cont" value="oceania" id="oceania"></label>
-  </div>              
-        
+  </div>
+
+	<div class="continents-wrap">
+			<h3 style="font-size:14px; font-weight:normal;">citations/media</h3></div>          
+
                 </div>
             </div>
             <div class="flowers">
@@ -307,13 +310,13 @@
                 <div class="flower" data-id="climbing-dayflower" data-category="blue tiny south-america">Climbing Dayflower</div>
                 <div class="flower" data-id="antarctic-pearlwort" data-category="green yellow large antarctica">Antarctic Pearlwort</div>
             </div>
-        
-        
-        
+
+
+
 		</div>
    </section>
-     
-	
+
+
 	</div>
 	</div>
 </main>
