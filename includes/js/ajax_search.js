@@ -1,31 +1,30 @@
- $(document).ready(function () {  
-	 
-            var source =
-            {
-                datatype: "json",
-                datafields:
-                [
-                    { name: 'collection_object_id', type: 'string' },
-					{ name: 'collection', type: 'string' },
-                    { name: 'cat_num', type: 'string' },
-                    { name: 'scientific_name', type: 'string' },
-                    { name: 'spec_locality', type: 'string' },
-                    { name: 'higher_geog', type: 'string' },
-                    { name: 'collectors', type: 'string' },
-					{ name: 'verbatim_date', type: 'string' },
-					{ name: 'coll_obj_disposition', type: 'string' },
-					{ name: 'originalcatalognumbers', type: 'string' }
-                ],			
-				root: 'specimenRecord',
-				id: 'collection_object_id',
-                url: '/redesign/component/records.cfc?method=getDataTable&searchText=',	
-				async: false,				
-            };   	 
-			var dataAdapter = new $.jqx.dataAdapter(source, {
+ $(document).ready(function () {           	   
+//            var search =
+//            {
+//                datatype: "json",
+//                datafields:
+//                [
+//                    { name: 'collection_object_id', type: 'string' },
+//					{ name: 'collection', type: 'string' },
+//                    { name: 'cat_num', type: 'string' },
+//                    { name: 'scientific_name', type: 'string' },
+//                    { name: 'spec_locality', type: 'string' },
+//                    { name: 'higher_geog', type: 'string' },
+//                    { name: 'collectors', type: 'string' }
+//                ],			
+//				root: 'specimenRecord',
+//				id: 'collection_object_id',
+//                url: '/redesign/component/records.cfc?method=getDataTable&searchText=',	
+//				async: false,				
+//            };   	 
+		var dataAdapter = new $.jqx.dataAdapter(search, {
                downloadComplete: function (data, status, xhr) { },
                loadComplete: function (data) { },
               loadError: function (xhr, status, error) { }
             });
+				
+				
+				 $('##jqxgrid').jqxGrid('source', dataAdapter);
 
             // create grid.
             $("#jqxgrid").jqxGrid(
@@ -37,69 +36,57 @@
                 sortable: true,
 				pageable: true,
                 autoheight: true,
-				pagesize: '20',
-				showaggregates: true,
-				//pagesizeoptions: ['100', '200', '300', '400', '500','600','700','800','900'],
+				pagesize: '50',
                 columnsresize: true,
-				
                 autoshowfiltericon: false,
                 columns: [
-				  { text: 'Collection Object ID', datafield: 'collection_object_id', width: 142, 
+				  { text: 'Collection Object ID', datafield: 'collection_object_id', width: 142
+				   , 
 				   createwidget: function (row, column, value, htmlElement) {
                    var datarecord = value;
-                   var linkurl = 'specimen-detail.cfm?collection_object_id=' + value;
+                   var linkurl = 'specimen-details2.cfm?collection_object_id=' + value;
                    var link = '<div style="text-align:center;margin-top:8px;"><a href="' + linkurl + '">';
                    var button = $(link + "<span>" + value + "</span></a></div>");
                    $(htmlElement).append(button);
-                      },
-				   initwidget: function (row, column, value, htmlElement) {  }},
-                  { text: 'Collection', datafield: 'collection', width: 150  },
-                  { text: 'Catalog Number', datafield: 'cat_num', width: 130  },
-                  { text: 'Scientific Name', datafield: 'scientific_name', width: 250  },
-                  { text: 'Locality', datafield: 'spec_locality', width: 250 },
-                  { text: 'Higher Geography', datafield: 'higher_geog', width: 280 },
-                  { text: 'Collectors', datafield: 'collectors', width: 160 },
-					{ text: 'Verbatim Date', datafield: 'verbatim_date', width: 220  },
-					{ text: 'Disposition', datafield: 'coll_obj_disposition', width: 100  },
-					{ text: 'Other IDs', datafield: 'originalcatalognumbers', width: 140  }
+                      }
+                  },
+                  { text: 'Collection', datafield: 'collection', width: 'auto' },
+                  { text: 'Catalog Number', datafield: 'cat_num', width: 'auto' },
+                  { text: 'Scientific Name', datafield: 'scientific_name', width:'auto' },
+                  { text: 'Locality', datafield: 'spec_locality', width:'auto'},
+                  { text: 'Higher Geography', datafield: 'higher_geog', width:'auto'},
+                  { text: 'Collectors', datafield: 'collectors', width: 'auto' }
                 ]
-
             });
 	 		// create buttons, listbox and the columns chooser dropdownlist.
             // create buttons, listbox and the columns chooser dropdownlist.
 	        // create buttons, listbox and the columns chooser dropdownlist.
             $("#applyfilter").jqxButton({ theme: theme });
             $("#clearfilter").jqxButton({ theme: theme });
-			
             $("#filterbox").jqxListBox({ checkboxes: true,  width: 280, height: 250 });
             $("#columnchooser").jqxDropDownList({ autoDropDownHeight: true, selectedIndex: 0,  width: 200, height: 25,
-                source: [ 
+                search: [ 
 				  {	label: 'Collectors', value: 'collectors' },
 				  { label: 'Collection Object ID', value: 'collection_object_id' },
 				  { label: 'Collection', value: 'collection' },
                   { label: 'Cat Num', value: 'cat_num' },
                   { label: 'Scientific Name', value: 'scientific_name' },
                   { label: 'Locality', value: 'spec_locality' },
-                  { label: 'Higher Geography', value: 'higher_geog' },
-				  { label: 'Verbatim Date',value: 'verbatim_date'  },
-				  { label: 'Disposition', value: 'coll_obj_disposition' },
-				  { label: 'Other IDs', value: 'originalcatalognumbers'  }
+                  { label: 'Higher Geography', value: 'higher_geog' }
                  
                 ]
             });
 
             var updateFilterBox = function (datafield) {
-		        var filterBoxAdapter = new $.jqx.dataAdapter(source,
+		        var filterBoxAdapter = new $.jqx.dataAdapter(search,
                 {
                     uniqueDataFields: [datafield],
-                    autoBind: true					
+                    autoBind: true
                 });
 				var uniqueRecords = filterBoxAdapter.records;
 				uniqueRecords.splice(0, 0, '(Select All)');
                 $("#filterbox").jqxListBox({ source: uniqueRecords, displayMember: datafield });
-               // $("#filterbox").jqxListBox('checkAll');
-			
-
+                $("#filterbox").jqxListBox('checkAll');
             }
 
             updateFilterBox('collectors');
@@ -162,7 +149,6 @@
                     }
                 }
                 $("#jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
-			
                 $("#jqxgrid").jqxGrid('applyfilters');
             }
             $("#clearfilter").click(function (datafield) { 
@@ -175,9 +161,8 @@
                 var dataField = $("#columnchooser").jqxDropDownList('getSelectedItem').value;
                 applyFilter(dataField);
             });
-
 	 
-   var listSource = [{ label: 'Collectors', value: 'collectors' },
+	    var listSource = [{ label: 'Collectors', value: 'collectors' },
 				  { label: 'Collection Object ID', value: 'collection_object_id' },
 				  { label: 'Collection', value: 'collection' },
                   { label: 'Cat Num', value: 'cat_num' },
@@ -202,4 +187,4 @@
                 $("#jqxgrid").jqxGrid('endupdate');
             });
         });
-
+  
