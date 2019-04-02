@@ -529,7 +529,7 @@ WHERE irel.related_coll_object_id=#collection_object_id#
       modal: true,
 	  resizable: true,
       buttons: {
-		    "1": { id: 'open', text: 'Save Shared Record', click: function(){ $(this).dialog("open"); },"class": "save_shared", width: dialogWidth/ dialogHeight * .5 },
+		    "1": { id: 'open', text: 'Save Shared Locality', click: function(){ $(this).dialog("open"); },"class": "save_shared" },
             "2": { id: 'save', text: 'Save Changes for this Record Only', click: function(){ $(this).dialog("save"); }, "class": "save_local" },
             "3": { id: 'close', text: 'Cancel', click: function(){ $(this).dialog("close"); }, "class": "cancel_bk"}
             }
@@ -597,15 +597,15 @@ WHERE irel.related_coll_object_id=#collection_object_id#
             </div>
                  <table id="static_values">
                     <tr>
-                        <td><label for="higher_geog" class="mt-1">Higher Geography</label>
+                        <td><label for="higher_geog" class="mt-2">Higher Geography &mdash; &nbsp;</label>
                             #getGeo.higher_geog#</td>
                     </tr>
                     <tr>
-                        <td><label for="verbatim_locality" class="mt-2" style="font-size: 12px;letter-spacing: -.01em;font-weight: bold;"><a href="">Collecting Event: Verbatim Locality</a></label>
+                        <td><label for="verbatim_locality" class="mt-2">Collecting Event: Verbatim Locality &mdash; &nbsp;</label>
                             #one.verbatim_locality#</td>
                     </tr>
                     <tr style="background-color: white;">
-                        <td><label for="lat_long" class="mt-2" style="font-size: 12px;letter-spacing: -.01em;font-weight: bold;">Coordinates for this Locality</label>
+                        <td><label for="lat_long" class="mt-2">Coordinates for this Locality &mdash; &nbsp;</label>
                             #one.dec_lat#, #one.dec_long#</td>
                     </tr>
                 </table>
@@ -624,39 +624,39 @@ WHERE irel.related_coll_object_id=#collection_object_id#
                         <input type="hidden" name="transaction_id" value="#locality_id#" id="shipmentForm_transaction_id" >
                         <input type="hidden" name="shipment_id" value="" id="shipment_id">
                         <input type="hidden" name="returnFormat" value="json" id="returnFormat">
-                        <div class="container">
+                        <div class="container-fluid">
                       <div class="row">
                          <div class="col-12">
-                          <label for="specific_locality">Specific Locality</label>
-                          <input type="text" value="#one.spec_locality#" name="spec_locality" id="spec_locality" >
-       					  <label for="sovereign_nation">Sovereign Nation</label>
-                          <input type="text" value="" name="sovereign_nation" id="sovereign_nation" >
+                          <label for="specific_locality" class="mt-3 ml-2">Specific Locality</label>
+                          <input type="text" value="#one.spec_locality#" name="spec_locality" id="spec_locality" class="w-100">
+       					  <label for="sovereign_nation" class="mt-3 ml-2">Sovereign Nation</label>
+                          <input type="text" value="" name="sovereign_nation" id="sovereign_nation" class="w-100 mt-0">
 						  </div></div>
                       <div class="row">
                   	    <div class="col-lg-4 col-md-4 col-sm-4"> 
-                          <label for="minimum_elevation">Minimum Elevation</label>
+                          <label for="minimum_elevation" class="mt-3 ml-2">Minimum Elevation</label>
                           <input type="text" value="" name="minimum_elevation" id="minimum_elevation" >
 						  </div>
                            <div class="col-lg-4 col-md-4 col-sm-4"> 
-                          <label for="maximum_elevation">Maximum Elevation</label>
+                          <label for="maximum_elevation" class="mt-3 ml-2">Maximum Elevation</label>
                           <input type="text" value="" name="maximum_elevation" id="maximum_elevation">
 						  </div>
                              <div class="col-lg-4 col-md-4 col-sm-4"> 
-                          <label for="orig_elev_units">Elev. Units</label>
+                          <label for="orig_elev_units" class="mt-3 ml-2">Elev. Units</label>
                           <input type="text" value="" name="orig_elev_units" id="orig_elev_units">
 						</div>
 				      </div>
 					  <div class="row">
 					  <div class="col-lg-4 col-md-4 col-sm-4">
-					   <label for="minimum_elevation">Minimum Depth</label>
+					   <label for="minimum_elevation" class="mt-3 ml-2">Minimum Depth</label>
 						<input type="text" value="" name="minimum_elevation" id="minimum_elevation">
 						  </div>
 					     <div class="col-lg-4 col-md-4 col-sm-4">   
-						   <label for="maximum_elevation">Maximum Depth</label>
+						   <label for="maximum_elevation" class="mt-3 ml-2">Maximum Depth</label>
 						   <input type="text" value="" name="maximum_elevation" id="maximum_elevation" >
 						  </div>
 						  <div class="col-lg-4 col-md-4 col-sm-4"> 
-						<label for="orig_elev_units">Depth Units</label>
+						<label for="orig_elev_units" class="mt-3 ml-2">Depth Units</label>
 						<input type="text" value="" name="orig_elev_units" id="orig_elev_units">
 						</div>
 			            </div>
