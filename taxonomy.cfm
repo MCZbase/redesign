@@ -1,1169 +1,443 @@
-<cfinclude template="/redesign/includes/_header.cfm">
-<cfquery name="ctInfRank" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	select infraspecific_rank from ctinfraspecific_rank order by infraspecific_rank
-</cfquery>
-<cfquery name="ctRelation" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	select taxon_relationship  from cttaxon_relation order by taxon_relationship
-</cfquery>
-<cfquery name="ctSourceAuth" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	select source_authority from CTTAXONOMIC_AUTHORITY order by source_authority
-</cfquery>
-<cfquery name="ctnomenclatural_code" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	select nomenclatural_code from ctnomenclatural_code order by nomenclatural_code
-</cfquery>
-<cfquery name="cttaxon_status" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	select taxon_status from cttaxon_status order by taxon_status
-</cfquery>
-<cfquery name="cttaxon_habitat" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	select taxon_habitat from cttaxon_habitat order by taxon_habitat
-</cfquery>
-<cfset title="Edit Taxonomy">
-<cfif !isdefined("subgenus_message")>
-    <cfset subgenus_message ="">
-</cfif>
-<style>
-	.warning{border:5px solid red;}
-</style>
-<script>
-	window.setInterval(chkTax, 1000);
-	function chkTax(){
-		if ($("#nomenclatural_code").val()=='unknown'){
-			$("#nomenclatural_code").addClass('warning');
-		} else {
-			$("#nomenclatural_code").removeClass('warning');
-		}
-		if ($("#kingdom").val()==''){
-			$("#kingdom").addClass('warning');
-		} else {
-			$("#kingdom").removeClass('warning');
-		}
-	}
-</script>
-<!------------------------------------------------>
-<cfif action is "nothing">
-	<cfheader statuscode="301" statustext="Moved permanently">
-	<cfheader name="Location" value="/redesign/taxonomy-search.cfm">
-	<cfabort>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "edit">
-	<cfset title="Edit Taxonomy">
-	<cfquery name="getTaxa" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		select * from taxonomy where taxon_name_id=#taxon_name_id#
-	</cfquery>
+<cfset pageTitle = "search taxonomy">
+<cfinclude template = "/redesign/includes/_header.cfm">
+
 <cfoutput>
-<div class="content_box_narrow">
-   <h2 class="wikilink" style="margin-left: 0;float:none;">Edit Taxonomy:  <cfif isdefined("session.roles") and listfindnocase(session.roles,"coldfusion_user")><img src="/images/info_i_2.gif" onClick="getMCZDocs('Edit Taxonomy')" class="likeLink" alt="[ help ]"></cfif>  <em>#getTaxa.scientific_name#</em></h2>
-	<h3><a href="/name/#getTaxa.scientific_name#">Detail Page</a></h3>
-    <table class="tInput">
-	<form name="taxa" method="post" action="Taxonomy.cfm">
-    	<input type="hidden" name="taxon_name_id" value="#getTaxa.taxon_name_id#">
-        <input type="hidden" name="Action">
-		<tr>
-			<td>
-				<label for="source_authority">
-					<span>Source</span>
-				</label>
-				<select name="source_authority" id="source_authority" size="1"  class="reqdClr">
-		             <cfloop query="ctSourceAuth">
-		               <option <cfif gettaxa.source_authority is ctsourceauth.source_authority> selected="selected" </cfif>
-							value="#ctSourceAuth.source_authority#">#ctSourceAuth.source_authority#</option>
-		             </cfloop>
-		        </select>
-			</td>
-			<td>
-				<label for="valid_catalog_term_fg"><span>ValidForCatalog?</span></label>
-				<select name="valid_catalog_term_fg" id="valid_catalog_term_fg" size="1" class="reqdClr">
-			    	<option <cfif getTaxa.valid_catalog_term_fg is "1"> selected="selected" </cfif> value="1">yes</option>
-			        <option <cfif getTaxa.valid_catalog_term_fg is "0"> selected="selected" </cfif> value="0">no</option>
-			    </select>
-			</td>
-		</tr>
-      	<tr>
-			<td>
-				<label for="nomenclatural_code"><span>Nomenclatural Code</span></label>
-				<select name="nomenclatural_code" id="nomenclatural_code" size="1" class="reqdClr">
-			    	<cfloop query="ctnomenclatural_code">
-			        	<option <cfif gettaxa.nomenclatural_code is ctnomenclatural_code.nomenclatural_code> selected="selected" </cfif>
-			            	value="#ctnomenclatural_code.nomenclatural_code#">#ctnomenclatural_code.nomenclatural_code#</option>
-			        </cfloop>
-				</select>
-			</td>
-			<td>
-				<label for="genus">Genus <span class="likeLink" onClick="taxa.genus.value='&##215;' + taxa.genus.value;">Add &##215;</span></label>
-				<input size="25" name="genus" id="genus" maxlength="40" value="#gettaxa.genus#">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="species">Species <span class="likeLink"
-					onClick="taxa.species.value='&##215;' + taxa.species.value;">Add &##215;</span></label>
-				<input size="25" name="species" id="species" maxlength="40" value="#gettaxa.species#">
-			</td>
-			<td>
-				<label for="author_text"><span>Author</span></label>
-				<input type="text" name="author_text" id="author_text" value="#gettaxa.author_text#" size="30">
-				<span class="infoLink"
-					onclick="window.open('/picks/KewAbbrPick.cfm?tgt=author_text','picWin','width=700,height=400, resizable,scrollbars')">
-					Find Kew Abbr
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="infraspecific_rank"><span>Infraspecific Rank</span></label>
-				<select name="infraspecific_rank" id="infraspecific_rank" size="1">
-                	<option value=""></option>
-	                <cfloop query="ctInfRank">
-	                  <option
-							<cfif gettaxa.infraspecific_rank is ctinfrank.infraspecific_rank> selected="selected" </cfif>value="#ctInfRank.infraspecific_rank#">#ctInfRank.infraspecific_rank#</option>
-	                </cfloop>
-              	</select>
-			</td>
-			<td>
-				<label for="taxon_status"><span>Taxon Status</span></label>
-				<select name="taxon_status" id="taxon_status" size="1">
-			    	<option value=""></option>
-			    	<cfloop query="cttaxon_status">
-			        	<option <cfif gettaxa.taxon_status is cttaxon_status.taxon_status> selected="selected" </cfif>
-			            	value="#cttaxon_status.taxon_status#">#cttaxon_status.taxon_status#</option>
-			        </cfloop>
-				</select>
-				<span class="infoLink" onclick="getCtDoc('cttaxon_status');">Define</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="subspecies">Subspecies</label>
-				<input size="25" name="subspecies" id="subspecies" maxlength="40" value="#gettaxa.subspecies#">
-			</td>
-			<td>
-				<label for="author_text"><span>
-					Infraspecific Author (do not use for ICZN names)</span></label>
-				<input type="text" name="infraspecific_author" id="infraspecific_author" value="#gettaxa.infraspecific_author#" size="30">
-				<span class="infoLink"
-					onclick="window.open('/picks/KewAbbrPick.cfm?tgt=infraspecific_author','picWin','width=700,height=400, resizable,scrollbars')">
-						Find Kew Abbr
-					</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="kingdom">Kingdom</label>
-				<input type="text" name="kingdom" id="kingdom" value="#gettaxa.kingdom#" size="30">
-			</td>
-			<td>
-				&nbsp;
-				<!---Deprecated: label for="nomenclatural_code">Nomenclatural Code</label>
-				<input type="text" name="nomenclatural_code" id="nomenclatural_code" value="#gettaxa.nomenclatural_code#" size="30"--->
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="phylum">Phylum</label>
-				<input type="text" name="phylum" id="phylum" value="#gettaxa.phylum#" size="30">
-			</td>
-			<td>
-				<label for="subphylum">Subphylum</label>
-				<input type="text" name="subphylum" id="subphylum" value="#gettaxa.subphylum#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="division">Division</label>
-				<input type="text" name="division" id="division" value="#gettaxa.division#" size="30">
-			</td>
-			<td>
-				<label for="subdivision">SubDivision</label>
-				<input type="text" name="subdivision" id="subdivision" value="#gettaxa.subdivision#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="superclass">Superclass</label>
-				<input type="text" name="superclass" id="superclass" value="#gettaxa.superclass#" size="30">
-			</td>
-			<td>
-				<label for="phylclass">Class</label>
-				<input type="text" name="phylclass" id="phylclass" value="#gettaxa.phylclass#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="subclass">SubClass</label>
-				<input type="text" name="subclass" id="subclass" value="#gettaxa.subclass#" size="30">
-			</td>
-			<td>
-				<label for="infraclass">InfraClass</label>
-				<input type="text" name="infraclass" id="infraclass" value="#gettaxa.infraclass#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="superorder">Superorder</label>
-				<input type="text" name="superorder" id="superorder" value="#gettaxa.superorder#" size="30">
-			</td>
-			<td>
-				<label for="phylorder">Order</label>
-				<input type="text" name="phylorder" id="phylorder" value="#gettaxa.phylorder#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="suborder">Suborder</label>
-				<input type="text" name="suborder" id="suborder" value="#gettaxa.suborder#" size="30">
-			</td>
-			<td>
-				<label for="infraorder">Infraorder</label>
-				<input type="text" name="infraorder" id="infraorder" value="#gettaxa.infraorder#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="superfamily">Superfamily</label>
-				<input type="text" name="superfamily" id="superfamily" value="#gettaxa.superfamily#" size="30">
-			</td>
-			<td>
-				<label for="family">Family</label>
-				<input type="text" name="family" id="family" value="#gettaxa.family#" size="30">
-			</td>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+        <section> <a id="showRightPush" class="btn" role="button" style="border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); background-color: rgb(15, 13, 14); box-shadow: rgb(204, 204, 204) 0px 0px 5px; border-width: 4px 0 4px 4px;">Filters</a> </section>
+        <h3>Filters</h3>
+        <div class="col-md-3 jumbotron" style="margin-bottom: 3em;padding-left:1em;">
+            <h2 style="width: 280px;float: left;margin-top: 1em;">By Columns and Values</h2>
+            <div style="float: left;">
+                <div>Choose Column:</div>
+                <div id="columnchooser"></div>
+                <div style="margin-top: 10px;" id="filterbox"></div>
+                <div style="margin-top: 10px;">
+                    <input type="button" id="applyfilter" value="Apply Filter" style="display: inline;"/>
+                    <input type="button" id="clearfilter" value="Clear Filter" style="display: inline;width: auto;"/>
+                </div>
+            </div>
+            <div style="width: 280px;float: left;margin-top: 1em;z-index: 50001">
+                <h2>Date</h2>
+                <div style="float: left;display:inline;width: 90px;margin-right: 1em;">
+                    <label style="margin-bottom: .14em;">From</label>
+                    <input id="began_date" type="text" style="width: 89px;">
+                </div>
+                <div style="float: left;display:inline;width: 90px;">
+                    <label style="margin-bottom: .14em;">To</label>
+                    <input id="ended_date" type="text" style="width: 89px;">
+                </div>
+                <div style="float: left;display:inline;width: 50px;margin-left: 1em;margin-top: 1.62em;"> <a id="refine" value="Refine" style="display: inline;width: 60px;vertical-align: bottom;background-color: none;color:##007bff;"/>Refine</a> </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="cbp-spmenu cbp-spmenu-vertical-left cbp-spmenu-left" id="cbp-spmenu-s3" style="z-index: 5000;">
+        <h5>Display Columns &nbsp;<i class="fas fa-columns" style="opacity: .5"></i></h5>
+        <div class="col-md-3 jumbotron" style="margin-bottom: 3em;padding-left:1em;margin-top: 0rem">
+            <ul class="checks">
+                <li>
+                    <input type="checkbox">
+                    Check all</li>
+                <li>
+                    <input type="checkbox">
+                    Minimum</li>
+            </ul>
+            <div style="float: left;margin-top: 1em;z-index: 50001;background-color:white;">
+                <div id="jqxlistbox2"></div>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid"> <br/>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-4 jumbotron pt-0">
+                <form id="searchForm" class="card card-sm" style="border: none;">
+                    <h2 class="mt-2 mb-1 mx-3">Search Taxonomy </h2>
+                    <div class="card_search row no-gutters align-items-center py-1 mr-4">
+                        <div class="col-auto"> </div>
+                        <!--end of col-->
+                        <div class="col px-2">
+                            <input id="searchText" class="form-control form-control-borderless" type="search" placeholder="Search any terms">
+                        </div>
+                        <!--end of col-->
+                        <div class="col-auto">
+                            <button class="btn" style="background: ##BAC5C6;" type="submit"> <i class="fas fa-search text-body"></i></button>
+                        </div>
+                        <!--end of col--> 
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" style="font-size: 1.2em;margin:0 1.2em .25em 1.2em;"> advanced search <i class="fas fa-expand"></i> </button>
+                    <div class="collapse navbar-collapse" id="collapseSearch"> <img src="/redesign/includes/images/Hollis.jpg" alt="screenshot of build a search" width="100%" style="margin-left: 0%;border:none;margin-top:1em;"/> </div>
+                </form>
+            </div>
+            
+            <div class="col-sm-12 col-md-12 col-lg-4 jumbotron pt-0">
+                 <div class="row no-gutters align-items-left py-1 mx-3">
+                    <h2 class="mt-1 mb-1 mx-3">What's here </h2>
+                    <p class="card card-sm mx-3" style="border: none;display: inline;"> These <a href="##" style="color: green;">341645</a> records represent current and past taxonomic usage in MCZbase. They are neither complete nor necessarily authoritative. Not all taxa have associated specimens. </p>
+                 </div>
+                </p>
+            </div>
+            
+                 <div class="col-sm-12 col-md-12 col-lg-4 jumbotron">
+                 <div class="row no-gutters align-items-left py-1 mx-3">
+                   <h2 class="my-1 mx-3 w-100 pl-1">Select Usage </h2>
+                    <form id="searchForm" style="border: none;">
+                            <ul class="check_selection mx-0 mb-4">
+							  <li><input type="checkbox">Display all matches?</li>
+							  <li><input type="checkbox">Display only taxa currently accepted?</li>
+							  <li><input type="checkbox">Display taxa identifying specimens?</li>
+                            </ul>
+                     </form>
+                </div>
+                </div>
 
-		</tr>
-		<tr>
-			<td>
-				<label for="subfamily">Subfamily</label>
-				<input type="text" name="subfamily" id="subfamily" value="#gettaxa.subfamily#" size="30">
-			</td>
-			<td>
-				<label for="tribe">Tribe</label>
-				<input type="text" name="tribe" id="tribe" value="#gettaxa.tribe#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="subgenus">Subgenus</label>
-				(<input type="text" name="subgenus" id="subgenus" value="#gettaxa.subgenus#" size="29">)#subgenus_message#
-			</td>
-			<td>
-				<label for="subgenus">SubSection</label>
-				<input type="text" name="subsection" id="subsection" value="#gettaxa.subsection#" size="29">
-			</td>
-		</tr>
-        <tr>
-			<td colspan="2">
-				<label for="taxon_remarks">Remarks</label>
-				<textarea name="taxon_remarks" id="taxon_remarks" rows="3" cols="60">#gettaxa.taxon_remarks#</textarea>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<div align="center">
-					<input type="button" value="Save" class="savBtn" onclick="taxa.Action.value='saveTaxaEdits';submit();">
-              		<input type="button" value="Clone" class="insBtn" onclick="taxa.Action.value='newTaxa';submit();">
-   					<input type="button" value="Delete" class="delBtn"	onclick="taxa.Action.value='deleTaxa';confirmDelete('taxa');">
-				</div>
-			</td>
-		</tr>
-      </form>
-    </table>
-	<cfquery name="tax_pub" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		select
-			taxonomy_publication_id,
-			formatted_publication,
-			taxonomy_publication.publication_id
-		from
-			taxonomy_publication,
-			formatted_publication
-		where
-			format_style='long' and
-			taxonomy_publication.publication_id=formatted_publication.publication_id and
-			taxonomy_publication.taxon_name_id=#taxon_name_id#
-	</cfquery>
-	<cfset i = 1>
-	<h4>Related Publications</h4>
-
-		<form name="newPub" method="post" action="Taxonomy.cfm">
-			<input type="hidden" name="taxon_name_id" value="#getTaxa.taxon_name_id#">
-			<input type="hidden" name="Action" value="newTaxonPub">
-			<input type="hidden" name="new_publication_id" id="new_publication_id">
-			<label for="new_pub">Pick Publication</label>
-			<input type="text" id="newPub" onchange="getPublication(this.id,'new_publication_id',this.value,'newPub')" size="80">
-			<input type="submit" value="Add Publication" class="insBtn">
-		</form>
-		<cfif tax_pub.recordcount gt 0>
-			<ul>
-		</cfif>
-		<cfloop query="tax_pub">
-			<li>
-				#formatted_publication#
-				<ul>
-					<li>
-						<a href="Taxonomy.cfm?action=removePub&taxonomy_publication_id=#taxonomy_publication_id#&taxon_name_id=#taxon_name_id#">[ remove ]</a>
-					</li>
-					<li>
-						<a href="SpecimenUsage.cfm?publication_id=#publication_id#">[ details ]</a>
-					</li>
-				</ul>
-			</li>
-		</cfloop>
-		<cfif tax_pub.recordcount gt 0>
-			</ul>
-		</cfif>
-	</table>
-	<cfquery name="relations" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		SELECT
-			scientific_name,
-			taxon_relationship,
-			relation_authority,
-			related_taxon_name_id
-		FROM
-			taxon_relations,
-			taxonomy
-		WHERE
-			taxon_relations.related_taxon_name_id = taxonomy.taxon_name_id
-			AND taxon_relations.taxon_name_id = #taxon_name_id#
-	</cfquery>
-	<cfset i = 1>
-	<h4>Related Taxa:</h4>
-	<table border="1">
-		<tr>
-			<th>Relationship</th>
-			<th>Related Taxa</th>
-			<th>Authority</th>
-		</tr>
-		<form name="newRelation" method="post" action="Taxonomy.cfm">
-			<input type="hidden" name="taxon_name_id" value="#getTaxa.taxon_name_id#">
-			<input type="hidden" name="Action" value="newTaxaRelation">
-			<tr class="newRec">
-				<td>
-					<label for="taxon_relationship">Add Relationship</label>
-					<select name="taxon_relationship" size="1" class="reqdClr">
-						<cfloop query="ctRelation">
-							<option value="#ctRelation.taxon_relationship#">#ctRelation.taxon_relationship#</option>
-						</cfloop>
-					</select>
-				</td>
-				<td>
-					<input type="text" name="relatedName" class="reqdClr" size="35"
-						onChange="taxaPick('newRelatedId','relatedName','newRelation',this.value); return false;"
-						onKeyPress="return noenter(event);">
-					<input type="hidden" name="newRelatedId">
-				</td>
-				<td>
-					<input type="text" name="relation_authority">
-				</td>
-				<td>
-					<input type="submit" value="Create" class="insBtn">
-	   			</td>
-			</tr>
-		</form>
-		<cfloop query="relations">
-			<form name="relation#i#" method="post" action="Taxonomy.cfm">
-				<input type="hidden" name="taxon_name_id" value="#getTaxa.taxon_name_id#">
-				<input type="hidden" name="Action">
-				<input type="hidden" name="related_taxon_name_id" value="#related_taxon_name_id#">
-				<input type="hidden" name="origTaxon_Relationship" value="#taxon_relationship#">
-				<tr>
-					<td>
-						<select name="taxon_relationship" size="1" class="reqdClr">
-							<cfloop query="ctRelation">
-								<option <cfif ctRelation.taxon_relationship is relations.taxon_relationship>
-									selected="selected" </cfif>value="#ctRelation.taxon_relationship#">#ctRelation.taxon_relationship#
-								</option>
-							</cfloop>
-						</select>
-					</td>
-					<td>
-						<input type="text" name="relatedName" class="reqdClr" size="50" value="#relations.scientific_name#"
-							onChange="taxaPick('newRelatedId','relatedName','relation#i#',this.value); return false;"
-							onKeyPress="return noenter(event);">
-						<input type="hidden" name="newRelatedId">
-					</td>
-					<td>
-						<input type="text" name="relation_authority" value="#relations.relation_authority#">
-					</td>
-					<td>
-						<input type="button" value="Save" class="savBtn" onclick="relation#i#.Action.value='saveRelnEdit';submit();">
-						<input type="button" value="Delete" class="delBtn" onclick="relation#i#.Action.value='deleReln';confirmDelete('relation#i#');">
-					</td>
-				</tr>
-			</form>
-			<cfset i = #i#+1>
-		</cfloop>
-	</table>
-	<cfquery name="common" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		select common_name from common_name where taxon_name_id = #taxon_name_id#
-	</cfquery>
-	<h4>Common Names</h4>
-	<cfset i=1>
-	<cfloop query="common">
-		<form name="common#i#" method="post" action="Taxonomy.cfm">
-			<input type="hidden" name="Action">
-			<input type="hidden" name="origCommonName" value="#common_name#">
-			<input type="hidden" name="taxon_name_id" value="#taxon_name_id#">
-			<input type="text" name="common_name" value="#common_name#" size="50">
-			<input type="button" value="Save" class="savBtn" onClick="common#i#.Action.value='saveCommon';submit();">
-	   		<input type="button" value="Delete" class="delBtn" onClick="common#i#.Action.value='deleteCommon';confirmDelete('common#i#');">
-		</form>
-		<cfset i=i+1>
-	</cfloop>
-	<table class="newRec">
-		<tr>
-			<td>
-				<form name="newCommon" method="post" action="Taxonomy.cfm">
-					<input type="hidden" name="Action" value="newCommon">
-					<input type="hidden" name="taxon_name_id" value="#taxon_name_id#">
-					<label for="common_name">New Common Name</label>
-					<input type="text" name="common_name" size="50">
-					<input type="submit" value="Create" class="insBtn">
-				</form>
-			</td>
-		</tr>
-	</table>
-	<cfquery name="habitat" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		select taxon_habitat from taxon_habitat where taxon_name_id = #taxon_name_id#
-	</cfquery>
-
-	<cfset usedHabitats = valueList(habitat.taxon_habitat)>
-
-	<h4>Habitat</h4>
-	<cfset i=1>
-	<cfloop query="habitat">
-		<form name="habitat#i#" method="post" action="Taxonomy.cfm">
-			<input type="hidden" name="Action">
-			<input type="hidden" name="orighabitatName" value="#taxon_habitat#">
-			<input type="hidden" name="taxon_name_id" value="#taxon_name_id#">
-			<input type="text" name="taxon_habitat" value="#taxon_habitat#" size="30" readonly style="background-color: ##dddddd; border: 0">
-	   		<input type="button" value="Delete" class="delBtn" onClick="habitat#i#.Action.value='deletehabitat';confirmDelete('habitat#i#');">
-		</form>
-		<cfset i=i+1>
-	</cfloop>
-	<table class="newRec">
-		<tr>
-			<td>
-				<form name="newhabitat" method="post" action="Taxonomy.cfm">
-					<input type="hidden" name="Action" value="newhabitat">
-					<input type="hidden" name="taxon_name_id" value="#taxon_name_id#">
-					<label for="taxon_habitat">New Habitat</label>
-					<select name="taxon_habitat" id="habitat_name"size="1">
-					<cfloop query="cttaxon_habitat">
-					<option value="">select</option>
-			        	<cfif not listcontains(usedHabitats,cttaxon_habitat.taxon_habitat)>
-			        	<option value="#cttaxon_habitat.taxon_habitat#">#cttaxon_habitat.taxon_habitat#</option>
-			        	</cfif>
-			        </cfloop>
-					<input type="submit" value="Add" class="insBtn">
-				</form>
-			</td>
-		</tr>
-	</table>
+        </div>
     </div>
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "removePub">
-	<cfquery name="removePub" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		delete from taxonomy_publication where taxonomy_publication_id=#taxonomy_publication_id#
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "newTaxonPub">
-	<cfquery name="newTaxonPub" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		INSERT INTO taxonomy_publication (taxon_name_id,publication_id)
-		VALUES (#taxon_name_id#,#new_publication_id#)
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "newCommon">
-<cfoutput>
-	<cfquery name="newCommon" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		INSERT INTO common_name (common_name, taxon_name_id)
-		VALUES ('#common_name#', #taxon_name_id#)
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "newHabitat">
-<cfoutput>
-	<cfquery name="newHabitat" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		INSERT INTO taxon_habitat (taxon_habitat, taxon_name_id)
-		VALUES ('#taxon_habitat#', #taxon_name_id#)
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif Action is "deleTaxa">
-<cfoutput>
-	<cfquery name="deleTaxa" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		DELETE FROM
-			taxonomy
-		WHERE
-			taxon_name_id=#taxon_name_id#
-	</cfquery>
-	You killed it!
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "deleteCommon">
-<cfoutput>
-	<cfquery name="killCommon" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		DELETE FROM
-			common_name
-		WHERE
-			common_name='#origCommonName#' AND taxon_name_id=#taxon_name_id#
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "saveCommon">
-<cfoutput>
-	<cfquery name="upCommon" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		UPDATE
-			common_name
-		SET
-			common_name = '#common_name#'
-		WHERE
-			common_name='#origCommonName#' AND taxon_name_id=#taxon_name_id#
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "deleteHabitat">
-<cfoutput>
-	<cfquery name="killhabitat" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		DELETE FROM
-			taxon_habitat
-		WHERE
-			taxon_habitat='#orighabitatName#' AND taxon_name_id=#taxon_name_id#
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfoutput>
-</cfif>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-left col-lg-12">
+                <main role="main">
+                    <div class="px-4 w-100 mb-5 mt-3">
 
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "newTaxa">
-<cfset title = "Add Taxonomy">
-<cfoutput>
-<div style="width: 41em; margin:0 auto; padding-bottom: 3em;">
-  <h2 class="wikilink" style="margin-left: 0;float:none;">Create New Taxonomy: <img src="/images/info_i_2.gif" border="0" onClick="getMCZDocs('New taxon')" class="likeLink" alt="[ help ]"></h2>
-  <p style="padding:2px 0;margin:2px 0;">(through cloning and editing)</p>
-	<table class="tInput">
-		<form name="taxa" method="post" action="Taxonomy.cfm">
-			<input type="hidden" name="Action" value="saveNewTaxa">
-			<tr>
-				<td>
-					<label for="source_authority"><span>Source</span></label>
-					<select name="source_authority" id="source_authority" size="1"  class="reqdClr">
-		              <cfloop query="ctSourceAuth">
-		                <option
-							<cfif form.source_authority is ctsourceauth.source_authority> selected="selected" </cfif>
-								value="#ctSourceAuth.source_authority#">#ctSourceAuth.source_authority#</option>
-		              </cfloop>
-		            </select>
-				</td>
-				<td>
-					<label for="valid_catalog_term_fg"><span>Valid?</span></label>
-					<select name="valid_catalog_term_fg" id="valid_catalog_term_fg" size="1" class="reqdClr">
-		              <option <cfif valid_catalog_term_fg is "1"> selected="selected" </cfif> value="1">yes</option>
-		              <option <cfif valid_catalog_term_fg is "0"> selected="selected" </cfif> value="0">no</option>
-		            </select>
-				</td>
-	        </tr>
-	        <tr>
-				<td>
-					<label for="nomenclatural_code"><span>Nomenclatural Code</span></label>
-					<select name="nomenclatural_code" id="nomenclatural_code" size="1" class="reqdClr">
-		               <cfloop query="ctnomenclatural_code">
-		                <option
-								<cfif #form.nomenclatural_code# is "#ctnomenclatural_code.nomenclatural_code#"> selected </cfif>value="#ctnomenclatural_code.nomenclatural_code#">#ctnomenclatural_code.nomenclatural_code#</option>
-		              </cfloop>
-		            </select>
-				</td>
-				<td>
-					<label for="genus">Genus <span class="likeLink"
-						onClick="taxa.genus.value='&##215;' + taxa.genus.value;">Add &##215;</span></label>
-					<input size="25" name="genus" id="genus" maxlength="40" value="#genus#">
-				</td>
-			</tr>
-	        <tr>
-				<td>
-					<label for="species">Species <span class="likeLink"
-						onClick="taxa.species.value='&##215;' + taxa.species.value;">Add &##215;</span></label>
-					<input size="25" name="species" id="species" maxlength="40" value="#species#">
-				</td>
-				<td>
-					<label for="author_text"><span>Author</span></label>
-					<input type="text" name="author_text" id="author_text" value="#author_text#" size="30">
-					<span class="infoLink"
-						onclick="window.open('/picks/KewAbbrPick.cfm?tgt=author_text','picWin','width=700,height=400, resizable,scrollbars')">
-							Find Kew Abbr
-					</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="infraspecific_rank"><span>Infraspecific Rank</span></label>
-					<select name="infraspecific_rank" id="infraspecific_rank" size="1">
-	                	<option <cfif form.infraspecific_rank is ""> selected </cfif>  value=""></option>
-		                <cfloop query="ctInfRank">
-		                  <option
-								<cfif form.infraspecific_rank is ctinfrank.infraspecific_rank> selected="selected" </cfif>value="#ctInfRank.infraspecific_rank#">#ctInfRank.infraspecific_rank#</option>
-		                </cfloop>
-	              	</select>
-				</td>
-				<td>
-					<label for="taxon_status"><span>Taxon Status</span></label>
-					<select name="taxon_status" id="taxon_status" size="1">
-				    	<option value=""></option>
-				    	<cfloop query="cttaxon_status">
-				        	<option <cfif form.taxon_status is cttaxon_status.taxon_status> selected="selected" </cfif>
-				            	value="#cttaxon_status.taxon_status#">#cttaxon_status.taxon_status#</option>
-				        </cfloop>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="subspecies">Subspecies</label>
-					<input size="25" name="subspecies" id="subspecies" maxlength="40" value="#subspecies#">
-				</td>
-				<td>
-					<label for="author_text"><span>
-						Infraspecific Author</span></label>
-					<input type="text" name="infraspecific_author" id="infraspecific_author" value="#infraspecific_author#" size="30">
-					<span class="infoLink"
-						onclick="window.open('/picks/KewAbbrPick.cfm?tgt=infraspecific_author','picWin','width=700,height=400, resizable,scrollbars')">
-							Find Kew Abbr
-						</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="kingdom">Kingdom</label>
-					<input type="text" name="kingdom" id="kingdom" value="#kingdom#" size="30">
-				</td>
-			<td>
-				&nbsp;
-				<!---Deprecated:label for="nomenclatural_code">Nomenclatural Code</label>
-				<input type="text" name="nomenclatural_code" id="nomenclatural_code" value="#nomenclatural_code#" size="30"---->
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="phylum">Phylum</label>
-				<input type="text" name="phylum" id="phylum" value="#phylum#" size="30">
-			</td>
-			<td>
-				<label for="subphylum">Subphylum</label>
-				<input type="text" name="subphylum" id="subphylum" value="#subphylum#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="division">Division</label>
-				<input type="text" name="division" id="division" value="#division#" size="30">
-			</td>
-			<td>
-				<label for="subdivision">SubDivision</label>
-				<input type="text" name="subdivision" id="subdivision" value="#subdivision#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="superclass">Superclass</label>
-				<input type="text" name="superclass" id="superclass" value="#superclass#" size="30">
-			</td>
-			<td>
-				<label for="phylclass">Class</label>
-				<input type="text" name="phylclass" id="phylclass" value="#phylclass#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="subclass">SubClass</label>
-				<input type="text" name="subclass" id="subclass" value="#subclass#" size="30">
-			</td>
-			<td>
-				<label for="infraclass">InfraClass</label>
-				<input type="text" name="infraclass" id="infraclass" value="#infraclass#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="superorder">Superorder</label>
-				<input type="text" name="superorder" id="superorder" value="#superorder#" size="30">
-			</td>
-			<td>
-				<label for="phylorder">Order</label>
-				<input type="text" name="phylorder" id="phylorder" value="#phylorder#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="suborder">Suborder</label>
-				<input type="text" name="suborder" id="suborder" value="#suborder#" size="30">
-			</td>
-			<td>
-				<label for="infraorder">Infraorder</label>
-				<input type="text" name="infraorder" id="infraorder" value="#infraorder#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="superfamily">Superfamily</label>
-				<input type="text" name="superfamily" id="superfamily" value="#superfamily#" size="30">
-			</td>
-			<td>
-				<label for="family">Family</label>
-				<input type="text" name="family" id="family" value="#family#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="subfamily">Subfamily</label>
-				<input type="text" name="subfamily" id="subfamily" value="#subfamily#" size="30">
-			</td>
-			<td>
-				<label for="tribe">Tribe</label>
-				<input type="text" name="tribe" id="tribe" value="#tribe#" size="30">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="subgenus">Subgenus</label>
-				(<input type="text" name="subgenus" id="subgenus" value="#subgenus#" size="29">)#subgenus_message#
-			</td>
-			<td>
-				<label for="subgenus">SubSection</label>
-				<input type="text" name="subsection" id="subsection" value="#subsection#" size="29">
-			</td>
-		</tr>
-	        <tr>
-				<td colspan="2">
-					<label for="taxon_remarks">Remarks</label>
-					<textarea name="taxon_remarks" id="taxon_remarks" rows="3" cols="60">#taxon_remarks#</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="2">
- 					<input type="submit" value="Create" class="insBtn">
-				</td>
-			</tr>
-		</form>
-	</table>
-    </div>
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "saveNewtaxa">
-<cfoutput>
-<cfquery name="nextID" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	select sq_taxon_name_id.nextval nextID from dual
-</cfquery>
-	<cfquery name="newTaxa" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		INSERT INTO taxonomy (
-			taxon_name_id,
-			valid_catalog_term_fg,
-			source_authority
-		<cfif len(#author_text#) gt 0>
-			,author_text
-		</cfif>
-		<cfif len(#tribe#) gt 0>
-			,tribe
-		</cfif>
-		<cfif len(#infraspecific_rank#) gt 0>
-			,infraspecific_rank
-		</cfif>
-		<cfif len(#phylclass#) gt 0>
-			,phylclass
-		</cfif>
-		<cfif len(#phylorder#) gt 0>
-			,phylorder
-		</cfif>
-		<cfif len(#suborder#) gt 0>
-			,suborder
-		</cfif>
-		<cfif len(#family#) gt 0>
-			,family
-		</cfif>
-		<cfif len(#subfamily#) gt 0>
-			,subfamily
-		</cfif>
-		<cfif len(#genus#) gt 0>
-			,genus
-		</cfif>
-		<cfif len(#subgenus#) gt 0>
-			,subgenus
-		</cfif>
-		<cfif len(#species#) gt 0>
-			,species
-		</cfif>
-		<cfif len(#subspecies#) gt 0>
-			,subspecies
-		</cfif>
-		<cfif len(#taxon_remarks#) gt 0>
-			,taxon_remarks
-		</cfif>
-		<cfif len(#phylum#) gt 0>
-			,phylum
-		</cfif>
-		<cfif len(#infraspecific_author#) gt 0>
-			,infraspecific_author
-		</cfif>
-		<cfif len(#kingdom#) gt 0>
-			,kingdom
-		</cfif>
-		<cfif len(#nomenclatural_code#) gt 0>
-			,nomenclatural_code
-		</cfif>
-		<cfif len(#subphylum#) gt 0>
-			,subphylum
-		</cfif>
-		<cfif len(#superclass#) gt 0>
-			,superclass
-		</cfif>
-		<cfif len(#subclass#) gt 0>
-			,subclass
-		</cfif>
-		<cfif len(#superorder#) gt 0>
-			,superorder
-		</cfif>
-		<cfif len(#infraorder#) gt 0>
-			,infraorder
-		</cfif>
-		<cfif len(#superfamily#) gt 0>
-			,superfamily
-		</cfif>
-		<cfif len(#division#) gt 0>
-			,division
-		</cfif>
-		<cfif len(#subdivision#) gt 0>
-			,subdivision
-		</cfif>
-		<cfif len(#subsection#) gt 0>
-			,subsection
-		</cfif>
-		<cfif len(#infraclass#) gt 0>
-			,infraclass
-		</cfif>
-		<cfif len(#taxon_status#) gt 0>
-			,taxon_status
-		</cfif>
-		) VALUES (
-			#nextID.nextID#,
-			#valid_catalog_term_fg#,
-			'#source_authority#'
-		<cfif len(#author_text#) gt 0>
-			,trim('#escapeQuotes(author_text)#')
-		</cfif>
-		<cfif len(#tribe#) gt 0>
-			,trim('#tribe#')
-		</cfif>
-		<cfif len(#infraspecific_rank#) gt 0>
-			,trim('#infraspecific_rank#')
-		</cfif>
-		<cfif len(#phylclass#) gt 0>
-			,trim('#phylclass#')
-		</cfif>
-		<cfif len(#phylorder#) gt 0>
-			,trim('#phylorder#')
-		</cfif>
-		<cfif len(#suborder#) gt 0>
-			,trim('#suborder#')
-		</cfif>
-		<cfif len(#family#) gt 0>
-			,trim('#family#')
-		</cfif>
-		<cfif len(#subfamily#) gt 0>
-			,trim('#subfamily#')
-		</cfif>
-		<cfif len(#genus#) gt 0>
-			,trim('#genus#')
-		</cfif>
-		<cfif len(#subgenus#) gt 0>
-			,trim('#subgenus#')
-		</cfif>
-		<cfif len(#species#) gt 0>
-			,trim('#species#')
-		</cfif>
-		<cfif len(#subspecies#) gt 0>
-			,trim('#subspecies#')
-		</cfif>
-		<cfif len(#taxon_remarks#) gt 0>
-			,trim('#escapeQuotes(taxon_remarks)#')
-		</cfif>
-		<cfif len(#phylum#) gt 0>
-			,'#phylum#'
-		</cfif>
-		<cfif len(#infraspecific_author#) gt 0>
-			,trim('#escapeQuotes(infraspecific_author)#')
-		</cfif>
-		<cfif len(#kingdom#) gt 0>
-			,trim('#kingdom#')
-		</cfif>
-		<cfif len(#nomenclatural_code#) gt 0>
-			,'#nomenclatural_code#'
-		</cfif>
-		<cfif len(#subphylum#) gt 0>
-			,trim('#subphylum#')
-		</cfif>
-		<cfif len(#superclass#) gt 0>
-			,trim('#superclass#')
-		</cfif>
-	 	<cfif len(#subclass#) gt 0>
-			,trim('#subclass#')
-		</cfif>
-		<cfif len(#superorder#) gt 0>
-			,trim('#superorder#')
-		</cfif>
-		<cfif len(#infraorder#) gt 0>
-			,trim('#infraorder#')
-		</cfif>
-		<cfif len(#superfamily#) gt 0>
-			,trim('#superfamily#')
-		</cfif>
-		<cfif len(#division#) gt 0>
-			,trim('#division#')
-		</cfif>
-		<cfif len(#subdivision#) gt 0>
-			,trim('#subdivision#')
-		</cfif>
-		<cfif len(#subsection#) gt 0>
-			,trim('#subsection#')
-		</cfif>
-		<cfif len(#infraclass#) gt 0>
-			,trim('#infraclass#')
-		</cfif>
-		<cfif len(#taxon_status#) gt 0>
-			,trim('#taxon_status#')
-		</cfif>
-		)
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#nextID.nextID#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif action is "newTaxaRelation">
-<cfoutput>
-	<cfquery name="newReln" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		INSERT INTO taxon_relations (
-			 TAXON_NAME_ID,
-			 RELATED_TAXON_NAME_ID,
-			 TAXON_RELATIONSHIP,
-			 RELATION_AUTHORITY
-		  )	VALUES (
-			#TAXON_NAME_ID#,
-			 #newRelatedId#,
-			 '#TAXON_RELATIONSHIP#',
-		 	'#RELATION_AUTHORITY#'
-		)
-	</cfquery>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif Action is "deleReln">
-<cfoutput>
-<cfquery name="deleReln" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	DELETE FROM
-		taxon_relations
-	WHERE
-		taxon_name_id = #taxon_name_id#
-		AND Taxon_relationship = '#origtaxon_relationship#'
-		AND related_taxon_name_id=#related_taxon_name_id#
+<script>	
+//////////////////////
+  $(function(){ 
+    function saveEdits() {
+    }
+ 	var screenWidth, screenHeight, dialogWidth, dialogHeight, isDesktop;
+    screenWidth = window.screen.width;
+    screenHeight = window.screen.height;
+    if ( screenWidth < 1600 ) {
+		dialogWidth = '90%';
+        dialogHeight = 'auto';
+		 isDesktop = false;
+    } else if ( screenWidth > 1600  ){
+        dialogWidth = '46%';
+       dialogHeight = 'auto'
+        isDesktop = true;
+    }
+    dialog = $( "##dialog-form" ).dialog({
+      autoOpen: false,
+      width: dialogWidth,
+	  height: dialogHeight,
+      maxWidth: 1150,
+	  fluid: true,
+      modal: true,
+	  resizable: true,
+      buttons: {
+            "1": { id: 'save', text: 'Save', click: function(){ $(this).dialog("save"); }, "class": "save_local" },
+            "2": { id: 'close', text: 'Cancel', click: function(){ $(this).dialog("close"); }, "class": "cancel_bk"}
+            }
+    });
+	form = dialog.find( "form" ).on( "submit", function( event ) {
+           event.preventDefault();
+           saveEdits();
+		// $(window).off("resize.responsive");
+    });
+    $( "##add-taxonomy" ).button().on( "click", function() {
+           dialog.dialog( "open" );
+		   fluidDialog();
+    });
+	function fluidDialog() {
+    var $visible = $(".ui-dialog:visible");
+    // each open dialog
+    $visible.each(function () {
+        var $this = $(this);
+        var dialog = $this.find(".ui-dialog-content").data("dialog");
+    //  console.log(dialog);
+        // if fluid option == true
+        if (dialog.options.maxWidth && dialog.options.width) {
+            // fix maxWidth bug
+            $this.css("max-width", dialog.options.maxWidth);
+            //reposition dialog
+            dialog.option("position", dialog.options.position);
+        }
+    });
+}  
+});
+ ///////////////////////
+</script> 
+ <h3 style="width: 150px;float: left;">Taxonomy</h3>  
+         <cfquery name="getTaxa"	 datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+			select full_taxon_name, taxon_name_id, phylclass, phylorder, family, genus, species from taxonomy	
 		</cfquery>
-		<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif #Action# is "saveRelnEdit">
-<cfoutput>
-<cfquery name="edRel" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-	UPDATE taxon_relations SET
-		taxon_relationship = '#taxon_relationship#'
-		<cfif len(#newRelatedId#) gt 0>
-			,related_taxon_name_id = #newRelatedId#
-		<cfelse>
-			,related_taxon_name_id = #related_taxon_name_id#
-		</cfif>
-		<cfif len(#relation_authority#) gt 0>
-			,relation_authority = '#relation_authority#'
-		<cfelse>
-			,relation_authority = null
-		</cfif>
-	WHERE
-		taxon_name_id = #taxon_name_id#
-		AND Taxon_relationship = '#origTaxon_relationship#'
-		AND related_taxon_name_id=#related_taxon_name_id#
-</cfquery>
-<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
-<cfif #Action# is "saveTaxaEdits">
-<cfoutput>
-       <cfset subgenus_message = "">
-        <cfif len(#subgenus#) gt 0 and REFind("^\(.*\)$",#subgenus#) gt 0>
-            <cfset subgenus_message = "<strong>Do Not include parethesies</strong>">
-            <cfset subgenus = replace(replace(#subgenus#,")",""),"(","") >
-        </cfif>
-<cftransaction>
-	<cfquery name="edTaxa" datasource="user_login" username='#session.username#' password="#decrypt(session.epw,cfid)#">
-	UPDATE taxonomy SET
-		valid_catalog_term_fg=#valid_catalog_term_fg#,
-		source_authority = '#source_authority#'
-		<cfif len(#author_text#) gt 0>
-			,author_text=trim('#escapeQuotes(author_text)#')
-		<cfelse>
-			,author_text=null
-		</cfif>
-		<cfif len(#tribe#) gt 0>
-			,tribe = trim('#tribe#')
-		<cfelse>
-			,tribe = null
-		</cfif>
-		<cfif len(#infraspecific_rank#) gt 0>
-			,infraspecific_rank = '#infraspecific_rank#'
-		<cfelse>
-			,infraspecific_rank = null
-		</cfif>
-		<cfif len(#phylclass#) gt 0>
-			,phylclass = trim('#phylclass#')
-		<cfelse>
-			,phylclass = null
-		</cfif>
-		<cfif len(#phylorder#) gt 0>
-			,phylorder = trim('#phylorder#')
-		<cfelse>
-			,phylorder = null
-		</cfif>
-		<cfif len(#suborder#) gt 0>
-			,suborder = trim('#suborder#')
-		<cfelse>
-			,suborder = null
-		</cfif>
-		<cfif len(#family#) gt 0>
-			,family = trim('#family#')
-		<cfelse>
-			,family = null
-		</cfif>
-		<cfif len(#subfamily#) gt 0>
-			,subfamily = trim('#subfamily#')
-		<cfelse>
-			,subfamily = null
-		</cfif>
-		<cfif len(#genus#) gt 0>
-			,genus = trim('#genus#')
-		<cfelse>
-			,genus = null
-		</cfif>
-		<cfif len(#subgenus#) gt 0>
-			,subgenus = trim('#subgenus#')
-		<cfelse>
-			,subgenus = null
-		</cfif>
-		<cfif len(#species#) gt 0>
-			,species = trim('#species#')
-		<cfelse>
-			,species = null
-		</cfif>
-		<cfif len(#subspecies#) gt 0>
-			,subspecies = trim('#subspecies#')
-		<cfelse>
-			,subspecies = null
-		</cfif>
-		<cfif len(#phylum#) gt 0>
-			,phylum = trim('#phylum#')
-		<cfelse>
-			,phylum = null
-		</cfif>
-		<cfif len(#taxon_remarks#) gt 0>
-			,taxon_remarks = trim('#escapeQuotes(taxon_remarks)#')
-		<cfelse>
-			,taxon_remarks = null
-		</cfif>
-		<cfif len(#kingdom#) gt 0>
-			,kingdom = trim('#kingdom#')
-		<cfelse>
-			,kingdom = null
-		</cfif>
-		<cfif len(#nomenclatural_code#) gt 0>
-			,nomenclatural_code = '#nomenclatural_code#'
-		<cfelse>
-			,nomenclatural_code = null
-		</cfif>
-		<cfif len(#infraspecific_author#) gt 0>
-			,infraspecific_author = trim('#escapeQuotes(infraspecific_author)#')
-		<cfelse>
-			,infraspecific_author = null
-		</cfif>
-		<cfif len(#subphylum#) gt 0>
-			,subphylum = trim('#subphylum#')
-		<cfelse>
-			,subphylum = null
-		</cfif>
-		<cfif len(#superclass#) gt 0>
-			,superclass = trim('#superclass#')
-		<cfelse>
-			,superclass = null
-		</cfif>
-		<cfif len(#subclass#) gt 0>
-			,subclass = trim('#subclass#')
-		<cfelse>
-			,subclass = null
-		</cfif>
-		<cfif len(#superorder#) gt 0>
-			,superorder = trim('#superorder#')
-		<cfelse>
-			,superorder = null
-		</cfif>
-		<cfif len(#infraorder#) gt 0>
-			,infraorder = trim('#infraorder#')
-		<cfelse>
-			,infraorder = null
-		</cfif>
-		<cfif len(#superfamily#) gt 0>
-			,superfamily = trim('#superfamily#')
-		<cfelse>
-			,superfamily = null
-		</cfif>
-		<cfif len(#division#) gt 0>
-			,division = trim('#division#')
-		<cfelse>
-			,division = null
-		</cfif>
-		<cfif len(#subdivision#) gt 0>
-			,subdivision = trim('#subdivision#')
-		<cfelse>
-			,subdivision = null
-		</cfif>
-		<cfif len(#subsection#) gt 0>
-			,subsection = trim('#subsection#')
-		<cfelse>
-			,subsection = null
-		</cfif>
-		<cfif len(#infraclass#) gt 0>
-			,infraclass  = trim('#infraclass#')
-		<cfelse>
-			,infraclass = null
-		</cfif>
-		<cfif len(#taxon_status#) gt 0>
-			,taxon_status = trim('#taxon_status#')
-		<cfelse>
-			,taxon_status = null
-		</cfif>
-	WHERE taxon_name_id=#taxon_name_id#
-	</cfquery>
-	</cftransaction>
-	<cflocation url="Taxonomy.cfm?Action=edit&taxon_name_id=#taxon_name_id#&subgenus_message=#subgenus_message#" addtoken="false">
-</cfoutput>
-</cfif>
-<!---------------------------------------------------------------------------------------------------->
+         <!--- <button type="button" id="add-taxonomy" class="detail-edit-cell" onClick="$('##dialog-form').dialog('open');">Add New</button>--->           
+            <div id="dialog-form" title="Add Taxonomy" style="display: none;z-index: 350"> 
+             <div class="active_form">
+              <form name="taxaForm" id="taxaForm">
+                    <fieldset>
+                        <input type="hidden" name="taxon_name_id" value="#getTaxa.taxon_name_id#" id="taxon_name_id" >
+                        <input type="hidden" name="returnFormat" value="json" id="returnFormat">
+                   <div class="container-fluid">
+                      <div class="row">
+                         <div class="col-md-4 col-sm-1">
+                           <label for="kingdom">Kingdom</label>
+                          <input type="text" value="" name="phylorder" id="kingdom" >
+                          <label for="phylclass">Class</label>
+                          <input type="text" value="" name="phylclass" id="phylclass" >
+       					  <label for="phylorder">Order</label>
+                          <input type="text" value="" name="phylorder" id="phylorder" >
+                          <label for="suborder">Suborder</label>
+                          <input type="text" value="" name="phylorder" id="phylorder" >
+                        
+						  </div>
+                  
+                  	    <div class="col-md-4 col-sm-1"> 
+                    
+                          <label for="family">Family</label>
+                          <input type="text" value="" name="family" id="family" >
+                           <label for="subfamily">Subfamily</label>
+                          <input type="text" value="" name="subfamily" id="subfamily" >
+                          <label for="genus">Genus</label>
+                          <input type="text" value="" name="genus" id="genus">
+                          <label for="subgenus">Subgenus</label>
+                          <input type="text" value="" name="subspecies" id="subspecies">
+                          
+						</div>
+		      	    <div class="col-md-4 col-sm-1"> 
+                    
+                          <label for="family">Family</label>
+                          <input type="text" value="" name="family" id="family" >
+                           <label for="subfamily">Subfamily</label>
+                          <input type="text" value="" name="subfamily" id="subfamily" >
+                          <label for="genus">Genus</label>
+                          <input type="text" value="" name="genus" id="genus">
+                          <label for="species">Species</label>
+                          <input type="text" value="" name="species" id="species">
+                          
+						</div>
+			      
+				      </div>
+                   </div>
+                 </fieldset>      
+              </form>
+		     </div>       
+            </div>
+                  <ul>
+                      <li id="showLeftPush" class="active searchfield">
+                           <i class="fas fa-columns"></i>
+                      </li>
+                      &nbsp; 
+                       <li class="searchfield">
+                         <a href="##" style="color: black;">
+                          <i class="fas fa-download" ></i>
+                          </a>
+							</li>
+                      
+                      <li class="searchfield">
+                      <a href="##" id="add-taxonomy" class="detail-edit-cell" onClick="$('##dialog-form').dialog('open');" style="color: black;">
+                      <i class="fas fa-plus-circle" style="font-size: 1em;" ></i>
+						  </a>
+                       </ul>
+                        <div class="row" style="clear:both;">
+                            <div id="jqxgrid" class="jqxGrid">
+                                <div id="grid"></div>
+        				    </div>
 
-<cfinclude template="includes/_footer.cfm">
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <script>
+////  below searches with keyword to return results which are then filtered
+//// see ajax.js to see code that fills table with initial page load results
+		  $(document).ready(function() {
+                $('##searchForm').bind('submit', function(evt){
+				console.log($('##searchText').val());
+				var searchParam = $('##searchText').val();
+				$('##searchText').jqxGrid('showloadelement');
+				$("##jqxgrid").jqxGrid('clearfilters');
+				var taxasearch =
+				{
+					datatype: "json",
+					datafields:
+					[
+	                { name: 'taxon_name_id', type: 'string' },
+					{ name: 'scientific_name', type: 'string'},
+					{ name: 'phylclass', type: 'string' },
+					{ name: 'suborder', type: 'string' },
+                    { name: 'family', type: 'string' },
+                    { name: 'subfamily', type: 'string' },
+                    { name: 'genus', type: 'string' },
+                    { name: 'species', type: 'string' },
+					{ name: 'valid_catalog_term_fg', type: 'string'},
+					{ name: 'source_authority', type: 'string'},
+					{ name: 'author_text', type: 'string' },
+                    { name: 'tribe', type: 'string' },
+                    { name: 'infraspecific_rank', type: 'string' },
+                    { name: 'taxon_remarks', type: 'string' },
+					{ name: 'phylum', type: 'string'},
+					{ name: 'kingdom', type: 'string'},
+					{ name: 'nomenclatural_code', type: 'string'}
+					],
+					root: 'specimenRecord',
+					id: 'taxon_name_id',
+
+					url: '/redesign/taxonomy-related/component/taxa-records_search.cfc?method=getDataTable&searchText='+ searchParam,
+					async: false
+				}
+				var dataAdapter = new $.jqx.dataAdapter(search, {
+				       beforeLoadEvent: function (){},
+                       downloadComplete: function (data, status, xhr) {},
+                       loadComplete: function (data) { },
+                       loadError: function (xhr, status, error) { },
+			    });
+			$("##jqxgrid").jqxGrid({source: dataAdapter});
+	
+			evt.preventDefault();	
+
+	  		// create buttons, listbox and the columns chooser dropdownlist.
+            // create buttons, listbox and the columns chooser dropdownlist.
+	        // create buttons, listbox and the columns chooser dropdownlist.
+            $("##applyfilter").jqxButton({ theme: theme });
+            $("##clearfilter").jqxButton({ theme: theme });
+			
+            $("##filterbox").jqxListBox({ checkboxes: true,  width: 280, height: 250 });
+            $("##columnchooser").jqxDropDownList({ autoDropDownHeight: true, selectedIndex: 0,  width: 200, height: 25,
+                source: [ 
+				  { label: 'Scientific Name', value: 'scientific_name' },
+				  { label: 'Class', value: 'phylclass' },
+				  { label: 'Suborder', value: 'suborder' },
+                  { label: 'Family', value: 'family' },
+                  { label: 'Subfamily', value: 'subfamily' },
+                  { label: 'Genus', value: 'genus' },
+                  { label: 'Species', value: 'species' },
+				  {	label: 'Taxon Name ID', value: 'taxon_name_id' },
+				  { label: 'Valid for Catalog?', value: 'valid_catalog_term_fg', width: 50},
+				  { label: 'Source Authority', value: 'souce_authority',width: 200},
+				  { label: 'Author Text', value: 'author_text', width: 200},
+				  { label: 'Tribe', value: 'tribe', width: 150},
+				  { label: 'Infraspecific Rank', value: 'infraspecific_rank', width: 150},
+				  { label: 'Taxon Remarks', value: 'taxon_remarks', width: 150},
+				  { label: 'Phylum', value: 'phylum', width: 150},
+				  { label: 'Kingdom', value: 'kingdom', width: 150},
+				  { label: 'Nomenclatural Code', value: 'nomenclatural_code', width: 150}
+                ]
+            });
+
+            var updateFilterBox = function (datafield) {
+		        var filterBoxAdapter = new $.jqx.dataAdapter(source,
+                {
+                    uniqueDataFields: [datafield],
+                    autoBind: true					
+                });
+				var uniqueRecords = filterBoxAdapter.records;
+				uniqueRecords.splice(0, 0, '(Select All)');
+                $("##filterbox").jqxListBox({ source: uniqueRecords, displayMember: datafield });
+               // $("##filterbox").jqxListBox('checkAll');
+			
+
+            }
+
+            updateFilterBox('phylclass');
+            var handleCheckChange = true;
+            $("##filterbox").on('checkChange', function (event) {
+                if (!handleCheckChange)
+                    return;
+                if (event.args.label != '(Select All)') {
+                    handleCheckChange = false;
+                    $("##filterbox").jqxListBox('checkIndex', 0);
+                    var checkedItems = $("##filterbox").jqxListBox('getCheckedItems');
+                    var items = $("##filterbox").jqxListBox('getItems');
+
+                    if (checkedItems.length == 1) {
+                        $("##filterbox").jqxListBox('uncheckIndex', 0);
+                    }
+                    else if (items.length != checkedItems.length) {
+                        $("##filterbox").jqxListBox('indeterminateIndex', 0);
+                    }
+                    handleCheckChange = true;
+                }
+                else {
+                    handleCheckChange = false;
+                    if (event.args.checked) {
+                        $("##filterbox").jqxListBox('checkAll');
+                    }
+                    else {
+                        $("##filterbox").jqxListBox('uncheckAll');
+                    }
+
+                    handleCheckChange = true;
+                }
+            });
+	         // handle columns selection.
+            $("##columnchooser").on('select', function (event) {
+                updateFilterBox(event.args.item.value);
+            });
+	 
+	 // builds and applies the filter.
+            var applyFilter = function (datafield) {
+                $("##jqxgrid").jqxGrid('clearfilters');
+                var filtertype = 'stringfilter';
+				if (datafield == 'collection_object_id') filtertype = 'numericfilter';
+                var filtergroup = new $.jqx.filter();
+                var checkedItems = $("##filterbox").jqxListBox('getCheckedItems');
+                if (checkedItems.length == 0) {
+                    var filter_or_operator = 1;
+                    var filtervalue = "Empty";
+                    var filtercondition = 'equal';
+                    var filter = filtergroup.createfilter(filtertype, filtervalue, filtercondition);
+                    filtergroup.addfilter(filter_or_operator, filter);
+                }
+                else {
+                    for (var i = 0; i < checkedItems.length; i++) {
+                        var filter_or_operator = 1;
+                        var filtervalue = checkedItems[i].label;
+                        var filtercondition = 'equal';
+                        var filter = filtergroup.createfilter(filtertype, filtervalue, filtercondition);
+                        filtergroup.addfilter(filter_or_operator, filter);
+                    }
+                }
+                $("##jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
+			
+                $("##jqxgrid").jqxGrid('applyfilters');
+            }
+            $("##clearfilter").click(function (datafield) { 
+				//we added datafield to pass to the function
+                $("##jqxgrid").jqxGrid('clearfilters');
+				$("##filterbox").jqxListBox('uncheckAll');  
+				//we added this line to the code
+            });
+            $("##applyfilter").click(function () { 
+                var dataField = $("##columnchooser").jqxDropDownList('getSelectedItem').value;
+                applyFilter(dataField);
+            });
+
+             var listSource = [	   
+				  { label: 'Taxon Name ID', value: 'taxon_name_id' },
+				  { label: 'Scientific Name', value: 'scientific_name'},
+				  { label: 'Phylclass', value: 'phylclass' },
+                  { label: 'Suborder', value: 'suborder' },
+                  { label: 'Family', value: 'family' },
+                  { label: 'Subfamily', value: 'subfamily' },
+                  { label: 'Genus', value: 'genus' },
+				  { label: 'Species',value: 'species'},
+				  { label: 'Valid for Catalog?', value: 'valid_catalog_term_fg'},
+				  { label: 'Source Authority', value: 'souce_authority'},
+				  { label: 'Author Text', value: 'author_text'},
+				  { label: 'Tribe', value: 'tribe'},
+				  { label: 'Infraspecific Rank', value: 'infraspecific_rank'},
+				  { label: 'Taxon Remarks', value: 'taxon_remarks'},
+				  { label: 'Phylum', value: 'phylum'},
+				  { label: 'Kingdom', value: 'kingdom'},
+				  { label: 'Nomenclatural Code', value: 'nomenclatural_code'}
+             ];
+
+            $("##jqxlistbox2").jqxListBox({ source: listSource, width: 200, height: 200, theme: theme, checkboxes: true });
+	        $("##jqxlistbox2").jqxListBox('checkAll');
+            $("##jqxlistbox2").on('checkChange', function (event) {
+                $("##jqxgrid").jqxGrid('beginupdate');
+                if (event.args.checked) {
+                    $("##jqxgrid").jqxGrid('showcolumn', event.args.value);
+                }
+                else {
+                    $("##jqxgrid").jqxGrid('hidecolumn', event.args.value);
+                }
+                $("##jqxgrid").jqxGrid('endupdate');
+            });
+ });
+		  });
+</script> 
+</cfoutput>
+<cfinclude template="/redesign/includes/_footer.cfm">
