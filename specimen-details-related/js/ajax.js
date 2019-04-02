@@ -14,7 +14,7 @@
                     { name: 'collectors', type: 'string' },
 					{ name: 'verbatim_date', type: 'string' },
 					{ name: 'coll_obj_disposition', type: 'string' },
-					{ name: 'originalcatalognumbers', type: 'string' }
+					{ name: 'othercatalognumbers', type: 'string' }
                 ],			
 				root: 'specimenRecord',
 				id: 'collection_object_id',
@@ -44,12 +44,12 @@
 				
                 autoshowfiltericon: false,
                 columns: [
-				  { text: 'Collection Object ID', datafield: 'collection_object_id', width: 142, 
+				  { text: '+', datafield: 'collection_object_id', width: 10, 
 				   createwidget: function (row, column, value, htmlElement) {
                    var datarecord = value;
                    var linkurl = 'specimen-detail.cfm?collection_object_id=' + value;
                    var link = '<div style="text-align:center;margin-top:8px;"><a href="' + linkurl + '">';
-                   var button = $(link + "<span>" + value + "</span></a></div>");
+                   var button = $(link + "<span><i class='fa fa-plus-circle'></span></a></div>");
                    $(htmlElement).append(button);
                       },
 				   initwidget: function (row, column, value, htmlElement) {  }},
@@ -58,10 +58,10 @@
                   { text: 'Scientific Name', datafield: 'scientific_name', width: 250  },
                   { text: 'Locality', datafield: 'spec_locality', width: 250 },
                   { text: 'Higher Geography', datafield: 'higher_geog', width: 280 },
-                  { text: 'Collectors', datafield: 'collectors', width: 160 },
-				  { text: 'Verbatim Date', datafield: 'verbatim_date', width: 220  },
-				  { text: 'Disposition', datafield: 'coll_obj_disposition', width: 100  },
-				  { text: 'Other IDs', datafield: 'originalcatalognumbers', width: 140  }
+                  { text: 'Collectors', datafield: 'collectors', width: 180 },
+				  { text: 'Verbatim Date', datafield: 'verbatim_date', width: 190  },
+				  { text: 'Disposition', datafield: 'coll_obj_disposition', width: 120  },
+				  { text: 'Other IDs', datafield: 'othercatalognumbers', width: 280  }
                 ]
 
             });
@@ -83,7 +83,7 @@
                   { label: 'Higher Geography', value: 'higher_geog' },
 				  { label: 'Verbatim Date',value: 'verbatim_date'  },
 				  { label: 'Disposition', value: 'coll_obj_disposition' },
-				  { label: 'Other IDs', value: 'originalcatalognumbers'  }
+				  { label: 'Other IDs', value: 'othercatalognumbers'  }
                  
                 ]
             });
@@ -177,7 +177,8 @@
             });
 
 	 
-   var listSource = [{ label: 'Collectors', value: 'collectors' },
+   var listSource = [
+	   			  { label: 'Collectors', value: 'collectors' },
 				  { label: 'Collection Object ID', value: 'collection_object_id' },
 				  { label: 'Collection', value: 'collection' },
                   { label: 'Cat Num', value: 'cat_num' },
@@ -186,8 +187,8 @@
                   { label: 'Higher Geography', value: 'higher_geog' },
 				  { label: 'Verbatim Date',value: 'verbatim_date'  },
 				  { label: 'Disposition', value: 'coll_obj_disposition' },
-				  { label: 'Other IDs', value: 'originalcatalognumbers'    
-   }];
+				  { label: 'Other IDs', value: 'originalcatalognumbers'}    
+   				];
 
             $("#jqxlistbox2").jqxListBox({ source: listSource, width: 200, height: 200, theme: theme, checkboxes: true });
 	            $("#jqxlistbox2").jqxListBox('checkAll');
