@@ -34,6 +34,9 @@
         </div>
     </nav>
     <nav class="cbp-spmenu cbp-spmenu-vertical-left cbp-spmenu-left zindex-sticky" id="cbp-spmenu-s3">
+        <section> 
+             <a id="showLeftPush" class="btn" role="button" style="border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); background-color: rgb(15, 13, 14); box-shadow: rgb(204, 204, 204) 0px 0px 5px; border-width: 4px 0 4px 4px;">Columns</a> 
+        </section>
         <h5>Display Columns</h5>
         <div class="col-md-3 jumbotron mb-3 pl-1 mt-0">
             <ul class="checks">
@@ -52,158 +55,154 @@
     <cfquery name="getCount" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 	select count(collection_object_id) as cnt from cataloged_item
     </cfquery>
-    <div class="container">
+		<cfquery name="collSearch" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+		SELECT
+			collection.institution,
+			collection.collection,
+			collection.collection_id,
+			collection.guid_prefix
+		FROM
+			collection
+		order by collection.collection
+	</cfquery>
+
+<div class="container">
     <br/>
     <div class="row justify-content-center">
-    <div class="col-12 col-md-9 col-lg-9">
+    <div class="col-12 col-md-10 col-lg-10 col-sm-12 col-xs-12">
     <div class="jumbotron">
     <form id="searchForm" class="card card-sm border-0">
-    <h2 class="mt-2 mb-1 mx-5 text-center">Search Specimen Records <span class="rec_count mx-1">(access to #getCount.cnt# records)</span></h2>
+    <h2 class="mb-2 mt-4 mx-5 text-center">Search Specimen Records <span class="rec_count mx-1">(access to #getCount.cnt# records)</span></h2>
     <div class="card-body row no-gutters align-items-center py-1">
-        <div class="col-auto">  
-		<div class="dropdown">
-		  <button class="btn1 btn dropdown-toggle btn-lrg py-090" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Collections</button>
-			     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				     <li><a tabindex="-1" href="##">Cryogenic</a>
-					 <li><a tabindex="-1" href="##">Entomology</a>
-					 <li><a tabindex="-1" href="##">Herpetology</a>
-					 <li><a tabindex="-1" href="##">Ichthyology</a>
-					 <li><a tabindex="-1" href="##">Invertebrate Paleontology</a>
-					 <li><a tabindex="-1" href="##">Invertebrate Zoology</a>
-					 <li><a tabindex="-1" href="##">Malacology</a>
-					 <li><a tabindex="-1" href="##">Mammalogy</a>
-					 <li><a tabindex="-1" href="##">Ornithology</a>
-					 <li><a tabindex="-1" href="##">Vertebrate Paleontology</a>
-			      </ul>
-			  <!----- To-Do:  add collections from dropdown above to query on records_search.cfc  ---->
-			
-			</div>		
-        </div>
+<style>
+	button.ui-multiselect {background-color: ##BAC5C6;padding: .89em; width: 100px;font-weight: 600;}
+	button.ui-multiselect.ui-state-active {color: ##535353;font-weight: 600;}
+	button span.ui-icon {margin-top:0;color:black;width: 10px;}
+	.ui-multiselect-header span.ui-icon {top: 4px;}
+	select span.ui-icon {margin-top:10px;}
+	.ui-multiselect-checkboxes label input {float:left; top:1px; position: relative;}
+	.ui-icon-triangle-2-n-s {font-size: 20px;color: black;}
+</style>
+<div class="col-sm-6 col-xs-6 col-lg-5 d-flex mx-0 my-1">
+<select id="coll-multi-select" multiple="multiple">
+	<cfloop query="collSearch">
+			<option value="#collSearch.guid_prefix#" style="font-size: 14px;"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
+	</cfloop>
+</select>
+</div>
 <script>
-$(function(){
-  $(".dropdown-menu li a").click(function(){
-    $(".btn1:first-child").text($(this).text());
-    $(".btn1:first-child").val($(this).text());
-  });
+$("##coll-multi-select").multiselect({
+	minWidth: "150",
+	height: "300"
 });
 </script>
-        <div class="col">
-            <input id="searchText" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search keywords">
+        <div class="col-sm-8 col-xs-8 col-lg-5 my-1">
+            <input id="searchText" class="form-control form-control-lg form-control-borderless col-sm-12" type="search" >
         </div>
-        <div class="col-auto">
-            <button class="btn btn-lg" style="background: ##BAC5C6;margin-left: 5px;" type="submit"> <i class="fa fa-search text-body"></i></button>
+        <div class="col-auto my-1">
+            <button class="btn btn-lg" style="background: ##BAC5C6;" type="submit"> <i class="fa fa-search text-body"></i></button>
         </div>
     </div>
-     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" style="font-size: 1.2em;margin:0 1.25em .25em 1.25em;padding: none;"> advanced search <i class="fa fa-expand"></i> </button>
-		</div>
-		</div>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" style="font-size: 16px;"> advanced search <i class="fa fa-expand"></i></button>
+	</div>
+</div>
 <div class="col-sm-12 col-md-7 col-lg-7 mb-4">
-    <div class="collapse navbar-collapse" id="collapseSearch">
+<div class="collapse navbar-collapse" id="collapseSearch">
 <script>
-function deleteRow(row) {
-  var i = row.parentNode.parentNode.rowIndex;
-  document.getElementById('POITable').deleteRow(i);
-
+function deleteRow(evt) {
+    var i = evt.target.parentNode.parentNode.rowIndex;
+    document.getElementById('POITable').deleteRow(i);
 }
-
 function insRow() {
-  var x = document.getElementById('POITable');
-  var new_row = x.rows[1].cloneNode(true);
-  var len = x.rows.length;
-  new_row.cells[0].innerHTML = len;
-  var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
-  inp1.id += len;
-  inp1.value = '';
-  var inp2 = new_row.cells[2].getElementsByTagName('select')[0];
-  inp2.id += len;
-  inp2.value = '';
-  var inp3 = new_row.cells[3].getElementsByTagName('select')[0];
-  inp3.id += len;
-  inp3.value = '';
-  var inp4 = new_row.cells[4].getElementsByTagName('select')[0];
-  inp4.id += len;
-  inp4.value = '';
-  x.appendChild(new_row);
+    var x = document.getElementById('POITable');
+    var new_row = x.rows[1].cloneNode(true);
+    var len = x.rows.length;
 
-///  If rows = 0, add one row when advanced search is clicked ///
-/// make the icons (plus, trash) show on the iphone ///
+    new_row.cells[0].innerHTML = len;
+
+    var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
+    inp1.id += len;
+    inp1.value = '';
+
+    var inp2 = new_row.cells[2].getElementsByTagName('select')[0];
+    inp2.id += len;
+    inp2.value = '';
+	
+	var inp3 = new_row.cells[3].getElementsByTagName('select')[0];
+    inp3.id += len;
+    inp3.value = '';
+	
+	var inp4 = new_row.cells[4].getElementsByTagName('input')[0];
+    inp4.id += len;
+    inp4.value = '';
+
+    var button = new_row.cells[5].getElementsByTagName('input')[0];
+    button.value = "DELETE";
+    button.onclick = function(it) {deleteRow(it)};
+
+    x.appendChild( new_row );    
 }
 </script>
- <form id="searchForm" class="card card-sm border-0">
-    <div class="card-body row no-gutters align-items-center py-1 ml-0">
-        <div id="POItablediv" class="table-responsive">
-            <table id="POITable" class="table mx-0 my-0 border-0">
-                 <tr class="border-0 my-0 mx-0 d-none">
-                    <td class="d-none">##</td>
-                    <td>And / Or/ Not</td>
-                    <td>Keyword</td>
-                    <td>Contains / Is</td>
-                    <td>Key Value</td>
-                    <td>Delete</td>
-                    <td>Add</td>
-                </tr>
-                <tbody>
-                <tr class="border-0 px-0 py-0" style="background-color: white;">
-                    <td class="d-none">1</td>
-                    <td class="px-0 py-0 border-0"><select id="name1" title="operator" class="custom-select mx-md-0 mt-0 py-0 rounded-0" style="min-width: 4em;text-align: center;margin-right: 1em;">
+<form id="searchForm" class="border-0" style="margin: 0 auto">
+    <div id="POItablediv" class="align-content-center">         
+    <table class="table" id="POITable" border="1">
+        <tr class="first_row">
+            <td style="display: none;">##</td>
+            <td>and/or/not</td>
+            <td>&nbsp;&nbsp;keyword</td>
+            <td>contains/is</td>
+			<td>&nbsp;&nbsp;value</td>
+			<td>&nbsp;&nbsp;delete?</td>
+        </tr>
+        <tr style="margin: 0 auto;">
+             <td style="display: none;">1</td>
+             <td class="px-0 py-0 border-0" style="width: 6em;">
+                           <select title="operator" class="custom-select mx-md-0 search-fields" style="min-width: 6em;text-align: center;margin-right: 1em;">
                             <option>and</option>
                             <option>or</option>
                             <option>not</option>
                         </select></td>
-                    <td class="px-0 py-0 border-0"><select id="name2" title="keyword" class="custom-select mx-md-0 mt-0 py-0 rounded-0" style="min-width: 8.5em;text-align: center;">
-                            <option>Keyword</option>
-                            <option>Collection</option>
+             <td class="px-0 py-0 border-0" style="width:9em;"><select title="keyword" class="custom-select mx-md-0 search-fields" style="min-width: 9em;">
                             <option>Taxonomy</option>
                             <option>Places</option>
                             <option>Media</option>
-                            <option>Publication</option>
+                            <option>Publications</option>
                             <option>Projects</option>
                             <option>Specimens</option>
                             <option>Dates</option>
                             <option>Parts</option>
                         </select></td>
-                    <td class="px-0 py-0 border-0"><select id="name3" title="operator" class="custom-select mx-md-0 mt-0 py-0 rounded-0" style="min-width: 7.5em;text-align:center;">
+             <td class="px-0 py-0 border-0"><select title="operator" class="custom-select mx-md-0 search-fields" style="min-width: 7.5em;text-align:center;">
                             <option>contains</option>
                             <option>is</option>
                         </select></td>
-                    <td class="advance px-0 py-0 border-0"><select id="name3" title="key value" class="custom-select mx-md-0 mt-0 rounded-0" style="min-width: 12.5em;text-align:center;">
-                            <option>Value</option>
-                            <option>Cryogenic</option>
-                            <option>Herpetology</option>
-                            <option>Malacology</option>
-                            <option>Ichthyology</option>
-                            <option>Invertebrate Zoology</option>
-                            <option>Invertebrate Paleontology</option>
-                            <option>Mammology</option>
-                            <option>Vertebrate Paleontology</option>
-                            <option>Ornithology</option>
-                            <option>Entomology</option>
-                        </select></td>
-                    <td class="advancebut px-0 py-0 mx-0 my-0 border-0"><input type="button" id="delPOIbutton" class="fas fa-trash-alt trash mt-1 rounded py-1" value=" " onclick="deleteRow(this)" style="font-size: 1.5em;width: 1.35em; height: 1.35em;"/></td>
-                    
-                    <td class="advancebut px-0 py-0 mx-0 my-0 border-0"><input type="button" id="addmorePOIbutton" onclick="insRow()" class="fas fa-plus mt-1 py-1 rounded" value="" style="font-size: 1.5em;width: 1.35em;height: 1.35em;"/></td>
-                </tr>
-				</tbody>
-            </table>
-        </div>
+             <td class="px-0 py-0 border-0 d-xs-flex"><input type="text" id="key_value" class="m-0 mt-1 d-xs-flex d-sm-flex"/></td>
+         <td class="px-2 py-0 border-0"><input type="button" id="delPOIbutton" class="mx-0 mt-1 p-1" value="ADD ROW" style="font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif'"onclick="insRow()"/></td>
+       <td class="px-0 py-0 m-0 border-0"><input type="button" id="searchButton" style="font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif'" class="mx-0 mt-1 p-1" value="SEARCH" onclick="search()"/></td>
+        </tr>
+    </table>
+	</div>
+</form>
+	</div>
+	</div>
+	   </div>
+	<div class="col-2"><div class="row"> </div></div>
+
+	</div>
     </div>
-		</form>
-    </div>
-    </div>
-    </div>
-    </div>
-    <div class="container-fluid">
+	</div>
+	</div>   
+<!--Grid Related code below along with search handler for keyword search-->
+<div class="container-fluid">
         <div class="row">
             <div class="text-left col-md-12">
                 <main role="main">
                 <div class="px-4 w-100 mb-5">
-                    <h3 style="float: left;width:170px;">All Records</h3>
-                    <!---               <button id="showLeftPush" class="active hide_button"  style="padding: 3px 5px 5px 5px;border:none;margin-bottom: -1em;margin-top: 1.25em;width: 138px;float: left;margin-left:1.8em;font-size: 14px;background-color: ##cfdfb6">Display Columns</button>--->
+                    <h3 style="float: left;width:220px;">All Records</h3>
                     <ul>
-                        <li id="showLeftPush" class="active searchfield"> <i class="fas fa-columns"></i> </li>
-                        &nbsp;
-                        <li class="searchfield"> <a href="##" style="color: ##1e1e1e;"> <i class="fas fa-download" ></i> </a> </li>
-                       <!--- <li class="searchfield"> <a href="##" id="add-taxonomy" class="detail-edit-cell" onClick="$('##dialog-form').dialog('open');" style="color: ##1e1e1e;"> <i class="fas fa-plus-circle" style="font-size: 1em;" ></i> </a> </li>--->
+                        <li class="searchfield"> 
+                             <a href="##" style="color: ##1e1e1e;"> <i class="fas fa-download" ></i> </a> 
+                        </li>
                     </ul>
                     <div class="row" style="clear:both;">
                         <div id="jqxgrid" class="jqxGrid"> </div>
@@ -212,10 +211,7 @@ function insRow() {
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-///  below searches with keyword to return results which are then filtered
-/// see ajax.js to see code that fills table with initial page load results
+<script>
 		  $(document).ready(function() {
                 $('##searchForm').bind('submit', function(evt){
 				console.log($('##searchText').val());
@@ -236,12 +232,12 @@ function insRow() {
 						{ name: 'collectors', type: 'string' },
 						{ name: 'verbatim_date', type: 'string' },
 						{ name: 'coll_obj_disposition', type: 'string' },
-						{ name: 'originalcatalognumbers', type: 'string' }
+						{ name: 'othercatalognumbers', type: 'string' }
 					],
 					root: 'specimenRecord',
 					id: 'collection_object_id',
 
-					url: '/redesign/component/records_search.cfc?method=getDataTable&searchText='+ searchParam,
+					url: '/redesign/specimen-details-related/component/records_search.cfc?method=getDataTable&searchText='+ searchParam,
 					async: false
 				}
 				var dataAdapter = new $.jqx.dataAdapter(search, {
@@ -268,7 +264,7 @@ function insRow() {
                   { label: 'Higher Geography', value: 'higher_geog' },
 				  { label: 'Verbatim Date',value: 'verbatim_date'  },
 				  { label: 'Disposition', value: 'coll_obj_disposition' },
-				  { label: 'Other IDs', value: 'originalcatalognumbers'  }
+				  { label: 'Other IDs', value: 'othercatalognumbers'  }
                 ]
             });
             var updateFilterBox = function (datafield) {
