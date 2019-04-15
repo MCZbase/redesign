@@ -1,174 +1,137 @@
- <footer class="footer" style="margin-left:0;bottom:0 !important">
-                <div class="fixed-bottom bg-inverse">
-                    <cfif cgi.HTTP_HOST contains "harvard.edu" >
-                        <div class="helplinks" ><a HREF="mailto:bhaley@oeb.harvard.edu">System Administrator</a> <a href="/info/bugs.cfm">Feedback&#8202;/&#8202;Report Errors</a> <a href="/Collections/index.cfm">Data Providers</a> </div>
-                       <div class="logos" style="padding-top: 0;">
-                           <div align="center" style="padding:.75em 0 0 0;background-color:#BAC5C6"><img src="includes/images/harvard_logo_footer.png" class="harvard_logo"/></div>
-                        <div class="copyright">
-                       <!-- <p class="copyright_c" style="margin-bottom:.25em;font-size: 14px;padding: 0 2em;color: #1e1e1e;">Database content: &copy; Copyright 2017
-                            President and Fellows of Harvard College</p>-->
-                        <a href="http://www.mcz.harvard.edu/privacy/index.html" style="display: inline;">Privacy Statement</a> <span>|</span> <a href="http://www.mcz.harvard.edu/privacy/user_agreement.html">User Agreement</a> </div>
-                             <a href="http://www.gbif.org/"><img src="/images/gbiflogo.png" alt="GBIF" class="gbif_logo"></a> <a href="http://www.idigbio.org/"><img src="/images/idigbio.png" alt="herpnet"></a> <a href="http://eol.org"><img src="/images/eol.png" alt="eol" class="eol_logo"></a>
-                             <a href="http://vertnet.org"><img src="/images/vertnet_logo_small.png" alt="Vertnet"></a>
-                             <a href="https://arctosdb.org/"><img src="/images/arctos-logo.png" class="arctos_logo" ALT="[ Link to home page. ]"></a>
-                            <p class="tagline">Delivering Data to the Natural Sciences Community &amp; Beyond</p>
-                        </div>
-                    </cfif>
-                  </div>
-            </footer>
+ <footer class="footer">
+    <div class="fixed-bottom bg-inverse">
+    <cfif cgi.HTTP_HOST contains "harvard.edu" >
+       <div class="container">
+       <div class="row helplinks">
+        <div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
+        <a HREF="mailto:bhaley@oeb.harvard.edu">System Administrator</a>
+		</div>
+       <div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
+        <a href="/info/bugs.cfm">Feedback&#8202;/&#8202;Report Errors</a>
+		</div>
+        <div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
+        <a href="/Collections/index.cfm">Data Providers</a> 
+        </div>
+		   </div>
+		</div>
+        <div class="row copyright_background">
+            <div class="footer-col-4-md" align="center" style="width: 393px;"> <img alt="Harvard Museum of Comparative Zoology Logo" title="Harvard Museum of Comparative Zoology Logo" class="media-element file-default file-os-files-medium" src="/redesign/includes/images/harvard_museum.png">
+                <p class="agreements" style="font-size: smaller;"><a href="/redesign/affiliates.cfm" style="color:#215990">Affiliates |</a> <a href="https://mcz.harvard.edu/privacy-policy" style="color:#215990">Privacy |</a> <a href="https://mcz.harvard.edu/user-agreement" style="color:#215990">User Agreement</a> </p>
+            </div>
+        </div>
+        </div>
+        <div class="branding-container">
+            <div class="copyright-bottom" style="text-align: center;"> Copyright © 2019 The President and Fellows of Harvard College.&nbsp; <a href="http://accessibility.harvard.edu/" style="color: white">Accessibility</a> | <a href="http://www.harvard.edu/reporting-copyright-infringements" style="color: white;">Report Copyright Infringement</a> </div>
+        </div>
+    </cfif>
+    </div>
+    
+ 
+<script>
 
-
-<script src="/redesign/includes/js/jquery.min.js"></script>
-<!--<script src="/redesign/includes/js/jquery-3.3.1.js"></script>
-<script src="/redesign/includes/js/jquery-1.12.4.js"></script>-->
-<script src="/redesign/includes/js/jquery-ui-1.12.1.js"></script>
-<!--  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
-<!--  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
-<!--<script type="text/javascript" language="javascript" src="/redesign/includes/js/bootstrap.min.js"></script>-->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" language="javascript" src="/redesign/includes/js/accordion.js"></script>
-<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-<script type="text/javascript" language="javascript" src="/redesign/includes/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" language="javascript" src="/redesign/includes/js/dataTables.jqueryui.min.js"></script>
-<script type="text/javascript" language="javascript" src="/redesign/includes/js/dataTables.searchPane.js"></script>
-<script type="text/javascript" language="javascript" src="/redesign/includes/js/query-builder.standalone.min.js"></script>
-
-<script type="text/javascript" charset="utf-8">
-
+var	menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+	showRightPush = document.getElementById( 'showRightPush' ),
+	menuLeft = document.getElementById( 'cbp-spmenu-s3' ),
+	showLeftPush = document.getElementById( 'showLeftPush' ),
+	body = document.body;
 	
-// needed for results pages
-if ( $.fn.dataTable.isDataTable( '#example' ) ) {
-    table = $('#example').DataTable({
-	    searchPane: {
-            container: '.searchPanes'
-					}})
+
+    showRightPush.onclick = function() {
+	classie.toggle( this, 'active' );
+	classie.toggle( body, 'cbp-spmenu-push-toleft' );
+	classie.toggle( menuRight, 'cbp-spmenu-open' );
+	disableOther( 'showRightPush' );
+    };
+		
+	showLeftPush.onclick = function() {
+		classie.toggle( this, 'active' );
+			classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+		disableOther( 'showLeftPush' );
+	};
+	
+	function disableOther( button ) {
+	if( button !== 'showLeftPush' ) {
+		classie.toggle( showLeftPush, 'disabled' );
+	}
+	if( button !== 'showRightPush' ) {
+		classie.toggle( showRightPush, 'disabled' );
+	}
+}
+	
+	////////////////////
+
+/*!
+ * classie - class helper functions
+ * from bonzo https://github.com/ded/bonzo
+ * 
+ * classie.has( elem, 'my-class' ) -> true/false
+ * classie.add( elem, 'my-new-class' )
+ * classie.remove( elem, 'my-unwanted-class' )
+ * classie.toggle( elem, 'my-class' )
+ */
+
+/*jshint browser: true, strict: true, undef: true */
+
+( function( window ) {
+
+'use strict';
+
+// class helper functions from bonzo https://github.com/ded/bonzo
+
+function classReg( className ) {
+  return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+}
+
+// classList support for class management
+// altho to be fair, the api sucks because it won't accept multiple classes at once
+var hasClass, addClass, removeClass;
+
+if ( 'classList' in document.documentElement ) {
+  hasClass = function( elem, c ) {
+    return elem.classList.contains( c );
+  };
+  addClass = function( elem, c ) {
+    elem.classList.add( c );
+  };
+  removeClass = function( elem, c ) {
+    elem.classList.remove( c );
+  };
 }
 else {
-    table = $('#example').DataTable( {
-        paging: true,
-		searchPane: {
-            container: '.searchPanes'
-					}
-    } );
-}
-// needed for results pages
-$(document).ready(function() {
-	$(".filter-button").click(function() {
-		var value = $(this).attr('data-filter');
-		if(value == "all") {
-			$('.filter').show('1000');
-		} else {        
-			 $(".filter").not('.'+value).hide('3000');
-			 $('.filter').filter('.'+value).show('3000');
-		}
-	});
-
-	if ($(".filter-button").removeClass("active")) {
-		$(this).removeClass("active");
-	}
-	$(this).addClass("active");
-});
-// needed for all pages -- account and login button
-$(document).ready(function() {
-    $('#login-form-link').click(function(e) {
-		$("#login-form").delay(100).fadeIn(100);
- 		$("#register-form").fadeOut(100);
-		$('#register-form-link').removeClass('active');
-		$(this).addClass('active');
-		e.preventDefault();
-	});
-	$('#register-form-link').click(function(e) {
-		$("#register-form").delay(100).fadeIn(100);
- 		$("#login-form").fadeOut(100);
-		$('#login-form-link').removeClass('active');
-		$(this).addClass('active');
-		e.preventDefault();
-	});
-
-});
-	
-// needed for home page searh tabs
-$(document).ready(function() {
-    $('.nav-tabs').on('shown.bs.pills', 'a', function(e) {
-        console.log(e.relatedTarget);
-        if (e.relatedTarget) {
-            $(e.relatedTarget).removeClass('active');
-        }
-    });    
-});
-
-$('#accordionGroup').scrollspy({ target: 'dd.Accordion-panel' })
-</script>
-
-            <script>
-document.addEventListener("DOMContentLoaded", function() {
-			
-	var $filterCheckboxes = $('input[type="checkbox"]');
-
-$filterCheckboxes.on('change', function() {
-
-  var selectedFilters = {};
-
-  $filterCheckboxes.filter(':checked').each(function() {
-
-    if (!selectedFilters.hasOwnProperty(this.name)) {
-      selectedFilters[this.name] = [];
+  hasClass = function( elem, c ) {
+    return classReg( c ).test( elem.className );
+  };
+  addClass = function( elem, c ) {
+    if ( !hasClass( elem, c ) ) {
+      elem.className = elem.className + ' ' + c;
     }
+  };
+  removeClass = function( elem, c ) {
+    elem.className = elem.className.replace( classReg( c ), ' ' );
+  };
+}
 
-    selectedFilters[this.name].push(this.value);
+function toggleClass( elem, c ) {
+  var fn = hasClass( elem, c ) ? removeClass : addClass;
+  fn( elem, c );
+}
 
-  });
+window.classie = {
+  // full names
+  hasClass: hasClass,
+  addClass: addClass,
+  removeClass: removeClass,
+  toggleClass: toggleClass,
+  // short names
+  has: hasClass,
+  add: addClass,
+  remove: removeClass,
+  toggle: toggleClass
+};
 
-  // create a collection containing all of the filterable elements
-  var $filteredResults = $('.flower');
-
-  // loop over the selected filter name -> (array) values pairs
-  $.each(selectedFilters, function(name, filterValues) {
-
-    // filter each .flower element
-    $filteredResults = $filteredResults.filter(function() {
-
-      var matched = false,
-        currentFilterValues = $(this).data('category').split(' ');
-
-      // loop over each category value in the current .flower's data-category
-      $.each(currentFilterValues, function(_, currentFilterValue) {
-
-        // if the current category exists in the selected filters array
-        // set matched to true, and stop looping. as we're ORing in each
-        // set of filters, we only need to match once
-
-        if ($.inArray(currentFilterValue, filterValues) != -1) {
-          matched = true;
-          return false;
-        }
-      });
-
-      // if matched is true the current .flower element is returned
-      return matched;
-
-    });
-  });
-
-  $('.flower').hide().filter($filteredResults).show();
-
-});
-
-		});
-		
-		function removeA(arr) {
-			var what, a = arguments, L = a.length, ax;
-			while (L > 1 && arr.length) {
-				what = a[--L];
-				while ((ax= arr.indexOf(what)) !== -1) {
-					arr.splice(ax, 1);
-				}
-			}
-			return arr;
-		}
-						   
-					   
-				</script>
-
-</body>
-</html>
+})( window );
+	</script>
+	<!--- <script src="/redesign/includes/bootstrap/js/bootstrap.min.js"></script> --->
+</footer>
+</body></html>

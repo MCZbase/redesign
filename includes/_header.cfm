@@ -2,309 +2,191 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../images/favicon.ico">
-<title>Specimen Search</title>
-<link href="/redesign/includes/css/bootstrap-reboot.css" rel="stylesheet">
-<link href="/redesign/includes/css/bootstrap-grid.css" rel="stylesheet">
-<link href="/redesign/includes/css/bootstrap.css" rel="stylesheet">
-<link href="/redesign/includes/css/custom.css" rel="stylesheet">
-<link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
-<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
-<link href="/redesign/includes/css/dataTables.jqueryui.min.css" rel="stylesheet">
-<link href="/redesign/includes/css/dataTables.searchPane.css" rel="stylesheet">
-<link rel="stylesheet" href="/redesign/includes/css/jquery-ui.css">
-
-<style>
-  #myScrollspy {
-      position: relative;
-  }
-  dd ul.nav-pills {
-      top: 10px;
-      position: absolute;
-  }
-  div.col-8 div {
-      height: 500px;
-  }
-	dd ul.nav-pills
-  </style>
-
+<cfoutput><title>#pageTitle#</title>
+</cfoutput>
+<link href="/redesign/includes/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/redesign/includes/css/bootstrap-multiselect.css" rel="stylesheet">
+<link href="/redesign/includes/images/fontawesome/fontawesome-free-5.5.0-web/css/all.css" rel="stylesheet">
+<link href="/redesign/includes/JQWidgets/jqwidgets/styles/jqx.base.css" rel="stylesheet">
+<link href="/redesign/includes/css/jquery-ui.css" rel="stylesheet">   <!-- needed for dialog box -->
+<script type="text/javascript" src="/redesign/includes/images/fontawesome/fontawesome-free-5.5.0-web/js/all.js"></script>
+<script type="text/javascript" src="/redesign/includes/js/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>  
+<link href="/redesign/includes/css/custom-styles.css" rel="stylesheet">
+<script type="text/javascript" src="/redesign/includes/js/jquery-1.7.1.min.js"></script> <!-- needed for dialog box -->
+<script type="text/javascript" src="/redesign/includes/js/popper.js"></script>
+<script type="text/javascript" src="/redesign/includes/js/jquery-3.3.1.js"></script>	 <!-- needed for dialog box -->
+<script type="text/javascript" src="/redesign/includes/js/jquery-ui-1.12.1.js"></script>  <!-- needed for dialog box -->
+<!---<script type="text/javascript" src="/redesign/includes/bootstrap/js/bootstrap.min.js"></script> --->
+<script type="text/javascript" src="/redesign/includes/js/bootstrap-multiselect.js"></script>
+  <link href="/redesign/includes/css/bootstrap-select.min.css" rel="stylesheet">
+<script src="/redesign/includes/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/redesign/includes/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>  
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxdata.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxlistbox.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxwindow.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxdatetimeinput.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxdate.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxslider.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.filter.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.edit.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.sort.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.selection.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.columnsresize.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxpanel.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.pager.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.grouping.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.aggregates.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxinput.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxcalendar.js"></script>
+<script type="text/javascript" src="/redesign/includes/JQWidgets/scripts/demos.js"></script>
+<cfif pageTitle eq 'search specimens'>
+<script type="text/javascript" type="text/javascript" src="/redesign/specimen-details-related/js/ajax.js"></script>
+<script type="text/javascript" type="text/javascript" src="/redesign/includes/js/shared-scripts.js"></script>
+<script type="text/javascript" type="text/javascript" src="/redesign/specimen-details-related/js/responsive_table.js"></script>
+<script type="text/javascript" src="/redesign/includes/js/jquery.multiselect.min.js"></script>
+<link rel="stylesheet" href="/redesign/includes/js/jquery-ui-1.12.1/jquery-ui.min.css" />
+<link rel="stylesheet" href="/redesign/includes/js/jquery.multiselect.css" />
+</cfif> 
+<cfif pageTitle eq 'search taxonomy'>
+<script type="text/javascript" type="text/javascript" src="/redesign/taxonomy-related/js/taxa-ajax.js"></script>
+</cfif> 
+<cfif pageTitle eq 'search media'>
+<script type="text/javascript" type="text/javascript" src="/redesign/media-related/js/media-ajax.js"></script>
+</cfif> 
 </head>
-
-<body>
-
- <nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
-     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-		  </button>
-      <div class="shield-container">
-       <div class="navbar-harvard navbar-toggler-left">
-		   <ul><li><img src="/redesign/includes/images/harvard_logo_sm.png" alt="harvard shield"/></li><li>Harvard University</li></ul>
-      </div>
-	 </div>
-      <div class="navbar-brand">
-      <a  href="#">
-      <img class="navbar-brandK" src="/redesign/includes/images/website_logo_with_text.png"/></a>
-	 </div>
-      <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav mr-auto" style="text-align: center;">
-          <li class="nav-item">
-            <a class="nav-link dropdown-toggle" href="/redesign/specimen-search.cfm" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Search</a>
-              <div class="dropdown-menu" style="top:94px;" aria-labelledby="dropdown01">
-                 <a class="dropdown-item" href="/redesign/specimen-search.cfm">Specimens</a>
-                  <a class="dropdown-item" href="/redesign/media-search.cfm">Media</a>
-                  <a class="dropdown-item" href="/redesign/locality-search.cfm">Places</a>
-                  <a class="dropdown-item" href="/redesign/project-search.cfm">Projects</a>
-                  <a class="dropdown-item" href="/redesign/publication-search.cfm">Publications</a>
-                  <a class="dropdown-item" href="/redesign/taxonomy-search.cfm">Taxonomy</a>
-            </div>
-          </li>
-              <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Data Entry</a>
-                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                      <a class="dropdown-item" href="/redesign/specimen-search.cfm">Enter Specimen Data</a>
-                      <a class="dropdown-item" href="/redesign/locality-search.cfm">Bulkloader</a>
-                      <a class="dropdown-item" href="/redesign/publication-search.cfm">Batch Tools</a>
-
-                  </div>
-          </li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Data</a>
-                  <div class="dropdown-menu" aria-labelledby="dropdown01">
-                      <a class="dropdown-item" href="/redesign/specimen-search.cfm">Location</a>
-                      <a class="dropdown-item" href="/redesign/media-search.cfm">Agents</a>
-                      <a class="dropdown-item" href="/redesign/locality-search.cfm">Object Tracking</a>
-                      <a class="dropdown-item" href="/redesign/publication-search.cfm">Media</a>
-                      <a class="dropdown-item" href="/redesign/project-search.cfm">Metadata</a>
-                      <a class="dropdown-item" href="/redesign/publication-search.cfm">Publications</a>
-                      <a class="dropdown-item" href="/redesign/publication-search.cfm">Tools</a>
-                      
-                      
-                  </div>
-          </li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Transactions</a>
-                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                      <a class="dropdown-item" href="/redesign/specimen-search.cfm">Accessions</a>
-                      <a class="dropdown-item" href="/redesign/locality-search.cfm">Borrows</a>
-                      <a class="dropdown-item" href="/redesign/publication-search.cfm">Deaccessions</a>
-                      <a class="dropdown-item" href="/redesign/media-search.cfm">Loans</a>
-                      <a class="dropdown-item" href="/redesign/project-search.cfm">Permits</a>
-                  </div>
-          </li>
-                   <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reports</a>
-                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                      <a class="dropdown-item" href="/redesign/media-search.cfm">Annual Reports</a>
-                      <a class="dropdown-item" href="/redesign/locality-search.cfm">Data Cleaning</a>
-                      <a class="dropdown-item" href="/redesign/specimen-search.cfm">Labels</a>
-                      <a class="dropdown-item" href="/redesign/project-search.cfm">Shared Data</a>
-                      <a class="dropdown-item" href="/redesign/publication-search.cfm">Statistics</a>
-                      
-                  </div>
-          </li>
-            <li class="nav-item active">
-            <a class="nav-link" href="#">Help</span></a>
-          </li>
+<body class="default cbp-spmenu-push" >
+<header>
+    <div class="branding-container clearfix">
+        <div class="branding-left justify-content-start"> <a href="http://www.harvard.edu/" > <img src="https://mcz.harvard.edu/profiles/openscholar/themes/hwpi_basetheme/images/harvard-logo.png" width="235" height="32" alt="University Logo" /></a> </div>
+        <div class="branding-right justify-content-end"> <a href="http://www.harvard.edu/" >HARVARD.EDU</a> </div>
+    </div>
+    <nav class="navbar justify-content-start navbar-expand-md navbar-expand-sm navbar-harvard pt-2 pb-1" style="background-color: ##a51c30;margin-block-end:0px;padding: .5rem .25rem .7rem .5rem">
+        <ul class="navbar col-lg-9 col-md-8 col-sm-9 pt-0 pb-0 mb-1">
+           <li class="nav-item mcz2"><a href="https://www.mcz.harvard.edu/" target="_blank">Museum of Comparative Zoology</a></li>
+           <li class="nav-item mczbase"><a href="/redesign/specimen-search.cfm" target="_blank">MCZbase: Database of Zoological Collections</a></li>
         </ul>
-      </div>
- </nav>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="top:105px;">
-  <button class="navbar-toggler navbar-toggler-right account_head" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <i class="fa .fa-lg fa-user"></i>
-	  </button>
-  <div class="collapse navbar-collapse positioning" id="navbarNavDropdown">
-   	<div class="col-lg-12"  style="height: auto;" id="user-account">
-   	<div class="container-fluid">
-    	<div class="row">
-    	<div class="col-md-2" style="background-color:palegoldenrod">
-				<div class="panel panel-login">
-					<div class="panel-heading">
-						<div class="row">
-						<div class="col-md-12" >
-							<a href="#" class="active" id="login-form-link">Login</a>
-							or
-							<a href="#" id="register-form-link">Register</a>
-						</div>
-					    </div>
-					 </div>
-				</div>
-				<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
-								<form id="login-form1" action="https://phpoll.com/login/process" method="post" role="form" style="display: block;">
-									<div class="form-group">
-										<input type="text" name="log-username" id="log-username" tabindex="1" class="form-control" placeholder="Username" value="">
-									</div>
-									<div class="form-group">
-										<input type="password" name="log-password" id="log-password" tabindex="2" class="form-control" placeholder="Password">
-									</div>
-									<div class="text-center">
-									<!--	<input type="checkbox" tabindex="3" class="" name="log-remember" id="log-remember">
-										<label for="remember"> Remember Me</label>-->
-									</div>
-									<div class="form-group">
-									<div class="text-center">
-												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary my-2" value="Log In"  style="width: 70%;">
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="text-center">
-													<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>
-								<form id="register-form3" action="https://phpoll.com/register/process" method="post" role="form" style="display: none;">
-									<div class="form-group">
-										<input type="text" name="reg-username1" id="reg-username1" tabindex="1" class="form-control" placeholder="Username" value="">
-									</div>
-									<div class="form-group">
-										<input type="email" name="reg-email1" id="reg-email1" tabindex="1" class="form-control" placeholder="Email Address" value="">
-									</div>
-									<div class="form-group">
-										<input type="password" name="reg-password1" id="reg-password1" tabindex="2" class="form-control" placeholder="Password">
-									</div>
-									<div class="form-group">
-										<input type="password" name="confirm-password1" id="reg-confirm-password1" tabindex="2" class="form-control" placeholder="Confirm Password">
-									</div>
-									<div class="form-group">
-									<div class="text-center">
-												<input type="submit" name="register-submit1" id="register-submit1" tabindex="4" class="form-control btn btn-register my-2" value="Log In"  style="width: 70%;">
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
+        <ul class="navbar col-lg-3 col-md-8 col-sm-3 pt-0 pb-0 mb-1" style="justify-content: flex-end"> 
+        <div class="mcz_logo">
+        <li class="nav-item" style="list-style: none;align-content: flex-end">
+            <a href="https://mcz.harvard.edu"><img class="mcz_logo_krono" src="includes/images/mcz_logo_white_left.png" width="160"></a>
+        </li>
 			</div>
-			<div class="col-md-3">
-				<div class="panel panel-login">
-					<div class="panel-heading">
-						<div class="row">
-						<div class="col-md-12" >
-							<p><strong>Site Profile</strong></p>
-						</div>
-					    </div>
-					 </div>
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
-								<form id="login-form2" action="https://phpoll.com/login/process" method="post" role="form" style="display: block;">
-									<div class="form-group">
-										<input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="First Name" value="">
-									</div>
-									<div class="form-group">
-										<input type="text" name="last_name" id="last_name" tabindex="2" class="form-control" placeholder="Last Name">
-									</div>
-									<div class="form-group">
-										<input type="text" name="affiliation" id="affiliation" tabindex="2" class="form-control" placeholder="Affiliation">
-									</div>
-									<div class="form-group">
-										<input type="email" name="email" id="email_address" tabindex="2" class="form-control" placeholder="Email">
-									</div>
-								</form>
-								<form id="register-form1" action="https://phpoll.com/register/process" method="post" role="form" style="display: none;">
-									<div class="form-group">
-										<input type="text" name="reg-username" id="reg-username" tabindex="1" class="form-control" placeholder="Username" value="">
-									</div>
-									<div class="form-group">
-										<input type="email" name="reg-email" id="reg-email" tabindex="1" class="form-control" placeholder="Email Address" value="">
-									</div>
-									<div class="form-group">
-										<input type="password" name="reg-password" id="reg-password" tabindex="2" class="form-control" placeholder="Password">
-									</div>
-									<div class="form-group">
-										<input type="password" name="reg-confirm-password" id="reg-confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
-									</div>
-									<div class="form-group">
-									<div class="text-center">
-												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register my-2" value="Register"  style="width: 70%;">
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			<div class="col-md-3">
-				<div class="panel panel-login">
-					<div class="panel-heading">
-						<div class="row">
-						<div class="col-md-12" >
-							<p><strong>Site Settings</strong></p>
-						</div>
-					    </div>
-					 </div>
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
-								<form id="login-form3" action="https://phpoll.com/login/process" method="post" role="form" style="display: block;">
-									<div class="form-group">
-									<span>Suggest Browse</span> &nbsp;<select name="block_suggest1" id="block_suggest1" onchange="blockSuggest1(this.value)">
-			<option value="0">Allow</option>
-			<option value="1" selected="selected">Block</option>
-		</select>
-
-									</div>
-										<div class="form-group">
-									<span>Include Observations</span> &nbsp;<select name="block_suggest2" id="block_suggest2" onchange="blockSuggest2(this.value)">
-			<option value="0">Yes</option>
-			<option value="1" selected="selected">No</option>
-		</select>
-
-									</div>
-								<div class="form-group">
-									<span>Specimen and Taxonomy Records per page</span> &nbsp;<select name="block_suggest3" id="block_suggest3" onchange="blockSuggest3(this.value)">
-			<option value="0">100</option>
-			<option value="1" selected="selected">10</option>
-		</select>
-		</div>
-		<div class="form-group">
-			<span>Other Identifier</span> &nbsp;<select name="block_suggest4" id="block_suggest4" onchange="blockSuggest4(this.value)">
-			<option value="0">Collector Number</option>
-			<option value="1" selected="selected">Previous Number</option>
-		</select>
-						<br/><br/>
-							<div class="form-group">
-									<div class="text-center">
-												<input type="submit" name="save_submit" id="save_submit" tabindex="4" class="form-control btn btn-register my-2" value="Save"  style="width: 70%;">
-										</div>
-									</div>
-								</form>
-								<form id="register-form2" action="https://phpoll.com/register/process" method="post" role="form" style="display: none;">
-									<div class="form-group">
-										<input type="text" name="set_username" id="set_username" tabindex="1" class="form-control" placeholder="Username" value="">
-									</div>
-									<div class="form-group">
-										<input type="email" name="set_email" id="set_email" tabindex="1" class="form-control" placeholder="Email Address" value="">
-									</div>
-									<div class="form-group">
-										<input type="password" name="set_password" id="set_password" tabindex="2" class="form-control" placeholder="Password">
-									</div>
-									<div class="form-group">
-										<input type="password" name="confirm_password" id="confirm_password" tabindex="2" class="form-control" placeholder="Confirm Password">
-									</div>
-									<div class="form-group">
-									<div class="text-center">
-												<input type="submit" name="register_submit" id="register_submit" tabindex="4" class="form-control btn btn-register my-2" value="Log In"  style="width: 70%;">
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-</nav>
-
-
+		</ul>    
+    </nav>
+    <nav class="navbar navbar-expand-md navbar-light bg-light py-0" style="border-bottom: 1px solid #f1f1f1;">
+        <div class="container" style="padding: 5px;">
+            <button class="navbar-toggler" style="z-index:4000;" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <ul class="navbar-nav nav-fill w-100">
+                    <li class="nav-item dropdown active"> <a class="nav-link dropdown-toggle" href="/redesign/specimen-search.cfm" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Specimen Data</a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+                        <a class="dropdown-item" href="/redesign/specimens.cfm">Specimens</a> 
+                        <a class="dropdown-item" href="/redesign/media.cfm">Media</a> 
+                        <a class="dropdown-item" href="/redesign/locality.cfm">Places</a> 
+                        <a class="dropdown-item" href="/redesign/publications.cfm">Publications</a> 
+                        <a class="dropdown-item" href="/redesign/projects.cfm">Projects</a> <a class="dropdown-item" href="/redesign/taxonomy.cfm">Taxonomy</a>
+                      </div>
+                    </li>
+                    <li class="nav-item dropdown"> 
+                      <a class="nav-link dropdown-toggle" href="##" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Data Entry </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+                          <a class="dropdown-item" href="/redesign/data-entry.cfm">Enter Single Records</a> 
+                          <a class="dropdown-item" href="/redesign/bulkloader.cfm">Bulkload Records</a> 
+                          <a class="dropdown-item" href="/redesign/bulkload-specimens.cfm">Bulkload Builder</a> 
+                          <a class="dropdown-item" href="/redesign/bulkloader.cfm">Browse and Edit</a> 
+                          <a class="dropdown-item" href="/redesign/bulkloader-status.cfm">Bulkloader Status</a> 
+                          <a class="dropdown-item" href="#">More Bulkloaders</a>
+                      </div>
+                    </li>
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Transactions </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+                            <a class="dropdown-item" href="/redesign/accessions.cfm">Accessions</a> 
+                            <a class="dropdown-item" href="/redesign/deaccessions.cfm">Deaccessions</a> 
+                            <a class="dropdown-item" href="/redesign/borrows.cfm">Borrows</a> 
+                            <a class="dropdown-item" href="/redesign/loans.cfm">Loans</a> 
+                            <a class="dropdown-item" href="/redesign/permits.cfm;">Permits</a> </div>
+                    </li>
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Reports </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+                            <a class="dropdown-item" href="#">Annual Report</a> 
+                            <a class="dropdown-item" href="#">Labels</a> 
+                            <a class="dropdown-item" href="#">Data Cleaning</a> 
+                            <a class="dropdown-item" href="#">Shared Data</a> 
+                            <a class="dropdown-item" href="#">Statistics</a> 
+                        </div>
+                    </li>
+                    <li class="nav-item"> 
+                         <a class="nav-link" href="https://code.mcz.harvard.edu/wiki/index.php/Main_Page">Help</a> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul id="profiles" class="nav justify-content-end col-sm-2 accn-icons col-md-1 pt-1 " style="">
+            <li class="nav-item dropdown"> 
+                   <a href="#profileSettings" data-toggle="dropdown" role="button">
+                      <i class="fas fa-cog" style="color: #666;"></i> 
+                 </a> 
+            </li>
+            <li class="nav-item dropdown"> 
+                <a href="#formLogin" data-toggle="dropdown" role="button">
+							<i class="fas fa-user"></i> 
+						</a>
+         
+            </li>
+        </ul>
+    </nav>
+       <div class="dropdown-menu" id="formLogin">
+                        <div class="row">
+                            <div class="container-fluid">
+                                <form class="">
+                                    <div class="form-group">
+                                        <label class="">Username</label>
+                                        <input class="form-control" name="username" id="username" type="text" style="margin:0;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="">Password</label>
+                                        <input class="form-control" name="password" id="password" type="password" style="margin: 0;">
+                                        <br class="">
+                                    </div>
+                                    <button type="submit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
+                                    <button type="submit" id="btnLogin" class="btn btn-sm">Cancel</button>
+                                    
+                                     <button type="submit" id="btnLogin" class="btn btn-primary btn-sm" style="float:right;">Register</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                     <div class="dropdown-menu" id="profileSettings">
+                        <div class="row">
+                            <div class="container-fluid">
+                                <form class="">
+                                    <div class="form-group">
+                                        <label class="">Profile</label>
+                                        <input class="form-control form-control-sm" name="username" id="username" type="text" style="margin:0;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="">Change Password</label>
+                                        <input class="form-control form-control-sm" name="password" id="password" type="password" style="margin: 0;">
+                                        <br class="">
+                                    </div>
+                                    <button type="submit" id="btnLogin" class="btn btn-sm btn-secondary">Save</button>
+                                    <button type="submit" id="btnLogin" class="btn btn-sm">Cancel</button>
+                                    
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+</header>
