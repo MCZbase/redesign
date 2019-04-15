@@ -2,12 +2,10 @@
 <cfinclude template = "/redesign/includes/_header.cfm">
 <cfoutput>
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
-        <section> 
-             <a id="showRightPush" class="btn" role="button" style="border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); background-color: rgb(15, 13, 14); box-shadow: rgb(204, 204, 204) 0px 0px 5px; border-width: 4px 0 4px 4px;">Filters</a> 
-        </section>
+        <section> <a id="showRightPush" class="btn" role="button" style="border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); background-color: rgb(15, 13, 14); box-shadow: rgb(204, 204, 204) 0px 0px 5px; border-width: 4px 0 4px 4px;">Filters</a> </section>
         <h3>Filters</h3>
         <div class="col-md-3 jumbotron mb-3 pl-3">
-            <h2 class="mt-3 float-left wd-280">By Columns and Values</h2>
+            <h2 class="mt-2 float-left wd-280">By Columns and Values</h2>
             <div class="float-left">
                 <div>Choose Column:</div>
                 <div id="columnchooser"></div>
@@ -27,16 +25,12 @@
                     <label class="mb-1 ml-1">To</label>
                     <input id="ended_date" type="text" style="width: 89px;">
                 </div>
-                <div class="float-left d-inline ml-3" style="width: 50px;margin-top: 1.62em;"> 
-                     <a id="refine" value="Refine" class="d-inline align-bottom bg-transparent wd-050 bg-primary"/>Refine</a> 
-                </div>
+                <div class="float-left d-inline ml-3" style="width: 50px;margin-top: 1.62em;"> <a id="refine" value="Refine" class="d-inline align-bottom bg-transparent wd-050 bg-primary"/>Refine</a> </div>
             </div>
         </div>
     </nav>
     <nav class="cbp-spmenu cbp-spmenu-vertical-left cbp-spmenu-left zindex-sticky" id="cbp-spmenu-s3">
-        <section> 
-             <a id="showLeftPush" class="btn" role="button" style="border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); background-color: rgb(15, 13, 14); box-shadow: rgb(204, 204, 204) 0px 0px 5px; border-width: 4px 0 4px 4px;">Columns</a> 
-        </section>
+        <section> <a id="showLeftPush" class="btn" role="button" style="border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); background-color: rgb(15, 13, 14); box-shadow: rgb(204, 204, 204) 0px 0px 5px; border-width: 4px 0 4px 4px;">Columns</a> </section>
         <h5>Display Columns</h5>
         <div class="col-md-3 jumbotron mb-3 pl-1 mt-0">
             <ul class="checks">
@@ -47,15 +41,15 @@
                     <input type="checkbox">
                     Minimum</li>
             </ul>
-            <div class="float-left mt-3 zindex-sticky bg-white">
-                <div id="jqxlistbox2"></div>
+            <div class="float-left zindex-sticky bg-white">
+                <div id="jqxlistbox2" style="margin-left: 5px;margin-top: 1em;"></div>
             </div>
         </div>
     </nav>
     <cfquery name="getCount" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 	select count(collection_object_id) as cnt from cataloged_item
     </cfquery>
-		<cfquery name="collSearch" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+    <cfquery name="collSearch" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 		SELECT
 			collection.institution,
 			collection.collection,
@@ -66,48 +60,75 @@
 		order by collection.collection
 	</cfquery>
 
-<div class="container">
-    <br/>
-    <div class="row justify-content-center">
-    <div class="col-12 col-md-10 col-lg-10 col-sm-12 col-xs-12">
-    <div class="jumbotron">
-    <form id="searchForm" class="card card-sm border-0">
-    <h2 class="mb-2 mt-4 mx-5 text-center">Search Specimen Records <span class="rec_count mx-1">(access to #getCount.cnt# records)</span></h2>
-    <div class="card-body row no-gutters align-items-center py-1">
-<style>
-	button.ui-multiselect {background-color: ##BAC5C6;padding: .89em; width: 100px;font-weight: 600;}
-	button.ui-multiselect.ui-state-active {color: ##535353;font-weight: 600;}
-	button span.ui-icon {margin-top:0;color:black;width: 10px;}
-	.ui-multiselect-header span.ui-icon {top: 4px;}
-	select span.ui-icon {margin-top:10px;}
-	.ui-multiselect-checkboxes label input {float:left; top:1px; position: relative;}
-	.ui-icon-triangle-2-n-s {font-size: 20px;color: black;}
-</style>
-<div class="col-sm-6 col-xs-6 col-lg-5 d-flex mx-0 my-1">
-<select id="coll-multi-select" multiple="multiple">
-	<cfloop query="collSearch">
-			<option value="#collSearch.guid_prefix#" style="font-size: 14px;"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
-	</cfloop>
-</select>
+<div style="padding: 0 2.5em;border: 2px solid ##ccc;color: ##333;background-color: gainsboro;z-index: -1">
+<form id="searchForm">
+<div class="jumbotron px-1" style="background-color: gainsboro;">
+	 <h2 class="">Search Specimen Records 
+	     <span class="rec_count mx-1">(access to #getCount.cnt# records)</span>
+	 </h2>
 </div>
-<script>
-$("##coll-multi-select").multiselect({
-	minWidth: "150",
-	height: "300"
-});
-</script>
-        <div class="col-sm-8 col-xs-8 col-lg-5 my-1">
-            <input id="searchText" class="form-control form-control-lg form-control-borderless col-sm-12" type="search" >
+    
+<div class="container-fluid">
+    <div class="row">    
+        <div class="col-xs-8 col-xs-offset-2">
+		    <div class="input-group">
+                <div class="input-group-btn search-panel">
+                   <select class="dropdown-menu" role="menu" id="col-multi-select" multiple="multiple">
+                    <cfloop query="collSearch">
+                        <option value="#collSearch.guid_prefix#" style="font-size: 14px;"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
+                    </cfloop>
+					</select>
+						<script>
+							//// script for multiselect dropdown for collections
+						$("##col-multi-select").multiselect({  
+							header: !0,
+							height: 175,
+							minWidth: "200px",
+							classes: "float-sm-left float-md-right mx-0",
+							checkAllText: "Check all",
+							uncheckAllText: "Uncheck all",
+							noneSelectedText: "Collections ",
+							selectedText: "## selected",
+							fontFamily: "Arial",
+							selectedList: 0,
+							show: null,
+							hide: null,
+							autoOpen: !1,
+							multiple: !0,
+							position: {}
+						});
+						</script> 
+                </div>
+                <input type="hidden" name="search_param" value="all" id="search_param">         
+                <input id="searchText" type="text" class="has-clear form-control form-control-borderless" name="x" placeholder="Search term" style="border-radius:5px;">
+                <span class="form-control-clear form-control-feedback hidden"><i class="far fa-times-circle" style="position:absolute;right: 55px;top:12px;color: ##94a4a5;"></i></span>   
+			    <span class="input-group-btn">
+                    <button class="btn btn-default" style="border: 1px solid ##bac5c6;" type="submit"><i class="fa fa-search text-body"></i></button>
+                </span>
+            </div>
         </div>
-        <div class="col-auto my-1">
-            <button class="btn btn-lg" style="background: ##BAC5C6;" type="submit"> <i class="fa fa-search text-body"></i></button>
-        </div>
-    </div>
-     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" style="font-size: 16px;"> advanced search <i class="fa fa-expand"></i></button>
 	</div>
 </div>
-<div class="col-sm-12 col-md-7 col-lg-7 mb-4">
-<div class="collapse navbar-collapse" id="collapseSearch">
+
+<script>
+	/// clear keyword search script below
+$('.has-clear input[type="text"]').on('input propertychange', function() {
+  var $this = $(this);
+  var visible = Boolean($this.val());
+  $this.siblings('.form-control-clear').toggleClass('hidden', !visible);
+}).trigger('propertychange');
+
+$('.form-control-clear').click(function() {
+  $(this).siblings('input[type="text"]').val('')
+    .trigger('propertychange').focus();
+});
+</script>
+	<div class="mb-3 mx-0" style="margin-top:.75em"> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" style="font-size: 16px;"> Advanced Search <i class="fa fa-sort fa-xs"></i></button></div>		
+			
+<div class="container" style="margin-left:0;">
+<div class="row">
+<div class="collapse navbar-collapse" id="collapseSearch" style="align-items: left">
+<!---advanced search dropdown table below--->
 <script>
 function deleteRow(evt) {
     var i = evt.target.parentNode.parentNode.rowIndex;
@@ -117,7 +138,6 @@ function insRow() {
     var x = document.getElementById('POITable');
     var new_row = x.rows[1].cloneNode(true);
     var len = x.rows.length;
-
     new_row.cells[0].innerHTML = len;
 
     var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
@@ -137,81 +157,80 @@ function insRow() {
     inp4.value = '';
 
     var button = new_row.cells[5].getElementsByTagName('input')[0];
-    button.value = "DELETE";
+    button.value = "* DELETE *";
     button.onclick = function(it) {deleteRow(it)};
 
     x.appendChild( new_row );    
 }
 </script>
-<form id="searchForm" class="border-0" style="margin: 0 auto">
-    <div id="POItablediv" class="align-content-center">         
-    <table class="table" id="POITable" border="1">
-        <tr class="first_row">
-            <td style="display: none;">##</td>
-            <td>and/or/not</td>
-            <td>&nbsp;&nbsp;keyword</td>
-            <td>contains/is</td>
-			<td>&nbsp;&nbsp;value</td>
-			<td>&nbsp;&nbsp;delete?</td>
-        </tr>
-        <tr style="margin: 0 auto;">
-             <td style="display: none;">1</td>
-             <td class="px-0 py-0 border-0" style="width: 6em;">
-                           <select title="operator" class="custom-select mx-md-0 search-fields" style="min-width: 6em;text-align: center;margin-right: 1em;">
-                            <option>and</option>
-                            <option>or</option>
-                            <option>not</option>
-                        </select></td>
-             <td class="px-0 py-0 border-0" style="width:9em;"><select title="keyword" class="custom-select mx-md-0 search-fields" style="min-width: 9em;">
-                            <option>Taxonomy</option>
-                            <option>Places</option>
-                            <option>Media</option>
-                            <option>Publications</option>
-                            <option>Projects</option>
-                            <option>Specimens</option>
-                            <option>Dates</option>
-                            <option>Parts</option>
-                        </select></td>
-             <td class="px-0 py-0 border-0"><select title="operator" class="custom-select mx-md-0 search-fields" style="min-width: 7.5em;text-align:center;">
-                            <option>contains</option>
-                            <option>is</option>
-                        </select></td>
-             <td class="px-0 py-0 border-0 d-xs-flex"><input type="text" id="key_value" class="m-0 mt-1 d-xs-flex d-sm-flex"/></td>
-         <td class="px-2 py-0 border-0"><input type="button" id="delPOIbutton" class="mx-0 mt-1 p-1" value="ADD ROW" style="font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif'"onclick="insRow()"/></td>
-       <td class="px-0 py-0 m-0 border-0"><input type="button" id="searchButton" style="font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif'" class="mx-0 mt-1 p-1" value="SEARCH" onclick="search()"/></td>
-        </tr>
-    </table>
-	</div>
-</form>
-	</div>
-	</div>
-	   </div>
-	<div class="col-2"><div class="row"> </div></div>
-
-	</div>
+        <form id="searchForm">
+            <div id="POItablediv" class="" style="background-color: none;">
+                <table class="table responsive-table" id="POITable" border="1" style="width:100%;border-collapse:separate !important; line-height:24px; font-weight:100;margin-bottom: 1.25em;border-radius:5px;" class="bodywrapcenter">
+				<tbody>
+                    <tr class="first_row">
+                        <td style="display: none;">##</td>
+                        <td>and/or/not</td>
+                        <td>&nbsp;&nbsp;keyword</td>
+                        <td>contains/is</td>
+                        <td>&nbsp;&nbsp;value</td>
+                        <td>&nbsp;&nbsp;delete?</td>
+                    </tr>
+                    <tr style="padding:.5em;border: 1px solid ##bac5c6;border-radius: 5px;">
+                        <td style="display: none;">1</td>
+                        <td class="mx-1 p-0 border-0"><select title="operator" class="custom-select" style="min-width: 6em;">
+                                <option value="and">and</option>
+                                <option value="or">or</option>
+                                <option value="not">not</option>
+                            </select></td>
+                        <td class="mx-1 p-0 border-0">
+                               <select title="keyword" id="sciNameOper" class="custom-select" style="min-width: 14em;margin-right: 10px;">
+                                <option value="taxonomy">Taxonomy</option>
+                                <option>Places</option>
+                                <option>Media</option>
+                                <option>Publications</option>
+                                <option>Projects</option>
+                                <option>Specimens</option>
+                                <option>Dates</option>
+                                <option>Parts</option>
+                            </select></td>
+                        <td class="mx-1 p-0 border-0"><select title="operator" id="sciNameOper" class="custom-select" style="min-width: 8em;">
+                                <option value="like">contains</option>
+                                <option value="eq">is</option>
+                            </select></td>
+                        <td class="mx-1 p-0 border-0"><input type="text" class="text_search form-control flex enter-search" id="key_value" placeholder="Enter Value" style="margin-left:0; margin-right:0;margin-right: 0; "/></td>
+                         <td class="mx-0 p-0 border-0 hello">
+                        <input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" style="display:inline;"/></td>
+                         <td class="mx-0 p-0 border-0">
+                        <input type="submit" id="searchText" value="SEARCH" class="text-right has-clear" style="display: inline"/>
+                        </td>
+                    </tr>
+					</tbody>
+                </table>
+            </div>
+        </form>
     </div>
 	</div>
-	</div>   
-<!--Grid Related code below along with search handler for keyword search-->
-<div class="container-fluid">
-        <div class="row">
-            <div class="text-left col-md-12">
-                <main role="main">
-                <div class="px-4 w-100 mb-5">
-                    <h3 style="float: left;width:220px;">All Records</h3>
-                    <ul>
-                        <li class="searchfield"> 
-                             <a href="##" style="color: ##1e1e1e;"> <i class="fas fa-download" ></i> </a> 
-                        </li>
-                    </ul>
-                    <div class="row" style="clear:both;">
-                        <div id="jqxgrid" class="jqxGrid"> </div>
-                    </div>
-                    </main>
+</div>
+</div>
+    
+    <!--Grid Related code below along with search handler for keyword search-->
+    <div class="container-fluid">
+    <div class="row">
+        <div class="text-left col-md-12">
+            <main role="main">
+            <div class="px-4 w-100 mb-5">
+                <h3 style="float: left;width:220px;">All Records</h3>
+                <ul>
+                    <li class="searchfield"> <a href="##" style="color: ##1e1e1e;"> <i class="fas fa-download" ></i> </a> </li>
+                </ul>
+                <div class="row" style="clear:both;">
+                    <div id="jqxgrid" class="jqxGrid"> </div>
                 </div>
+                </main>
             </div>
         </div>
-<script>
+    </div>
+    <script>
 		  $(document).ready(function() {
                 $('##searchForm').bind('submit', function(evt){
 				console.log($('##searchText').val());
@@ -327,6 +346,83 @@ function insRow() {
         });	  
 
  });
+		
+		
+		
+   
+
+ 
+  $(function(){  
+    function saveEdits() {
+    }
+ 	var screenWidth, screenHeight, dialogWidth, dialogHeight, isDesktop;
+    screenWidth = window.screen.width;
+    screenHeight = window.screen.height;
+
+    if ( screenWidth < 1600 ) {
+		dialogWidth = '94%';
+        dialogHeight = 'auto';
+		 isDesktop = false;
+    } else if ( screenWidth > 1600  ){
+        dialogWidth = '66%';
+       dialogHeight = 'auto'
+        isDesktop = true;
+    }
+$(function () {
+    dialog = $( "##dialog-form" ).dialog({
+      autoOpen: false,
+      width: dialogWidth,
+	  height: dialogHeight,
+      maxWidth: 1250,
+	  fluid: true,
+      modal: true,
+	  resizable: true,
+      buttons: {
+		    "1": { id: 'open', text: 'Save Shared Record', click: function(){ $(this).dialog("open"); },"class": "save_shared" },
+            "2": { id: 'save', text: 'Save Changes for this Record Only', click: function(){ $(this).dialog("save"); }, "class": "save_local" },
+            "3": { id: 'close', text: 'Cancel', click: function(){ $(this).dialog("close"); }, "class": "cancel_bk"}
+            }
+    });
+    $(_btnToDialog).click(function () {
+                $("##dialog-form").dialog("open");
+            });
+	form = dialog.find( "form" ).on( "submit", function( event ) {
+           event.preventDefault();
+           saveEdits();
+		// $(window).off("resize.responsive");
+    });
+ $(document).on("click", "button.popperbtn", function() {
+    $("##dialog-form").dialog("open");
+	 fluidDialog();
+  });
+});
+	$(document).ready(function(){
+  activaTab(role);
+});
+function activaTab(tab){
+  $('.nav-tabs a[href="##' + tab + '"]').tab('show');
+};
+	function fluidDialog() {
+    var $visible = $(".ui-dialog:visible");
+    // each open dialog
+    $visible.each(function () {
+        var $this = $(this);
+        var dialog = $this.find(".ui-dialog-content").data("dialog");
+        // if fluid option == true
+        if (dialog.options.maxWidth && dialog.options.width) {
+            // fix maxWidth bug
+            $this.css("max-width", dialog.options.maxWidth);
+            //reposition dialog
+            dialog.option("position", dialog.options.position);
+        }
+
+    });
+}  
+	
+});
+
+	
+		
 </script> 
 </cfoutput>
 <cfinclude template="/redesign/includes/_footer.cfm">
