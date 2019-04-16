@@ -60,9 +60,9 @@
 		order by collection.collection
 	</cfquery>
 
-<div style="padding: 0 2.5em 0 2em;border: 2px solid ##ccc;color: ##333;background-color:gainsboro;z-index: -1">
+<div style="padding: 0 2.5em 0 2em;border: 1px solid ##ccc;color: ##333;background-color:##e9ecef;z-index: -1">
 <form id="searchForm">
-<div class="jumbotron px-1" style="background-color: gainsboro;">
+<div class="jumbotron px-1" style="background-color: ##e9ecef;">
 	 <h2 class="">Search Specimen Records 
 	     <span class="rec_count mx-0">(access to #getCount.cnt# records)</span>
 	 </h2>
