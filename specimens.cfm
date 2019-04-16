@@ -60,11 +60,11 @@
 		order by collection.collection
 	</cfquery>
 
-<div style="padding: 0 2.5em;border: 2px solid ##ccc;color: ##333;background-color: gainsboro;z-index: -1">
+<div style="padding: 0 2.5em 0 2em;border: 2px solid ##ccc;color: ##333;background-color:gainsboro;z-index: -1">
 <form id="searchForm">
 <div class="jumbotron px-1" style="background-color: gainsboro;">
 	 <h2 class="">Search Specimen Records 
-	     <span class="rec_count mx-1">(access to #getCount.cnt# records)</span>
+	     <span class="rec_count mx-0">(access to #getCount.cnt# records)</span>
 	 </h2>
 </div>
     
@@ -72,8 +72,8 @@
     <div class="row">    
         <div class="col-xs-8 col-xs-offset-2">
 		    <div class="input-group">
-                <div class="input-group-btn search-panel">
-                   <select class="dropdown-menu" role="menu" id="col-multi-select" multiple="multiple">
+                <div class="input-group-btn search-panel" style="">
+                   <select class="dropdown-menu" role="menu" id="col-multi-select" multiple="multiple" >
                     <cfloop query="collSearch">
                         <option value="#collSearch.guid_prefix#" style="font-size: 14px;"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
                     </cfloop>
@@ -103,7 +103,7 @@
                 <input id="searchText" type="text" class="has-clear form-control form-control-borderless" name="x" placeholder="Search term" style="border-radius:5px;">
                 <span class="form-control-clear form-control-feedback hidden"><i class="far fa-times-circle" style="position:absolute;right: 55px;top:12px;color: ##94a4a5;"></i></span>   
 			    <span class="input-group-btn">
-                    <button class="btn btn-default" style="border: 1px solid ##bac5c6;" type="submit"><i class="fa fa-search text-body"></i></button>
+                    <button class="btn btn-default" style="border: 1px solid ##bac5c6;background-color: ##bebebe" type="submit"><i class="fa fa-search text-body"></i></button>
                 </span>
             </div>
         </div>
@@ -123,7 +123,9 @@ $('.form-control-clear').click(function() {
     .trigger('propertychange').focus();
 });
 </script>
-	<div class="mb-3 mx-0" style="margin-top:.75em"> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" style="font-size: 16px;"> Advanced Search <i class="fa fa-sort fa-xs"></i></button></div>		
+
+
+	<div class="mb-3 mx-0" style="margin-top:.75em"> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" style="font-size: 16px;margin-left:2px;"> Advanced Search <i class="fa fa-sort fa-xs"></i></button></div>		
 			
 <div class="container" style="margin-left:0;">
 <div class="row">
@@ -177,13 +179,13 @@ function insRow() {
                     </tr>
                     <tr style="padding:.5em;border: 1px solid ##bac5c6;border-radius: 5px;">
                         <td style="display: none;">1</td>
-                        <td class="mx-1 p-0 border-0"><select title="operator" class="custom-select" style="min-width: 6em;">
+                        <td class="mx-1 p-0 border-0"><select title="operator" class="custom-select" style="min-width: 5em;font-weight: 510;">
                                 <option value="and">and</option>
                                 <option value="or">or</option>
                                 <option value="not">not</option>
                             </select></td>
                         <td class="mx-1 p-0 border-0">
-                               <select title="keyword" id="sciNameOper" class="custom-select" style="min-width: 14em;margin-right: 10px;">
+                               <select title="keyword" id="sciNameOper" class="custom-select" style="min-width: 9em;margin-right: 10px;font-weight: 510">
                                 <option value="taxonomy">Taxonomy</option>
                                 <option>Places</option>
                                 <option>Media</option>
@@ -193,7 +195,7 @@ function insRow() {
                                 <option>Dates</option>
                                 <option>Parts</option>
                             </select></td>
-                        <td class="mx-1 p-0 border-0"><select title="operator" id="sciNameOper" class="custom-select" style="min-width: 8em;">
+                        <td class="mx-1 p-0 border-0"><select title="operator" id="sciNameOper" class="custom-select" style="min-width: 7em;font-weight: 510">
                                 <option value="like">contains</option>
                                 <option value="eq">is</option>
                             </select></td>
@@ -201,7 +203,7 @@ function insRow() {
                          <td class="mx-0 p-0 border-0 hello">
                         <input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" style="display:inline;"/></td>
                          <td class="mx-0 p-0 border-0">
-                        <input type="submit" id="searchText" value="SEARCH" class="text-right has-clear" style="display: inline"/>
+                        <input type="submit" id="searchText" value="SEARCH" class="text-right has-clear" style="display: inline;background-color: ##BEBEBE;"/>
                         </td>
                     </tr>
 					</tbody>
