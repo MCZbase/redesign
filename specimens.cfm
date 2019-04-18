@@ -75,7 +75,7 @@
         <div class="col-xs-8 col-xs-offset-2">
 		    <div class="input-group">
                 <div class="input-group-btn search-panel">
-                   <select class="dropdown-menu" role="menu" id="col-multi-select" multiple="multiple" >
+                   <select class="dropdown-menu fs-14" role="menu" id="col-multi-select" multiple="multiple" >
                     <cfloop query="collSearch">
                         <option value="#collSearch.guid_prefix#"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
                     </cfloop>
