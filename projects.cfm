@@ -1,4 +1,4 @@
-<cfset pageTitle = "search media">
+<cfset pageTitle = "search projects">
 <cfinclude template = "/redesign/includes/_header.cfm">
 <style>
 	#drop-area {
@@ -47,13 +47,13 @@ p {
     <div class="container-fluid mt-3">
       <div class="row">
             <div class="col-sm-12 col-md-4 col-lg-4 jumbotron" style="padding: 0 4em;">
-                    <h2 class="mb-1">What's here </h2>
+                    <h2 class="mt-4 mb-1">What's here </h2>
                     <p style="border: none;display: inline;"> These <a href="##" style="color: green;">341645</a> records represent media in MCZbase. The media records can be associated with publications, transactions, and specimens. </p>
                
              </div>
-            <div class="col-sm-12 col-md-4 col-lg-4 jumbotron px-0 mx-0">
+            <div class="col-sm-12 col-md-4 col-lg-4 jumbotron pt-2 px-0 mx-0">
                 <form id="searchForm" class="card card-sm" style="border: none;">
-                    <h2 class="mb-1 mx-1">Search Media Keywords</h2>
+                    <h2 class="mt-4 mb-1 mx-1">Search Media Keywords</h2>
                     <div class="card_search row no-gutters align-items-center py-1 mr-4">
                         <div class="col px-0">
                             <input id="searchText" class="form-control form-control-borderless" type="search" placeholder="Search any terms">
@@ -66,7 +66,7 @@ p {
               </div>
 					
                  <div class="col-lg-4 col-md-4 jumbotron mx-0 px-0 col-sm-12">
-                   <h2 class="mx-3 w-100 pl-1">Select Usage </h2>
+                   <h2 class="mt-3 mx-3 w-100 pl-1">Select Usage </h2>
                     <form id="searchForm" style="border: none;">
                       <ul class="check_selection mx-0 mb-1">
 						<li><input type="checkbox">Limit to media not yet linked to records?</li>
@@ -299,14 +299,95 @@ function insRow() {
 	</form>
   <progress id="progress-bar" max=100 value=0></progress>
   <div id="gallery" /></div>
-  	<h6>Metadata</h6>
-<input value="" type="text">
+  
+	<div class="collapse navbar-collapse" id="collapseSearch" style="align-items: left">
+<!---advanced search dropdown table below--->
+<script>
+function deleteRow(evt) {
+    var i = evt.target.parentNode.parentNode.rowIndex;
+    document.getElementById('POITable').deleteRow(i);
+}
+function insRow() {
+    var x = document.getElementById('POITable');
+    var new_row = x.rows[1].cloneNode(true);
+    var len = x.rows.length;
+    new_row.cells[0].innerHTML = len;
 
+    var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
+    inp1.id += len;
+    inp1.value = '';
 
+    var inp2 = new_row.cells[2].getElementsByTagName('select')[0];
+    inp2.id += len;
+    inp2.value = '';
+	
+	var inp3 = new_row.cells[3].getElementsByTagName('select')[0];
+    inp3.id += len;
+    inp3.value = '';
+	
+	var inp4 = new_row.cells[4].getElementsByTagName('input')[0];
+    inp4.id += len;
+    inp4.value = '';
+
+    var button = new_row.cells[5].getElementsByTagName('input')[0];
+    button.value = "* DELETE *";
+    button.onclick = function(it) {deleteRow(it)};
+
+    x.appendChild( new_row );    
+}
+</script>
+        <form id="searchForm">
+            <div id="POItablediv" class="" style="background-color: none;">
+                <table class="table responsive-table" id="POITable" border="1" style="width:100%;border-collapse:separate !important; line-height:24px; font-weight:100;margin-bottom: 1.25em;border-radius:5px;" class="bodywrapcenter">
+				<tbody>
+                    <tr class="first_row">
+                        <td style="display: none;">##</td>
+                        <td>and/or/not</td>
+                        <td>&nbsp;&nbsp;keyword</td>
+                        <td>contains/is</td>
+                        <td>&nbsp;&nbsp;value</td>
+                        <td>&nbsp;&nbsp;delete?</td>
+                    </tr>
+                    <tr style="padding:.5em;border: 1px solid ##bac5c6;border-radius: 5px;">
+                        <td style="display: none;">1</td>
+                        <td class="mx-1 p-0 border-0"><select title="operator" class="custom-select" style="min-width: 6em;">
+                                <option value="and">and</option>
+                                <option value="or">or</option>
+                                <option value="not">not</option>
+                            </select></td>
+                        <td class="mx-1 p-0 border-0">
+                               <select title="keyword" id="sciNameOper" class="custom-select" style="min-width: 14em;margin-right: 10px;">
+                                <option value="taxonomy">Taxonomy</option>
+                                <option>Places</option>
+                                <option>Media</option>
+                                <option>Publications</option>
+                                <option>Projects</option>
+                                <option>Specimens</option>
+                                <option>Dates</option>
+                                <option>Parts</option>
+                            </select></td>
+                        <td class="mx-1 p-0 border-0"><select title="operator" id="sciNameOper" class="custom-select" style="min-width: 8em;">
+                                <option value="like">contains</option>
+                                <option value="eq">is</option>
+                            </select></td>
+                        <td class="mx-1 p-0 border-0"><input type="text" class="text_search form-control flex enter-search" id="key_value" placeholder="Enter Value" style="margin-left:0; margin-right:0;margin-right: 0; "/></td>
+                         <td class="mx-0 p-0 border-0 hello">
+                        <input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" style="display:inline;"/></td>
+                         <td class="mx-0 p-0 border-0">
+                        <input type="submit" id="searchText" value="SEARCH" class="text-right has-clear" style="display: inline"/>
+                        </td>
+                    </tr>
+					</tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+  
 </div>   
             
        </form>            
-         
+              
+                 
   </div>
                   <ul>
                       <li id="showLeftPush" class="active searchfield">
@@ -338,7 +419,60 @@ function insRow() {
 		  </div></div>
      <script>	
 //////////////////////
-
+  $(function(){ 
+    function saveEdits() {
+    }
+ 	var screenWidth, screenHeight, dialogWidth, dialogHeight, isDesktop;
+    screenWidth = window.screen.width;
+    screenHeight = window.screen.height;
+    if ( screenWidth < 1599 ) {
+		dialogWidth = '90%';
+        dialogHeight = 'auto';
+		 isDesktop = false;
+    } else if ( screenWidth > 1600  ){
+        dialogWidth = '40%';
+       dialogHeight = 'auto'
+        isDesktop = true;
+    }
+    dialog = $( "##dialog-form" ).dialog({
+      autoOpen: false,
+      width: dialogWidth,
+	  height: dialogHeight,
+      maxWidth: 800,
+	  fluid: true,
+      modal: true,
+	  resizable: true,
+      buttons: {
+            "1": { id: 'save', text: 'Save', click: function(){ $(this).dialog("save"); }, "class": "save_local" },
+            "2": { id: 'close', text: 'Cancel', click: function(){ $(this).dialog("close"); }, "class": "cancel_bk"}
+            }
+    });
+	form = dialog.find( "form" ).on( "submit", function( event ) {
+           event.preventDefault();
+           saveEdits();
+		// $(window).off("resize.responsive");
+    });
+    $( "##add-taxonomy" ).button().on( "click", function() {
+           dialog.dialog( "open" );
+		   fluidDialog();
+    });
+	function fluidDialog() {
+    var $visible = $(".ui-dialog:visible");
+    // each open dialog
+    $visible.each(function () {
+        var $this = $(this);
+        var dialog = $this.find(".ui-dialog-content").data("dialog");
+    //  console.log(dialog);
+        // if fluid option == true
+        if (dialog.options.maxWidth && dialog.options.width) {
+            // fix maxWidth bug
+            $this.css("max-width", dialog.options.maxWidth);
+            //reposition dialog
+            dialog.option("position", dialog.options.position);
+        }
+    });
+}  
+});
 	
 // ************************ Drag and drop ***************** //
 let dropArea = document.getElementById("drop-area")
