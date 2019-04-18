@@ -720,6 +720,7 @@ override Bootstrap styles
 	color: #fff;
 	font-weight: bold;
 }
+.ui-widget {font-size: 14px;}
 button.detail-edit-cell {
 	float: right;
 	width: auto;
@@ -879,6 +880,7 @@ position: absolute;
 .mt-075 {margin-top: 0.75em}
 .fs-16 {font-size: 16px;}
 .fs-15 {font-size: 15px;}
+.fs-14 {font-size: 14px;}
 .bbr-0 {background: none;border: none;}
 .fw-510 {font-weight: 510}
 .fw-100 {font-weight: 100}
@@ -887,6 +889,9 @@ position: absolute;
 .b-collapse-s {border-collapse:separate !important; }
 .black-filter-btn {border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); background-color: rgb(15, 13, 14); box-shadow: rgb(204, 204, 204) 0px 0px 5px; border-width: 4px 0 4px 4px;}
 .black-columns-btn {border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); background-color: rgb(15, 13, 14); box-shadow: rgb(204, 204, 204) 0px 0px 5px; border-width: 4px 0 4px 4px;}
+.ui-icon.ui-icon-triangle-2-n-s {
+    background-position: -124px -16px;
+}
 #localityForm .container {
 	padding: 0;
 }
