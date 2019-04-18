@@ -1145,9 +1145,17 @@ input#searchText.form-control{min-width: 280px;}
 .navbar-nav li:first-child {
 	margin-left: 100px;
 }
+
+}
 }
 
+@media (min-width: 768px){
+
+}
 @media(min-width:768px) {
+.col-md-1 {
+width: 30px;
+}
 .footer-col-4-md {
 	width: 36%;
 	max-width: 41%;
@@ -1187,6 +1195,9 @@ img.mcz_logo_krono {
 }
 img.mcz_logo_krono {
 	display: block;
+}
+	.offset-md-2 {
+margin-left: 12%;
 }
 }
 
@@ -1280,6 +1291,7 @@ img.harvard-shield {
 	width: 24px;
 	margin-left: 4px;
 }
+	.container {margin-left: 0;}/*for menu toogle*/
 img {
 	z-index: 2000;
 }
