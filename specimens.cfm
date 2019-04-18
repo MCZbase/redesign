@@ -204,9 +204,9 @@ function insRow() {
                         <td class="mx-1 p-0 border-0"><input type="text" class="text_search form-control flex enter-search mx-0" id="key_value" placeholder="Enter Value"/></td>
                          <td class="mx-0 p-0 border-0 hello">
                         <input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" class="d-inline"/></td>
-                         <td class="mx-0 p-0 border-0">
+                <!---         <td class="mx-0 p-0 border-0">
                         <input type="submit" id="searchText" value="SEARCH" class="text-right has-clear d-inline blue-gray"/>
-                        </td>
+                        </td>--->
                     </tr>
 					</tbody>
                 </table>
@@ -220,7 +220,7 @@ function insRow() {
     <!--Grid Related code below along with search handler for keyword search-->
     <div class="container-fluid">
     <div class="row">
-        <div class="text-left col-md-12">
+    <div class="text-left col-md-12">
             <main role="main">
             <div class="px-4 w-100 mb-5">
          <!---       <h3 style="float: left;width:220px;">All Records</h3>
@@ -230,7 +230,7 @@ function insRow() {
                 <div class="row" style="clear:both;">
                     <div id="jqxgrid" class="jqxGrid" style="width: 100%;">   
               
-                    <div class='tableauPlaceholder' id='viz1555509433495' style='position: relative; align-content: center;margin:auto auto;'>
+                 <!---   <div class='tableauPlaceholder' id='viz1555509433495' style='position: relative; align-content: center;margin:auto auto;'>
                     <noscript>
 						<a href='##'><img alt='visualization of data' src='https://public.tableau.com/static/images/SC/SCXQGQQKW/1_rss.png' style='border: none' /></a>
 					</noscript>
@@ -246,7 +246,7 @@ function insRow() {
 								<param name='display_overlay' value='yes' />
 								<param name='display_count' value='yes' />
                     </object>
-                    </div> 
+                    </div> --->
                     </div>
              </div>
              </main>
@@ -401,6 +401,7 @@ function insRow() {
             });
 	         // handle columns selection.
             $("##columnchooser").on('select', function (event) {
+				console.log(event);
                 updateFilterBox(event.args.item.value);
             });
 	 
