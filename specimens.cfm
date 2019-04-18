@@ -4,7 +4,7 @@
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
         <section> <a id="showRightPush" class="btn black-filter-btn" role="button">Filters</a> </section>
         <h3>Filters</h3>
-        <div class="col-md-3 jumbotron mb-3 pl-3">
+        <div class="col-md-3 jumbotron mb-3 pl-3" style="background: none;">
             <h2 class="mt-2 float-left wd-280">By Columns and Values</h2>
             <div class="float-left">
                 <div>Choose Column:</div>
@@ -157,7 +157,7 @@ function insRow() {
 
 
 	<div class="mb-3 mx-0 mt-075"> 
-		<button type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" class="fs-16 bbr-0"> 
+		<button type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" class="fs-15 bbr-0"> 
 		   Advanced Search <i class="fa fa-sort fa-xs"></i>
 		</button>
     </div>		
