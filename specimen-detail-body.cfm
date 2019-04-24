@@ -314,6 +314,85 @@ WHERE irel.related_coll_object_id=#collection_object_id#
 		substr(formatted_publication, - 4)
 </cfquery>
 <cfoutput query="one">
+   
+   
+  <script>	
+ 
+  $(function(){  
+    function saveEdits() {
+    }
+ 	var screenWidth, screenHeight, dialogWidth, dialogHeight, isDesktop;
+    screenWidth = window.screen.width;
+    screenHeight = window.screen.height;
+
+    if ( screenWidth < 1600 ) {
+		dialogWidth = '94%';
+        dialogHeight = 'auto';
+		 isDesktop = false;
+    } else if ( screenWidth > 1600  ){
+        dialogWidth = '66%';
+       dialogHeight = 'auto'
+        isDesktop = true;
+    }
+$(function () {
+    dialog = $( "##dialog-form" ).dialog({
+      autoOpen: false,
+      width: dialogWidth,
+	  height: dialogHeight,
+      maxWidth: 1250,
+	  fluid: true,
+      modal: true,
+	  resizable: true,
+      buttons: {
+		   // "1": { id: 'open', text: 'Save Shared Record', click: function(){ $(this).dialog("open"); },"class": "save_shared" },
+            "2": { id: 'save', text: 'Save Changes for this Record', click: function(){ $(this).dialog("save"); }, "class": "save_local" },
+            "3": { id: 'close', text: 'Cancel', click: function(){ $(this).dialog("close"); }, "class": "cancel_bk"}
+            }
+    });
+    $(_btnToDialog).click(function () {
+                $("##dialog-form").dialog("open");
+            });
+	form = dialog.find( "form" ).on( "submit", function( event ) {
+           event.preventDefault();
+           saveEdits();
+		// $(window).off("resize.responsive");
+    });
+ $(document).on("click", "button.popperbtn", function() {
+    $("##dialog-form").dialog("open");
+	 fluidDialog();
+  });
+});
+	$(document).ready(function(){
+  activaTab(role);
+});
+function activaTab(tab){
+  $('.nav-tabs a[href="##' + tab + '"]').tab('show');
+};
+	function fluidDialog() {
+    var $visible = $(".ui-dialog:visible");
+    // each open dialog
+    $visible.each(function () {
+        var $this = $(this);
+        var dialog = $this.find(".ui-dialog-content").data("dialog");
+        // if fluid option == true
+        if (dialog.options.maxWidth && dialog.options.width) {
+            // fix maxWidth bug
+            $this.css("max-width", dialog.options.maxWidth);
+            //reposition dialog
+            dialog.option("position", dialog.options.position);
+        }
+
+    });
+}  
+	
+});
+
+	  //////////////////////
+	  //////////////////////////////
+	  ////////////////////////
+	  ///////////////////////
+	</script> 
+   
     <cfif oneOfUs is 1>
         <form name="editStuffLinks" method="post" action="/redesign/specimen-details2.cfm">
         <input type="hidden" name="collection_object_id" value="#one.collection_object_id#">
@@ -329,6 +408,7 @@ WHERE irel.related_coll_object_id=#collection_object_id#
         <div class="card">
             <div class="card-header">
                 <h5 style="margin-bottom: 0;font-size: 15px;"> Identifications</h5>
+                  <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
             </div>
             <div class="card-body">
                 <cfquery name="identification" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
@@ -493,89 +573,12 @@ WHERE irel.related_coll_object_id=#collection_object_id#
         
         <!------------------------------------ locality -------------------------------------------> 
 
-  <script>	
-	  
-	  //////////////////////
-	  /////what can move to the main function page?
-	  //////////////////////////////
-	  ////////////////////////
-	  ///////////////////////
-	  
-  $(function(){
-	  
-    function saveEdits() {
-    }
-	 
- 	var screenWidth, screenHeight, dialogWidth, dialogHeight, isDesktop;
-    screenWidth = window.screen.width;
-    screenHeight = window.screen.height;
-
-    if ( screenWidth < 1600 ) {
-		dialogWidth = '90%';
-        dialogHeight = 'auto';
-		 isDesktop = false;
-    } else if ( screenWidth > 1600  ){
-        dialogWidth = '46%';
-       dialogHeight = 'auto'
-        isDesktop = true;
-    }
-
-    dialog = $( "##dialog-form" ).dialog({
-      autoOpen: false,
-      width: dialogWidth,
-	  height: dialogHeight,
-      maxWidth: 1150,
-	  fluid: true,
-      modal: true,
-	  resizable: true,
-      buttons: {
-		    "1": { id: 'open', text: 'Save Shared Locality', click: function(){ $(this).dialog("open"); },"class": "save_shared" },
-            "2": { id: 'save', text: 'Save Changes for this Record Only', click: function(){ $(this).dialog("save"); }, "class": "save_local" },
-            "3": { id: 'close', text: 'Cancel', click: function(){ $(this).dialog("close"); }, "class": "cancel_bk"}
-            }
-    });
-    
-	form = dialog.find( "form" ).on( "submit", function( event ) {
-           event.preventDefault();
-           saveEdits();
-		// $(window).off("resize.responsive");
-    });
- 
-    $( "##edit-locality" ).button().on( "click", function() {
-           dialog.dialog( "open" );
-		   fluidDialog();
-    });
-	function fluidDialog() {
-    var $visible = $(".ui-dialog:visible");
-    // each open dialog
-    $visible.each(function () {
-        var $this = $(this);
-        var dialog = $this.find(".ui-dialog-content").data("dialog");
-      console.log(dialog);
-        // if fluid option == true
-        if (dialog.options.maxWidth && dialog.options.width) {
-            // fix maxWidth bug
-            $this.css("max-width", dialog.options.maxWidth);
-            //reposition dialog
-            dialog.option("position", dialog.options.position);
-        }
-
-    });
-}  
-	
-});
-	  
-	  //////////////////////
-	  //////////////////////////////
-	  ////////////////////////
-	  ///////////////////////
-	</script> 
 
         <div class="card">
             <div class="card-header">
                 <h5 style="margin-bottom: 0;font-size: 15px;">Locality</h5>
              
-                <button type="button" id="edit-locality" class="detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
+                <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
 
             </div>
             <cfquery name="getLoc"	 datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
@@ -589,13 +592,46 @@ WHERE irel.related_coll_object_id=#collection_object_id#
 
             
             
-     <div id="dialog-form" title="Edit Locality"> 
-			<div class="menu-tabs"> 
-              <ul>
-                  <li>Taxa</li><li>Accn &amp; IDs</li><li>Collecting Event</li><li>Locality</li><li>Relations</li><li>Parts</li><li>Attributes</li><li>Media</li><li>Encumbrances</li>
-              </ul>
-            </div>
-                 <table id="static_values">
+     <div id="dialog-form" title="Edit"> 
+           <ul class="nav nav-tabs" role="tablist">
+			 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="##taxa">Taxa</a></li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" href="##trans">Transactions</a></li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" href="##otherid">Other IDs</a></li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" href="##collevent">Collecting Event</a></li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" href="##locality1">Locality</a></li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" href="##relations">Relations</a></li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" href="##parts">Parts
+              <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="##containers">Containers</a></li>
+					  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="##barcode">Barcode Lookup</a></li>
+					  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="##editparts">Edit Parts</a></li>
+					</ul>
+ 			 </li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="##attributes">Attributes</a></li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="##media">Media</a></li>
+             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="##encumbrances">Encumbrances</a></li>
+            </ul>
+   <div class="tab-content">
+    <div id="taxa" class="tab-pane fade in active"  role="tabpanel">
+      <h3 class="mt-2 ml-1">Edit Taxonomy</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div id="accn" class="tab-pane fade" role="tabpanel">
+      <h3 class="mt-2 ml-1">Edit Accession</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="otherid" class="tab-pane fade" role="tabpanel">
+      <h3 class="mt-2 ml-1">Edit ID</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+       <div id="collevent" class="tab-pane fade" role="tabpanel">
+      <h3 class="mt-2 ml-1">Edit Collecting Event</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+      <div id="locality1" class="tab-pane fade" role="tabpanel">
+        <h3 class="mt-2 ml-1">Edit Locality</h3>
+        <table id="static_values">
                     <tr>
                         <td><label for="higher_geog" class="mt-2">Higher Geography &mdash; &nbsp;</label>
                             #getGeo.higher_geog#</td>
@@ -609,7 +645,6 @@ WHERE irel.related_coll_object_id=#collection_object_id#
                             #one.dec_lat#, #one.dec_long#</td>
                     </tr>
                 </table>
-		
         <div class="active_form">
                 <div class="alert_box">This locality includes:
                     <ul>
@@ -617,8 +652,6 @@ WHERE irel.related_coll_object_id=#collection_object_id#
                         <li class="colls"><a>4 invertebrates (IZ)</a></li>
                     </ul>
                 </div>
-              
-               
                 <form name="localityForm" id="localityForm">
                     <fieldset>
                         <input type="hidden" name="transaction_id" value="#locality_id#" id="shipmentForm_transaction_id" >
@@ -665,10 +698,342 @@ WHERE irel.related_coll_object_id=#collection_object_id#
                     
                     <fieldset>
 						<button value="Edit Georeference" type="button" class="ml-1 mt-3">Edit Georeference</button>
-                </form>
-		</div>
+                </form>       
+            </div>
+	   </div>
+	
+       <div id="relations" class="tab-pane fade" role="tabpanel">
+      <h3 class="mt-2 ml-1">Edit Relations</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+      
+           <!---
+     -----------------------------------
+     -----------------------------------
+     -----------------------------------
+     -----------------------------------
+     --->
+ <div id="parts" class="tab-pane fade" role="tabpanel">
+  <div class="container-fluid">
+   <h3 class="mt-2">Edit Parts</h3>
+    <cfoutput>
+	<cfquery name="getParts" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+		SELECT
+			specimen_part.collection_object_id as partID,
+			part_name,
+			preserve_method,
+			collection.institution_acronym,
+			coll_obj_disposition,
+			condition,
+			sampled_from_obj_id,
+			cataloged_item.collection_cde,
+			cat_num,
+			lot_count_modifier,
+			lot_count,
+			parentContainer.barcode,
+			parentContainer.label,
+			parentContainer.container_id AS parentContainerId,
+			thisContainer.container_id AS partContainerId,
+			parentContainer.print_fg,
+			coll_object_remarks
+		FROM
+			cataloged_item
+			INNER JOIN collection ON (cataloged_item.collection_id = collection.collection_id)
+			LEFT OUTER JOIN specimen_part ON (cataloged_item.collection_object_id = specimen_part.derived_from_cat_item)
+			LEFT OUTER JOIN coll_object ON (specimen_part.collection_object_id = coll_object.collection_object_id)
+			LEFT OUTER JOIN coll_obj_cont_hist ON (specimen_part.collection_object_id = coll_obj_cont_hist.collection_object_id)
+			LEFT OUTER JOIN container thisContainer ON (coll_obj_cont_hist.container_id = thisContainer.container_id)
+			LEFT OUTER JOIN container parentContainer ON (thisContainer.parent_container_id = parentContainer.container_id)
+			LEFT OUTER JOIN coll_object_remark ON (specimen_part.collection_object_id = coll_object_remark.collection_object_id)
+		WHERE
+			cataloged_item.collection_object_id = #collection_object_id#
+		ORDER BY sampled_from_obj_id DESC,part_name ASC
+	</cfquery>
+	<cfquery name="ctDisp" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+		select coll_obj_disposition from ctcoll_obj_disp order by coll_obj_disposition
+	</cfquery>
+	<cfquery name="ctModifiers" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+		select modifier from ctnumeric_modifiers order by modifier desc
+	</cfquery>
+	<cfquery name="ctPreserveMethod" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+		select preserve_method
+		from ctspecimen_preserv_method
+		where collection_cde = '#getParts.collection_cde#'
+		order by preserve_method
+	</cfquery>
+	
+<ul class="list-inline">
+  <li class="list-inline-item"><a href="/findContainer.cfm?collection_object_id=#collection_object_id#">Part Locations</a></li>
+  <li class="list-inline-item"><a href="/editContainer.cfm?action=newContainer&label=#getParts.collection_cde#:#getParts.cat_num#">New Container</a></li>
+  <li class="list-inline-item"><a href="/Reports/report_printer.cfm?collection_object_id=#collection_object_id#">Print Labels</a></li>
+</ul>
+	<cfset i = 1>
+	<cfset listedParts = "">
+	<form name="parts" method="post" action="editParts.cfm">
+		<input type="hidden" name="action" value="saveEdits">
+		<input type="hidden" name="collection_object_id" value="#collection_object_id#">
+		<input type="hidden" name="institution_acronym" value="#getParts.institution_acronym#">	
+<div class="container-fluid px-0 py-2">
+	<cfloop query="getParts">
+		<cfif len(getParts.partID) gt 0>
+			<input type="hidden" name="partID#i#" value="#getParts.partID#">
+			<!--- next couple lines and the if statement stop us from putting the same part in the
+			grid twice, which seems to happen when tehre are 2 parts in different containers -
+			voodoo solution, but it works.....
+			---->
+<cfif not #listcontains(listedParts, getParts.partID)#>
+	<cfset listedParts = "#listedParts#,#getParts.partID#">
+	<cfif #i# mod 2 eq 0>
+		<cfset bgc = "##C0C0C0">
+	<cfelse>
+		<cfset bgc="##F5F5F5">
+	</cfif>
+	<cfset lblClr = "red">
+	<cfif len(sampled_from_obj_id) gt 0>
+		<cfset bgc="##669999">
+	</cfif>
+	
+	 <div class="container" id="partForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <form class="form-inline">
+          <div class="row">
+            <div class="form-group">
+    <label for="part_name#i#" class="col-form-label-sm">Part
+	 <cfif len(sampled_from_obj_id) gt 0>Subsample	</cfif>	&nbsp;<span class="likeLink" onClick="getCtDoc('ctspecimen_part_name')">[ Define values ]</span></label><input type="text" name="part_name#i#" id="part_name#i#" class="form-control reqdClr" placeholder="Name" value="#getParts.part_name#"
+	onchange="findPart(this.id,this.value,'#getParts.collection_cde#');" onkeypress="return noenter(event);">
+            </div>
+            <div class="form-group">
+             <label for="preserve_method#i#" class="col-form-label-sm">&nbsp;Preserve Method&nbsp;<span class="likeLink" onClick="chgPreserve('#getParts.partID#')">[ History ]</span>
+	 </label>
+              <select name="preserve_method#i#" class="rounded form-control">
+		  <option value=""></option>
+		  <cfloop query="ctPreserveMethod">
+			  <option <cfif ctPreserveMethod.preserve_method is getParts.preserve_method> selected </cfif>value="#ctPreserveMethod.preserve_method#">#ctPreserveMethod.preserve_method#</option>
+		  </cfloop>
+		</select>
+            </div>
+            <div class="form-group">
+             
+                   <label for="coll_obj_disposition#i#" class="col-form-label-sm">Disposition</label>
+		<select name="coll_obj_disposition#i#" class="reqdClr rounded form-control">
+		  <cfloop query="ctDisp">
+			  <option <cfif ctdisp.coll_obj_disposition is getParts.coll_obj_disposition> selected </cfif>value="#ctDisp.coll_obj_disposition#">#ctDisp.coll_obj_disposition#</option>
+		  </cfloop> 
+		</select>
+             
+            </div>
+              <div class="form-group">
               
-</div>
+                <label for="condition#i#" class="col-form-label-sm">&nbsp; Condition&nbsp;<span class="likeLink" onClick="chgCondition('#getParts.partID#')">[ History ]</span></label>
+	  <input type="text" name="condition#i#" id="condition#i#" value="#getparts.condition#"  class="form-control reqdClr">
+             
+            </div>
+              <div class="form-group">
+              
+                 	<label for="lot_count_modifier#i#" class="col-form-label-sm">Mod.</label>
+		<select name="lot_count_modifier#i#" class="form-control">
+	    <option value=""></option>
+		<cfloop query="ctModifiers">
+		<option <cfif ctModifiers.modifier is getParts.lot_count_modifier> selected </cfif>value="#ctModifiers.modifier#">#ctModifiers.modifier#</option>
+		</cfloop>
+		</select>
+             
+             
+            </div>
+     
+            <div class="form-group">
+             
+              <label for="lot_count#i#" class="col-form-label-sm">Lot Count</label>
+	     <input type="text" id="lot_count#i#" name="lot_count#i#" value="#getparts.lot_count#"  class="reqdClr form-control">
+           
+            </div>
+            <div class="form-group">
+              <label for="label#i#" class="col-form-label-sm">In&nbsp;Container</label>
+           <p class="p-5px">	<cfif len(getparts.barcode) gt 0>
+		#getparts.barcode#
+		<cfelseif len(getparts.label) gt 0>
+		#getparts.label#
+		<cfelse>
+		-NONE-
+			</cfif></p>
+			</div>
+			<div class="form-group">
+		<input type="hidden" name="label#i#" value="#getparts.label#">
+		<input type="hidden" name="parentContainerId#i#" value="#getparts.parentContainerId#">
+		<input type="hidden" name="partContainerId#i#" value="#getparts.partContainerId#">
+  
+
+		<label for="print_fg#i#" class="col-form-label-sm">Container Label Type</label>
+		<select name="print_fg#i#" id="print_fg#i#" class="form-control">
+			<option <cfif getParts.print_fg is 0>selected="selected" </cfif>value="0"></option>
+			<option <cfif getParts.print_fg is 1>selected="selected" </cfif>value="1">dry</option>
+			<option <cfif getParts.print_fg is 3>selected="selected" </cfif>value="3">thermal</option>
+			<option <cfif getParts.print_fg is 2>selected="selected" </cfif>value="2">vial</option>
+		</select>
+            </div>
+            
+            <div class="form-group">
+             
+             <label for="newCode#i#" class="col-form-label-sm">Container unique ID</label>
+	  <input type="text" name="newCode#i#" id="newCode#i#" value="#getparts.barcode#" class="form-control">
+            
+            </div>
+		
+              <div class="form-group">
+              <cfquery name="pAtt" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+			select
+				 part_attribute_id,
+				 attribute_type,
+				 attribute_value,
+				 attribute_units,
+				 determined_date,
+				 determined_by_agent_id,
+				 attribute_remark,
+				 agent_name
+			from
+				specimen_part_attribute,
+				preferred_agent_name
+			where
+				specimen_part_attribute.determined_by_agent_id=preferred_agent_name.agent_id (+) and
+				collection_object_id=#partID#
+			</cfquery>
+  				 <div class="row">	
+  				 <div class="form-group">
+   				<cfif pAtt.recordcount gt 0>
+   				 
+   			
+							<cfloop query="pAtt">
+								<p>	
+								#attribute_type#<br>
+									
+								#attribute_value#<br>
+									
+								#attribute_units#<br>
+									
+								#dateformat(determined_date,"yyyy-mm-dd")#<br>
+								
+								#agent_name#<br>
+								
+								#attribute_remark#<br>
+									</p>	
+							</cfloop>
+					<cfelse>
+						<p>-- no attributes -- </p>
+					
+					</cfif>
+					 </div>
+				</div>
+      
+            </div>
+          
+          </div>
+        <div class="container-fluid">
+
+  <div class="row justify-content-md-center w-100">
+     <div class="col-sm-4 col-md-4 col-lg-4">
+     <input type="button" value="Manage Attributes" onclick="mgPartAtts(#partID#, '#getParts.collection_cde#');" class="float-right">
+	  </div>
+	 <div class="col-sm-4 col-md-4 col-lg-4">
+     <input type="button" value="Delete Part" class="delBtn"
+	onclick="parts.action.value='deletePart';parts.partID.value='#partID#';confirmDelete('parts','#part_name#');" style="text-align: center;">
+	 </div>
+	  <div class="col-sm-4 col-md-4 col-lg-4">
+ <input type="button" value="Copy" class="insBtn" onClick="newPart.part_name.value='#part_name#';
+		newPart.lot_count.value='#lot_count#';
+		newPart.coll_obj_disposition.value='#coll_obj_disposition#';
+		newPart.condition.value='#condition#';
+		newPart.coll_object_remarks.value='#coll_object_remarks#';" style="text-align: left;">
+	 </div>
+  </div><!---end row--->
+</div>		
+        </form>
+      </div>
+    </div>
+  </div>
+		
+
+
+<cfset i = i+1>
+</cfif><!---- end of the list ---->
+	</cfif>
+</cfloop>	 
+<!---<td colspan="12" align="center">
+<input type="button" value="Save All Changes" class="savBtn" onclick="parts.action.value='saveEdits';submit();">
+ </td>--->
+<cfset numberOfParts= #i# - 1>
+<input type="hidden" name="NumberOfParts" value="#numberOfParts#">
+<input type="hidden" name="partID">
+ </form>
+							
+<a name="newPart"></a>
+<div class="col-12">
+<strong>Add Specimen Part</strong>
+<form name="newPart" method="post" action="specimen-detail-body.cfm">
+	<input type="hidden" name="Action" value="newPart">
+	<input type="hidden" name="collection_object_id" value="#collection_object_id#">
+	<input type="hidden" name="institution_acronym" value="#getParts.institution_acronym#">
+
+   <div>Part Name: </div>
+			<input type="text" name="part_name" id="part_name" class="reqdClr"
+				onchange="findPart(this.id,this.value,'#getParts.collection_cde#');"
+				onkeypress="return noenter(event);">
+   <div>Preserve Method: </div>
+      
+			<select name="preserve_method"  class="reqdClr">
+            <cfloop query="ctPreserveMethod">
+              <option value="#ctPreserveMethod.preserve_method#">#ctPreserveMethod.preserve_method#</option>
+            </cfloop>
+          </select>
+	<div>Lot Count:</div>
+			<select name="lot_count_modifier">
+				<option value=""></option>
+	            <cfloop query="ctModifiers">
+	              <option value="#ctModifiers.modifier#">#ctModifiers.modifier#</option>
+	            </cfloop>
+          	</select>
+			<input type="text" name="lot_count" class="reqdClr">
+    <div>Disposition:</div>
+      <select name="coll_obj_disposition" size="1"  class="reqdClr">
+            <cfloop query="ctDisp">
+              <option value="#ctDisp.coll_obj_disposition#">#ctDisp.coll_obj_disposition#</option>
+            </cfloop>
+          </select>
+    <lable>Condition:</label>
+       <input type="text" name="condition" class="reqdClr">
+      <label>Remarks:</label><input type="text" name="coll_object_remarks">
+  <input type="submit" value="Create" class="insBtn">
+	</div>
+		
+	
+  </form>
+  </div>
+</cfoutput>
+    </div>
+	   </div> 
+          <!---
+     -----------------------------------
+     -----------------------------------
+     -----------------------------------
+     -----------------------------------
+     --->
+       <div id="attributes" class="tab-pane fade" role="tabpanel">
+      <h3 class="mt-2 ml-1">Edit Attributes</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+           <div id="media" class="tab-pane fade" role="tabpanel">
+      <h3 class="mt-2 ml-1">Edit Media</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+       <div id="encumbrances" class="tab-pane fade" role="tabpanel">
+      <h3 class="mt-2 ml-1">Edit Encumbrances</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+       
+		 </div>
+		
+  
         
             <cfquery name="localityMedia"  datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 						select
@@ -735,6 +1100,7 @@ WHERE irel.related_coll_object_id=#collection_object_id#
         <div class="card">
             <div class="card-header">
                 <h5 style="margin-bottom: 0;font-size: 15px;">Collecting Event</h5>
+                  <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled row" style="padding: 0 20px;">
@@ -786,6 +1152,10 @@ WHERE irel.related_coll_object_id=#collection_object_id#
                         <li class="list-group-item col-6"><em>Microhabitat:</em></li>
                         <li class="list-group-item col-6">#one.habitat#</li>
                     </cfif>
+                           <cfif len(colls.collectors) gt 0>
+                        <li class="list-group-item col-6"><em>Collectors:</em></li>
+                        <li class="list-group-item col-6">#colls.collectors#</li>
+                    </cfif>
                 </ul>
             </div>
         </div>
@@ -811,8 +1181,18 @@ WHERE irel.related_coll_object_id=#collection_object_id#
         <cfif len(citations.cited_name) gt 0>
             <div class="card" style="column-fill:auto">
                 <div class="card-header">
-                    <h5 style="margin-bottom: 0;font-size: 15px;">Citations</h5>
-                </div>
+                    <h5 style="margin-bottom: 0;font-size: 15px;">Citations</h5>             
+                <button type="button" id="edit-locality" class="detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#publication_id#);">Edit</button>
+
+            </div>
+            <cfquery name="getLoc"	 datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+			select  spec_locality, geog_auth_rec_id from locality
+			where locality_id=#locality_id#
+		</cfquery>
+            <cfquery name="getGeo" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+			select higher_geog from geog_auth_rec where
+			geog_auth_rec_id=#getLoc.geog_auth_rec_id#
+		</cfquery>
                 <ul class="list-group">
                     <cfloop query="citations">
                         <li class="list-group-item"> <a href="/SpecimenUsage.cfm?action=search&publication_id=#publication_id#"
@@ -896,8 +1276,10 @@ WHERE irel.related_coll_object_id=#collection_object_id#
         <cfif len(oid.other_id_type) gt 0>
             <div class="card">
                 <div class="card-header">
-                    <h5 style="margin-bottom: 0;font-size: 15px;">Other IDs</h5>
-                </div>
+                           <h5 style="margin-bottom: 0;font-size: 15px;">Other IDs</h5>             
+                <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#collection_object_id#);">Edit</button>
+
+            </div>
                 <div class="card-body">
                     <ul class="list-group">
                         <cfloop query="oid">
@@ -913,6 +1295,10 @@ WHERE irel.related_coll_object_id=#collection_object_id#
                 </div>
             </div>
         </cfif>
+        
+        
+                   
+
         <!------------------------------------ accession ------------------------------------------>
         <cfquery name="accnMedia" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 			    select       media.media_id,
@@ -935,6 +1321,7 @@ WHERE irel.related_coll_object_id=#collection_object_id#
             <div class="card">
                 <div class="card-header">
                     <h5 style="margin-bottom: 0;font-size: 15px;">Transactions</h5>
+                      <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
                 </div>
                 <ul class="list-group list-group-flush" style="padding-left: 5px;">
                     <li class="list-group-item">Accession:
@@ -1051,6 +1438,7 @@ WHERE irel.related_coll_object_id=#collection_object_id#
             <div class="card">
                 <div class="card-header">
                     <h5 style="margin-bottom: 0;font-size: 15px;">Relationship</h5>
+                      <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
                 </div>
                 <ul class="list-group list-group-flush" style="padding-left: 5px;">
                     <li class="list-group-item">
@@ -1073,6 +1461,7 @@ WHERE irel.related_coll_object_id=#collection_object_id#
             <div class="card">
                 <div class="card-header">
                     <h5 style="margin-bottom: 0;font-size: 15px;">Attributes</h5>
+                      <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
                 </div>
                 <div class="card-body">
                     <cfquery name="sex" dbtype="query">
@@ -1182,7 +1571,12 @@ WHERE irel.related_coll_object_id=#collection_object_id#
         </cfif>
         
         <!------------------------------------ parts ---------------------------------------------->
-        <div class="card" style="padding-bottom: 0;">
+           <div class="card">
+                <div class="card-header">
+                    <h5 style="margin-bottom: 0;font-size: 15px;">Parts</h5>
+                      <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
+                </div>
+                <div class="card-body">
             <cfquery name="rparts" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 					select
 						specimen_part.collection_object_id part_id,
@@ -1267,27 +1661,27 @@ WHERE irel.related_coll_object_id=#collection_object_id#
                 <cfif oneOfUs is 1>
                     <!---  <span class="detailEditCell" onclick="window.parent.loadEditApp('editParts');">Edit</span>--->
                 </cfif>
-                <table class="table table-striped table-bordered table-hovered table-responsive-md table-responsive-sm" style="margin-bottom:0">
+                <table class="table table-striped table-hovered table-responsive-md table-responsive-sm">
                     <tr>
-                        <th scope="col"><span class="innerDetailLabel">Part Name</span></th>
-                        <th scope="col"><span class="innerDetailLabel">Condition</span></th>
-                        <th scope="col"><span class="innerDetailLabel">Disposition</span></th>
-                        <th scope="col"><span class="innerDetailLabel">##</span></th>
+                        <th scope="col">Part Name</th>
+                        <th scope="col">Condition</th>
+                        <th scope="col">Disposition</span></th>
+                        <th scope="col">##</th>
                         <cfif oneOfus is "1">
-                            <th scope="col"><span class="innerDetailLabel">Container Name</span></th>
+                            <th scope="col">Container Name</th>
                         </cfif>
-                        <th scope="col"><span class="innerDetailLabel">Remarks</span></th>
+                        <th scope="col">Remarks</th>
                     </tr>
                     <cfloop query="mPart">
                         <tr>
-                            <td class="inside">#part_name#</td>
-                            <td class="inside">#part_condition#</td>
-                            <td class="inside">#part_disposition#</td>
-                            <td class="inside">#lot_count#</td>
+                            <td>#part_name#</td>
+                            <td>#part_condition#</td>
+                            <td>#part_disposition#</td>
+                            <td>#lot_count#</td>
                             <cfif oneOfus is 1>
-                                <td class="inside">#label#</td>
+                                <td>#label#</td>
                             </cfif>
-                            <td class="inside">#part_remarks#</td>
+                            <td>#part_remarks#</td>
                         </tr>
                         <cfquery name="patt" dbtype="query">
 									select
@@ -1350,6 +1744,8 @@ WHERE irel.related_coll_object_id=#collection_object_id#
                 </table>
             </cfif>
         </div>
+								</div>
+								</div>
         
         <!------------------------------------ media ---------------------------------------------->
         <cfif len(citations.cited_name) gt 0>

@@ -25,8 +25,8 @@
                     <label class="mb-1 ml-1">To</label>
                     <input id="ended_date" type="text" class="wd-090">
                 </div>
-                <div class="float-left d-inline ml-3 w-050 m-162"> 
-                <a id="refine" value="Refine" class="d-inline align-bottom bg-transparent wd-050 text-primary"/>Refine</a> 
+                <div class="float-left d-inline ml-3 w-050 m-162">
+                <a id="refine" value="Refine" class="d-inline align-bottom bg-transparent wd-050 text-primary"/>Refine</a>
                 </div>
             </div>
         </div>
@@ -65,13 +65,13 @@
 <div class="search-form-div">
 <form id="searchForm">
 <div class="jumbotron px-1 mt-1">
-	 <h2 class="">Search Specimen Records 
+	 <h2 class="">Search Specimen Records
 	     <span class="rec_count mx-0">(access to #getCount.cnt# records)</span>
 	 </h2>
 </div>
-    
+
 <div class="container-fluid">
-    <div class="row">    
+    <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
 		    <div class="input-group">
                 <div class="input-group-btn search-panel">
@@ -82,7 +82,7 @@
 					</select>
 						<script>
 							//// script for multiselect dropdown for collections
-						$("##col-multi-select").multiselect({  
+						$("##col-multi-select").multiselect({
 							header: !0,
 							height: 175,
 							minWidth: "200px",
@@ -99,11 +99,11 @@
 							multiple: !0,
 							position: {}
 						});
-						</script> 
+						</script>
                 </div>
-                  
+
                 <input id="searchText" type="text" class="has-clear form-control form-control-borderless rounded" name="searchText" placeholder="Search term">
-                <span class="form-control-clear form-control-feedback hidden"><i class="far fa-times-circle" style="position: absolute;right: 55px;top: 12px;color: ##94a4a5;"></i></span>   
+                <span class="form-control-clear form-control-feedback hidden"><i class="far fa-times-circle" style="position: absolute;right: 55px;top: 12px;color: ##94a4a5;"></i></span>
 			    <span class="input-group-btn">
                     <button class="btn btn-default blue-gray border-0" type="submit"><i class="fa fa-search text-body"></i></button>
                 </span>
@@ -123,8 +123,8 @@ $('.form-control-clear').click(function() {
   $(this).siblings('input[type="text"]').val('')
     .trigger('propertychange').focus();
 });
-	
-	
+
+
 function deleteRow(evt) {
     var i = evt.target.parentNode.parentNode.rowIndex;
     document.getElementById('POITable').deleteRow(i);
@@ -136,32 +136,36 @@ function insRow() {
     new_row.cells[0].innerHTML = len;
     var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
     inp1.id += len;
+    inp1.name += len;
     inp1.value = '';
     var inp2 = new_row.cells[2].getElementsByTagName('select')[0];
     inp2.id += len;
+    inp2.name += len;
     inp2.value = '';
-	
+
 	var inp3 = new_row.cells[3].getElementsByTagName('select')[0];
     inp3.id += len;
+    inp3.name += len;
     inp3.value = '';
-	
+
 	var inp4 = new_row.cells[4].getElementsByTagName('input')[0];
     inp4.id += len;
+    inp4.name += len;
     inp4.value = '';
     var button = new_row.cells[5].getElementsByTagName('input')[0];
     button.value = "* DELETE *";
     button.onclick = function(it) {deleteRow(it)};
-    x.appendChild( new_row ); 
+    x.appendChild( new_row );
 }
 </script>
 
 
-	<div class="mb-3 mx-0 mt-075"> 
-		<button type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" class="fs-15 bbr-0"> 
+	<div class="mb-3 mx-0 mt-075">
+		<button type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" class="fs-15 bbr-0">
 		   Advanced Search <i class="fa fa-sort fa-xs"></i>
 		</button>
-    </div>		
-			
+    </div>
+
 <div class="container" style="margin-left:0;">
 <div class="row">
 <div class="collapse navbar-collapse" id="collapseSearch" style="align-items: left">
@@ -170,7 +174,7 @@ function insRow() {
         <form id="searchForm">
             <div id="POItablediv" class="bg-0" style="background-color: none;">
                 <table class="table responsive-table w-100 text-muted mb-3 rounded b-collapse-s" id="POITable" border="1" style="line-height:24px;">
-				<tbody>
+					<tbody>
                     <tr class="first_row">
                         <td style="display: none;">##</td>
                         <td>and/or/not</td>
@@ -181,31 +185,39 @@ function insRow() {
                     </tr>
                     <tr class="rounded p-2 b-blue-gray p-2">
                         <td style="display: none;">1</td>
-                        <td class="mx-1 p-0 border-0"><select title="operator" class="custom-select fw-510" style="min-width: 5em;">
+                        <td class="mx-1 p-0 border-0">
+							<select title="joinOperator" name="joinOperator" id="joinOperator" class="custom-select fw-510" style="min-width: 5em;">
                                 <option value="and">and</option>
                                 <option value="or">or</option>
                                 <option value="not">not</option>
                             </select></td>
                         <td class="mx-1 p-0 border-0">
-                               <select title="keyword" id="sciNameOper" class="custom-select fw-510" style="min-width: 9em;">
-                                <option value="taxonomy">Taxonomy</option>
-                                <option>Places</option>
-                                <option>Media</option>
-                                <option>Publications</option>
-                                <option>Projects</option>
-                                <option>Specimens</option>
-                                <option>Dates</option>
-                                <option>Parts</option>
-                            </select></td>
-                        <td class="mx-1 p-0 border-0"><select title="operator" id="sciNameOper" class="custom-select fw-510" style="min-width: 7em;">
+							<select title="searchField" name="searchField" id="searchField" class="custom-select fw-510" style="min-width: 9em;">
+								<option value="taxonomy">Taxonomy</option>
+								<option>Places</option>
+								<option>Media</option>
+								<option>Publications</option>
+								<option>Projects</option>
+								<option>Specimens</option>
+								<option>Dates</option>
+								<option>Parts</option>
+							</select>
+						</td>
+                        <td class="mx-1 p-0 border-0">
+							<select title="comparator" name="comparator" id="comparator" class="custom-select fw-510" style="min-width: 7em;">
                                 <option value="like">contains</option>
                                 <option value="eq">is</option>
-                            </select></td>
-                        <td class="mx-1 p-0 border-0"><input type="text" class="text_search form-control flex enter-search mx-0" id="key_value" placeholder="Enter Value"/></td>
-                         <td class="mx-0 p-0 border-0 hello">
-                        <input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" class="d-inline"/></td>
-                <!---         <td class="mx-0 p-0 border-0">
-                        <input type="submit" id="searchText" value="SEARCH" class="text-right has-clear d-inline blue-gray"/>
+                            </select>
+						</td>
+                        <td class="mx-1 p-0 border-0">
+							<input type="text" class="text_search form-control flex enter-search mx-0" name="srchTxt" id="srchTxt" placeholder="Enter Value"/>
+						</td>
+                        <td class="mx-0 p-0 border-0 hello">
+                        	<input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" class="d-inline"/>
+							<input type="hidden" id="nextRowNum" value="1">
+						</td>
+                    <!---    <td class="mx-0 p-0 border-0">
+                        	<input type="submit" id="searchText" value="SEARCH" class="text-right has-clear d-inline blue-gray"/>
                         </td>--->
                     </tr>
 					</tbody>
@@ -216,7 +228,7 @@ function insRow() {
 	</div>
 </div>
 </div>
-    
+
     <!--Grid Related code below along with search handler for keyword search-->
     <div class="container-fluid">
     <div class="row">
@@ -228,18 +240,18 @@ function insRow() {
                     <li class="searchfield"> <a href="##" style="color: ##1e1e1e;"> <i class="fas fa-download" ></i> </a> </li>
                 </ul>--->
                 <div class="row" style="clear:both;">
-                    <div id="jqxgrid" class="jqxGrid" style="width: 100%;">   
-              
+                    <div id="jqxgrid" class="jqxGrid" style="width: 100%;min-height: 290px;">
+
                  <!---   <div class='tableauPlaceholder' id='viz1555509433495' style='position: relative; align-content: center;margin:auto auto;'>
                     <noscript>
 						<a href='##'><img alt='visualization of data' src='https://public.tableau.com/static/images/SC/SCXQGQQKW/1_rss.png' style='border: none' /></a>
 					</noscript>
 								<object class='tableauViz'  style='display:none;'>
-								<param name='host_url' value='https://public.tableau.com/' /> 
-								<param name='embed_code_version' value='3' /> 
-								<param name='path' value='shared/SCXQGQQKW' /> 
+								<param name='host_url' value='https://public.tableau.com/' />
+								<param name='embed_code_version' value='3' />
+								<param name='path' value='shared/SCXQGQQKW' />
 								<param name='toolbar' value='yes' />
-								<param name='static_image' value='https://public.tableau.com/static/images/SC/SCXQGQQKW/1.png' /> 
+								<param name='static_image' value='https://public.tableau.com/static/images/SC/SCXQGQQKW/1.png' />
 								<param name='animate_transition' value='yes' />
 								<param name='display_static_image' value='yes' />
 								<param name='display_spinner' value='yes' />
@@ -281,17 +293,17 @@ function insRow() {
 					url: '/redesign/specimen-details-related/component/records_search.cfc?method=getDataTable&searchText='+ searchParam,
 					async: false
 				}
-			
+
 				var dataAdapter = new $.jqx.dataAdapter(search, {
 				       beforeLoadEvent: function (){},
                        downloadComplete: function (data, status, xhr) {},
                        loadComplete: function (data) { },
                        loadError: function (xhr, status, error) { },
 			    });
-					
-					
-				evt.preventDefault();	
-					
+
+
+				evt.preventDefault();
+
 			$("##jqxgrid").jqxGrid({
 				width: '100%',
 				autoheight: 'true',
@@ -304,15 +316,15 @@ function insRow() {
 				showaggregates: true,
 				pagesizeoptions: ['100', '200', '300', '400', '500','600','700','800','900'],
                 columnsresize: true,
-				
+
                 autoshowfiltericon: false,
                 columns: [
-				  { text: '+', datafield: 'collection_object_id', width: 10, 
+				  { text: 'Link', datafield: 'collection_object_id', width: 100,
 				   createwidget: function (row, column, value, htmlElement) {
                    var datarecord = value;
                    var linkurl = 'specimen-detail.cfm?collection_object_id=' + value;
                    var link = '<div style="text-align:center;margin-top:8px;"><a href="' + linkurl + '">';
-                   var button = $(link + "<span><i class='fa fa-plus-circle'></span></a></div>");
+                   var button = $(link + "<span>View Record</span></a></div>");
                    $(htmlElement).append(button);
                       },
 				   initwidget: function (row, column, value, htmlElement) {  }},
@@ -326,20 +338,20 @@ function insRow() {
 				  { text: 'Disposition', datafield: 'coll_obj_disposition', width: 120  },
 				  { text: 'Other IDs', datafield: 'othercatalognumbers', width: 280  }
                 ]
-                    
+
 			});
-	
-		
-					
-		
+
+
+
+
 	 		// create buttons, listbox and the columns chooser dropdownlist.
             // create buttons, listbox and the columns chooser dropdownlist.
 	        // create buttons, listbox and the columns chooser dropdownlist.
             $("##applyfilter").jqxButton({ theme: theme });
-            $("##clearfilter").jqxButton({ theme: theme });	
+            $("##clearfilter").jqxButton({ theme: theme });
             $("##filterbox").jqxListBox({ checkboxes: true,  width: 280, height: 250 });
             $("##columnchooser").jqxDropDownList({ autoDropDownHeight: true, selectedIndex: 0,  width: 200, height: 25,
-                source: [ 
+                source: [
 				  {	label: 'Collectors', value: 'collectors' },
 				  { label: 'Collection Object ID', value: 'collection_object_id' },
 				  { label: 'Collection', value: 'collection' },
@@ -350,7 +362,7 @@ function insRow() {
 				  { label: 'Verbatim Date',value: 'verbatim_date'  },
 				  { label: 'Disposition', value: 'coll_obj_disposition' },
 				  { label: 'Other IDs', value: 'othercatalognumbers'  }
-                 
+
                 ]
             });
 
@@ -358,13 +370,13 @@ function insRow() {
 		        var filterBoxAdapter = new $.jqx.dataAdapter(search,
                 {
                     uniqueDataFields: [datafield],
-                    autoBind: true					
+                    autoBind: true
                 });
 				var uniqueRecords = filterBoxAdapter.records;
 				uniqueRecords.splice(0, 0, '(All or None)');
                 $("##filterbox").jqxListBox({ source: uniqueRecords, displayMember: datafield });
                 $("##filterbox").jqxListBox('checkAll');
-			
+
 
             }
 
@@ -404,7 +416,7 @@ function insRow() {
 				console.log(event);
                 updateFilterBox(event.args.item.value);
             });
-	 
+
 	 // builds and applies the filter.
             var applyFilter = function (datafield) {
                 $("##jqxgrid").jqxGrid('clearfilters');
@@ -429,21 +441,21 @@ function insRow() {
                     }
                 }
                 $("##jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
-			
+
                 $("##jqxgrid").jqxGrid('applyfilters');
                 }
-                $("##clearfilter").click(function (datafield) { 
+                $("##clearfilter").click(function (datafield) {
 				//we added datafield to pass to the function
                 $("##jqxgrid").jqxGrid('clearfilters');
-				$("##filterbox").jqxListBox('uncheckAll');  
+				$("##filterbox").jqxListBox('uncheckAll');
 				//we added this line to the code
                 });
-                $("##applyfilter").click(function () { 
+                $("##applyfilter").click(function () {
                 var dataField = $("##columnchooser").jqxDropDownList('getSelectedItem').value;
                 applyFilter(dataField);
             });
 
-	 
+
               var listSource = [ { label: 'Collectors', value: 'collectors' },
 			  { label: 'Collection Object ID', value: 'collection_object_id' },
 			  { label: 'Collection', value: 'collection' },
@@ -466,15 +478,15 @@ function insRow() {
 			  $("##jqxgrid").jqxGrid('hidecolumn', event.args.value);
 			  }
 			    $("##jqxgrid").jqxGrid('endupdate');
-					
-			
+
+
             });
-	 
+
     });
 		  });
-	 
 
-  $(function(){  
+
+  $(function(){
     function saveEdits() {
     }
  	var screenWidth, screenHeight, dialogWidth, dialogHeight, isDesktop;
@@ -537,10 +549,10 @@ function activaTab(tab){
             dialog.option("position", dialog.options.position);
         }
     });
-}  
-	
+}
+
 });
-	
-</script> 
+
+</script>
 </cfoutput>
 <cfinclude template="/redesign/includes/_footer.cfm">
