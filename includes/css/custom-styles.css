@@ -633,7 +633,7 @@ override Bootstrap styles
 	width: 100%;
 	align-content: center;
 	border-top: 1px solid #333;
-	margin: 3.5em 0 0 0;
+	margin: 1.5em 0 0 0;
 }
 .footer .bg-inverse {
 	z-index: 1;
@@ -654,6 +654,9 @@ override Bootstrap styles
 	margin-top: -.5em;
 	font-size: 1em;
 }
+#partForm .row {margin: 15px 0;}
+#partForm label {margin-bottom: 0; margin-left: 5px;}
+#partForm .form-group {margin-right: 5px;}
 #jqxDropDownList {padding:.86em 0;}
 /*.jqx-fill-state-normal, .candy {border-color: #BAC5C6; background: #BAC5C6;}
 .jqx-fill-state-pressed {border-color: #BAC5C6; background: #fff;}
