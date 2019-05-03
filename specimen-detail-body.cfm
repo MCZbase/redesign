@@ -13,7 +13,7 @@
         <cfset oneOfUs = 0>
         <cfset isClicky = "">
     </cfif>
-    <cfif oneOfUs is 0 and cgi.CF_TEMPLATE_PATH contains "/redesign/specimen-details-body-datatables.cfm">
+    <cfif oneOfUs is 0 and cgi.CF_TEMPLATE_PATH contains "/redesign/specimen-details-body.cfm">
         <!---<cfheader statuscode="301" statustext="Moved permanently">
 		<cfheader name="Location" value="/redesign/specimen_detail.cfm?collection_object_id=#collection_object_id#">--->
     </cfif>
@@ -314,11 +314,11 @@ WHERE irel.related_coll_object_id=#collection_object_id#
 		substr(formatted_publication, - 4)
 </cfquery>
 <cfoutput query="one">
-
-
-  <script>
-
-  $(function(){
+   
+   
+  <script>	
+ 
+  $(function(){  
     function saveEdits() {
     }
  	var screenWidth, screenHeight, dialogWidth, dialogHeight, isDesktop;
@@ -383,16 +383,16 @@ function activaTab(tab){
         }
 
     });
-}
-
+}  
+	
 });
 
 	  //////////////////////
 	  //////////////////////////////
 	  ////////////////////////
 	  ///////////////////////
-	</script>
-
+	</script> 
+   
     <cfif oneOfUs is 1>
         <form name="editStuffLinks" method="post" action="/redesign/specimen-details2.cfm">
         <input type="hidden" name="collection_object_id" value="#one.collection_object_id#">
@@ -401,10 +401,10 @@ function activaTab(tab){
         <input type="hidden" name="Srch" value="Part">
         <input type="hidden" name="collecting_event_id" value="#one.collecting_event_id#">
     </cfif>
-    <div class="card-columns">
-
+    <div class="card-columns"> 
+        
         <!------------------------------------ indentifications ---------------------------------->
-
+        
         <div class="card">
             <div class="card-header">
                 <h5 style="margin-bottom: 0;font-size: 15px;"> Identifications</h5>
@@ -570,14 +570,14 @@ function activaTab(tab){
                 </cfloop>
             </div>
         </div>
-
-        <!------------------------------------ locality ------------------------------------------->
+        
+        <!------------------------------------ locality -------------------------------------------> 
 
 
         <div class="card">
             <div class="card-header">
                 <h5 style="margin-bottom: 0;font-size: 15px;">Locality</h5>
-
+             
                 <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#locality_id#);">Edit</button>
 
             </div>
@@ -590,9 +590,9 @@ function activaTab(tab){
 			geog_auth_rec_id=#getLoc.geog_auth_rec_id#
 		</cfquery>
 
-
-
-     <div id="dialog-form" title="Edit">
+            
+            
+     <div id="dialog-form" title="Edit"> 
            <ul class="nav nav-tabs" role="tablist">
 			 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="##taxa">Taxa</a></li>
              <li class="nav-item"><a class="nav-link" data-toggle="tab" role="tab" href="##trans">Transactions</a></li>
@@ -666,15 +666,15 @@ function activaTab(tab){
                           <input type="text" value="" name="sovereign_nation" id="sovereign_nation" class="w-100 mt-0">
 						  </div></div>
                       <div class="row">
-                  	    <div class="col-lg-4 col-md-4 col-sm-4">
+                  	    <div class="col-lg-4 col-md-4 col-sm-4"> 
                           <label for="minimum_elevation" class="mt-3 ml-2">Minimum Elevation</label>
                           <input type="text" value="" name="minimum_elevation" id="minimum_elevation" >
 						  </div>
-                           <div class="col-lg-4 col-md-4 col-sm-4">
+                           <div class="col-lg-4 col-md-4 col-sm-4"> 
                           <label for="maximum_elevation" class="mt-3 ml-2">Maximum Elevation</label>
                           <input type="text" value="" name="maximum_elevation" id="maximum_elevation">
 						  </div>
-                             <div class="col-lg-4 col-md-4 col-sm-4">
+                             <div class="col-lg-4 col-md-4 col-sm-4"> 
                           <label for="orig_elev_units" class="mt-3 ml-2">Elev. Units</label>
                           <input type="text" value="" name="orig_elev_units" id="orig_elev_units">
 						</div>
@@ -684,29 +684,29 @@ function activaTab(tab){
 					   <label for="minimum_elevation" class="mt-3 ml-2">Minimum Depth</label>
 						<input type="text" value="" name="minimum_elevation" id="minimum_elevation">
 						  </div>
-					     <div class="col-lg-4 col-md-4 col-sm-4">
+					     <div class="col-lg-4 col-md-4 col-sm-4">   
 						   <label for="maximum_elevation" class="mt-3 ml-2">Maximum Depth</label>
 						   <input type="text" value="" name="maximum_elevation" id="maximum_elevation" >
 						  </div>
-						  <div class="col-lg-4 col-md-4 col-sm-4">
+						  <div class="col-lg-4 col-md-4 col-sm-4"> 
 						<label for="orig_elev_units" class="mt-3 ml-2">Depth Units</label>
 						<input type="text" value="" name="orig_elev_units" id="orig_elev_units">
 						</div>
 			            </div>
                    </div>
                     </fieldset>
-
+                    
                     <fieldset>
 						<button value="Edit Georeference" type="button" class="ml-1 mt-3">Edit Georeference</button>
-                </form>
+                </form>       
             </div>
 	   </div>
-
+	
        <div id="relations" class="tab-pane fade" role="tabpanel">
       <h3 class="mt-2 ml-1">Edit Relations</h3>
       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
     </div>
-
+      
            <!---
      -----------------------------------
      -----------------------------------
@@ -761,7 +761,7 @@ function activaTab(tab){
 		where collection_cde = '#getParts.collection_cde#'
 		order by preserve_method
 	</cfquery>
-
+	
 <ul class="list-inline">
   <li class="list-inline-item"><a href="/findContainer.cfm?collection_object_id=#collection_object_id#">Part Locations</a></li>
   <li class="list-inline-item"><a href="/editContainer.cfm?action=newContainer&label=#getParts.collection_cde#:#getParts.cat_num#">New Container</a></li>
@@ -772,7 +772,7 @@ function activaTab(tab){
 	<form name="parts" method="post" action="editParts.cfm">
 		<input type="hidden" name="action" value="saveEdits">
 		<input type="hidden" name="collection_object_id" value="#collection_object_id#">
-		<input type="hidden" name="institution_acronym" value="#getParts.institution_acronym#">
+		<input type="hidden" name="institution_acronym" value="#getParts.institution_acronym#">	
 <div class="container-fluid px-0 py-2">
 	<cfloop query="getParts">
 		<cfif len(getParts.partID) gt 0>
@@ -792,7 +792,7 @@ function activaTab(tab){
 	<cfif len(sampled_from_obj_id) gt 0>
 		<cfset bgc="##669999">
 	</cfif>
-
+	
 	 <div class="container" id="partForm">
     <div class="row">
       <div class="col-sm-12">
@@ -814,23 +814,23 @@ function activaTab(tab){
 		</select>
             </div>
             <div class="form-group">
-
+             
                    <label for="coll_obj_disposition#i#" class="col-form-label-sm">Disposition</label>
 		<select name="coll_obj_disposition#i#" class="reqdClr rounded form-control">
 		  <cfloop query="ctDisp">
 			  <option <cfif ctdisp.coll_obj_disposition is getParts.coll_obj_disposition> selected </cfif>value="#ctDisp.coll_obj_disposition#">#ctDisp.coll_obj_disposition#</option>
-		  </cfloop>
+		  </cfloop> 
 		</select>
-
+             
             </div>
               <div class="form-group">
-
+              
                 <label for="condition#i#" class="col-form-label-sm">&nbsp; Condition&nbsp;<span class="likeLink" onClick="chgCondition('#getParts.partID#')">[ History ]</span></label>
 	  <input type="text" name="condition#i#" id="condition#i#" value="#getparts.condition#"  class="form-control reqdClr">
-
+             
             </div>
               <div class="form-group">
-
+              
                  	<label for="lot_count_modifier#i#" class="col-form-label-sm">Mod.</label>
 		<select name="lot_count_modifier#i#" class="form-control">
 	    <option value=""></option>
@@ -838,15 +838,15 @@ function activaTab(tab){
 		<option <cfif ctModifiers.modifier is getParts.lot_count_modifier> selected </cfif>value="#ctModifiers.modifier#">#ctModifiers.modifier#</option>
 		</cfloop>
 		</select>
-
-
+             
+             
             </div>
-
+     
             <div class="form-group">
-
+             
               <label for="lot_count#i#" class="col-form-label-sm">Lot Count</label>
 	     <input type="text" id="lot_count#i#" name="lot_count#i#" value="#getparts.lot_count#"  class="reqdClr form-control">
-
+           
             </div>
             <div class="form-group">
               <label for="label#i#" class="col-form-label-sm">In&nbsp;Container</label>
@@ -862,6 +862,8 @@ function activaTab(tab){
 		<input type="hidden" name="label#i#" value="#getparts.label#">
 		<input type="hidden" name="parentContainerId#i#" value="#getparts.parentContainerId#">
 		<input type="hidden" name="partContainerId#i#" value="#getparts.partContainerId#">
+  
+
 		<label for="print_fg#i#" class="col-form-label-sm">Container Label Type</label>
 		<select name="print_fg#i#" id="print_fg#i#" class="form-control">
 			<option <cfif getParts.print_fg is 0>selected="selected" </cfif>value="0"></option>
@@ -870,13 +872,15 @@ function activaTab(tab){
 			<option <cfif getParts.print_fg is 2>selected="selected" </cfif>value="2">vial</option>
 		</select>
             </div>
+            
             <div class="form-group">
+             
              <label for="newCode#i#" class="col-form-label-sm">Container unique ID</label>
 	  <input type="text" name="newCode#i#" id="newCode#i#" value="#getparts.barcode#" class="form-control">
+            
             </div>
-            </div>
-            <div class="row">
-    <div class="form-group">
+		
+              <div class="form-group">
               <cfquery name="pAtt" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 			select
 				 part_attribute_id,
@@ -894,32 +898,35 @@ function activaTab(tab){
 				specimen_part_attribute.determined_by_agent_id=preferred_agent_name.agent_id (+) and
 				collection_object_id=#partID#
 			</cfquery>
-
+  				 <div class="row">	
+  				 <div class="form-group">
    				<cfif pAtt.recordcount gt 0>
+   				 
+   			
 							<cfloop query="pAtt">
-								<p>
+								<p>	
 								#attribute_type#<br>
-
+									
 								#attribute_value#<br>
-
+									
 								#attribute_units#<br>
-
+									
 								#dateformat(determined_date,"yyyy-mm-dd")#<br>
-
+								
 								#agent_name#<br>
-
+								
 								#attribute_remark#<br>
-									</p>
+									</p>	
 							</cfloop>
 					<cfelse>
 						<p>-- no attributes -- </p>
-
+					
 					</cfif>
-	
+					 </div>
 				</div>
-
+      
             </div>
-
+          
           </div>
         <div class="container-fluid">
 
@@ -939,18 +946,18 @@ function activaTab(tab){
 		newPart.coll_object_remarks.value='#coll_object_remarks#';" style="text-align: left;">
 	 </div>
   </div><!---end row--->
-</div>
+</div>		
         </form>
       </div>
     </div>
   </div>
-
+		
 
 
 <cfset i = i+1>
 </cfif><!---- end of the list ---->
 	</cfif>
-</cfloop>
+</cfloop>	 
 <!---<td colspan="12" align="center">
 <input type="button" value="Save All Changes" class="savBtn" onclick="parts.action.value='saveEdits';submit();">
  </td>--->
@@ -958,7 +965,7 @@ function activaTab(tab){
 <input type="hidden" name="NumberOfParts" value="#numberOfParts#">
 <input type="hidden" name="partID">
  </form>
-
+							
 <a name="newPart"></a>
 <div class="col-12">
 <strong>Add Specimen Part</strong>
@@ -972,7 +979,7 @@ function activaTab(tab){
 				onchange="findPart(this.id,this.value,'#getParts.collection_cde#');"
 				onkeypress="return noenter(event);">
    <div>Preserve Method: </div>
-
+      
 			<select name="preserve_method"  class="reqdClr">
             <cfloop query="ctPreserveMethod">
               <option value="#ctPreserveMethod.preserve_method#">#ctPreserveMethod.preserve_method#</option>
@@ -997,13 +1004,13 @@ function activaTab(tab){
       <label>Remarks:</label><input type="text" name="coll_object_remarks">
   <input type="submit" value="Create" class="insBtn">
 	</div>
-
-
+		
+	
   </form>
   </div>
 </cfoutput>
     </div>
-	   </div>
+	   </div> 
           <!---
      -----------------------------------
      -----------------------------------
@@ -1023,11 +1030,11 @@ function activaTab(tab){
       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
     </div>
   </div>
-
+       
 		 </div>
-
-
-
+		
+  
+        
             <cfquery name="localityMedia"  datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 						select
 							media_id
@@ -1087,9 +1094,9 @@ function activaTab(tab){
                 </ul>
             </div>
         </div>
-
+        
         <!------------------------------------ collecting event ------------------------------------------->
-
+        
         <div class="card">
             <div class="card-header">
                 <h5 style="margin-bottom: 0;font-size: 15px;">Collecting Event</h5>
@@ -1152,7 +1159,7 @@ function activaTab(tab){
                 </ul>
             </div>
         </div>
-
+        
         <!------------------------------------ citations ------------------------------------------>
         <cfquery name="publicationMedia"  datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 								select
@@ -1167,14 +1174,14 @@ function activaTab(tab){
 									RELATED_PRIMARY_KEY = c.publication_id and
 									c.publication_id = fp.publication_id and
 									fp.format_style='short' and
-									c.collection_object_id = #collection_object_id#
-
+									c.collection_object_id = #collection_object_id# 								
+									
 								order by substr(formatted_publication, -4)
 				</cfquery>
         <cfif len(citations.cited_name) gt 0>
             <div class="card" style="column-fill:auto">
                 <div class="card-header">
-                    <h5 style="margin-bottom: 0;font-size: 15px;">Citations</h5>
+                    <h5 style="margin-bottom: 0;font-size: 15px;">Citations</h5>             
                 <button type="button" id="edit-locality" class="detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#publication_id#);">Edit</button>
 
             </div>
@@ -1213,8 +1220,8 @@ function activaTab(tab){
                     </cfloop>
                     <cfif publicationMedia.recordcount gt 0>
                         <cfloop query="publicationMedia">
-                            <li class="list-group-item">
-
+                            <li class="list-group-item"> 
+                                
                                 <!---<cfset puri=getMediaPreview(preview_uri,media_type)>--->
                                 <cfquery name="labels"  datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 										select
@@ -1232,8 +1239,8 @@ function activaTab(tab){
                                 <cfif desc.recordcount is 1>
                                     <cfset alt=desc.label_value>
                                 </cfif>
-                                <img src="http://www.archive.org/download/proceedingsofnew04newe/page/n22_w392" width="70" height="100" style="float: left;margin: 0 8px 8px 0">
-                                <!--- <a href="#media_uri#" target="_blank"><img src="#getMediaPreview(preview_uri,media_type)#" alt="#alt#" class="theThumbSmall"></a>--->
+                                <img src="http://www.archive.org/download/proceedingsofnew04newe/page/n22_w392" width="70" height="100" style="float: left;margin: 0 8px 8px 0"> 
+                                <!--- <a href="#media_uri#" target="_blank"><img src="#getMediaPreview(preview_uri,media_type)#" alt="#alt#" class="theThumbSmall"></a>---> 
                                 <span style="font-size: .9em;line-height: .95em;">#media_type# (#mime_type#) <a href="/media/#media_id#" target="_blank">Media Details</a> #alt# </span> </li>
                         </cfloop>
                     </cfif>
@@ -1269,7 +1276,7 @@ function activaTab(tab){
         <cfif len(oid.other_id_type) gt 0>
             <div class="card">
                 <div class="card-header">
-                           <h5 style="margin-bottom: 0;font-size: 15px;">Other IDs</h5>
+                           <h5 style="margin-bottom: 0;font-size: 15px;">Other IDs</h5>             
                 <button type="button" class="popperbtn detail-edit-cell" onClick="$('##dialog-form').dialog('open'); setupNewLocality(#collection_object_id#);">Edit</button>
 
             </div>
@@ -1288,9 +1295,9 @@ function activaTab(tab){
                 </div>
             </div>
         </cfif>
-
-
-
+        
+        
+                   
 
         <!------------------------------------ accession ------------------------------------------>
         <cfquery name="accnMedia" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
@@ -1331,9 +1338,9 @@ function activaTab(tab){
                             </cfloop>
                         </cfif>
                     </li>
-
+                    
                     <!--------------------  Project / Usage ------------------------------------>
-
+                    
                     <cfquery name="isProj" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 				SELECT project_name, project.project_id project_id FROM
 				project, project_trans
@@ -1425,7 +1432,7 @@ function activaTab(tab){
                 </ul>
             </div>
         </cfif>
-
+        
         <!------------------------------------ relationships  ------------------------------------->
         <cfif len(relns.biol_indiv_relationship) gt 0 >
             <div class="card">
@@ -1448,7 +1455,7 @@ function activaTab(tab){
                 </ul>
             </div>
         </cfif>
-
+        
         <!------------------------------------ attributes ----------------------------------------->
         <cfif len(attribute.attribute_type) gt 0>
             <div class="card">
@@ -1562,7 +1569,7 @@ function activaTab(tab){
                 </div>
             </div>
         </cfif>
-
+        
         <!------------------------------------ parts ---------------------------------------------->
            <div class="card">
                 <div class="card-header">
@@ -1739,7 +1746,7 @@ function activaTab(tab){
         </div>
 								</div>
 								</div>
-
+        
         <!------------------------------------ media ---------------------------------------------->
         <cfif len(citations.cited_name) gt 0>
             <cfquery name="mediaTag" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
@@ -1820,7 +1827,7 @@ function activaTab(tab){
 						id="ala_image_confirm" onclick='windowOpener("/ALA_Imaging/confirmImage.cfm?collection_object_id=#collection_object_id#","alaWin","width=700,height=400, resizable,scrollbars,location,toolbar");'> Confirm Image IDs </span>
                     </CFIF>
                 </cfif>
-
+                
                 <!---"thumbs"--->
                 <div class="card  card-primary bg-light text-left">
                     <div class="card-header">
@@ -1864,7 +1871,7 @@ function activaTab(tab){
                 </div>
             </cfif>
         </cfif>
-
+        
         <!------------------------------------ metadata ------------------------------------------->
         <cfif oneofus is 1 or not Findnocase("mask parts", one.encumbranceDetail)>
             <cfif oneOfUs is 1>

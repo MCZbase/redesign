@@ -1,5 +1,6 @@
 <cfset pageTitle = "search specimens">
 <cfinclude template = "/redesign/includes/_header.cfm">
+
 <cfoutput>
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
         <section> <a id="showRightPush" class="btn black-filter-btn" role="button">Filters</a> </section>
@@ -25,9 +26,7 @@
                     <label class="mb-1 ml-1">To</label>
                     <input id="ended_date" type="text" class="wd-090">
                 </div>
-                <div class="float-left d-inline ml-3 w-050 m-162">
-                <a id="refine" value="Refine" class="d-inline align-bottom bg-transparent wd-050 text-primary"/>Refine</a>
-                </div>
+                <div class="float-left d-inline ml-3 w-050 m-162"> <a id="refine" value="Refine" class="d-inline align-bottom bg-transparent wd-050 text-primary"/>Refine</a> </div>
             </div>
         </div>
     </nav>
@@ -50,81 +49,18 @@
     </nav>
     <cfquery name="getCount" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
 	select count(collection_object_id) as cnt from cataloged_item
-    </cfquery>
-    <cfquery name="collSearch" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
-		SELECT
-			collection.institution,
-			collection.collection,
-			collection.collection_id,
-			collection.guid_prefix
-		FROM
-			collection
-		order by collection.collection
 	</cfquery>
-
-<div class="search-form-div">
-<form id="searchForm">
-<div class="jumbotron px-1 mt-1">
-	 <h2 class="">Search Specimen Records
-	     <span class="rec_count mx-0">(access to #getCount.cnt# records)</span>
-	 </h2>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
-		    <div class="input-group">
-                <div class="input-group-btn search-panel">
-                   <select class="dropdown-menu fs-14" role="menu" id="col-multi-select" multiple="multiple" >
-                    <cfloop query="collSearch">
-                        <option value="#collSearch.guid_prefix#"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
-                    </cfloop>
-					</select>
-						<script>
-							//// script for multiselect dropdown for collections
-						$("##col-multi-select").multiselect({
-							header: !0,
-							height: 175,
-							minWidth: "200px",
-							classes: "float-sm-left float-md-right mx-0",
-							checkAllText: "Check all",
-							uncheckAllText: "Uncheck all",
-							noneSelectedText: "All Collections ",
-							selectedText: "## selected",
-							fontFamily: "Arial",
-							selectedList: 0,
-							show: null,
-							hide: null,
-							autoOpen: !1,
-							multiple: !0,
-							position: {}
-						});
-						</script>
-                </div>
-
-                <input id="searchText" type="text" class="has-clear form-control form-control-borderless rounded" name="searchText" placeholder="Search term">
-                <span class="form-control-clear form-control-feedback hidden"><i class="far fa-times-circle" style="position: absolute;right: 55px;top: 12px;color: ##94a4a5;"></i></span>
-			    <span class="input-group-btn">
-                    <button class="btn btn-default blue-gray border-0" type="submit"><i class="fa fa-search text-body"></i></button>
-                </span>
-            </div>
-        </div>
-	</div>
-</div>
-
-<script>
-	/// clear keyword search script below
-$('.has-clear input[type="text"]').on('input propertychange', function() {
-  var $this = $(this);
-  var visible = Boolean($this.val());
-  $this.siblings('.form-control-clear').toggleClass('hidden', !visible);
-}).trigger('propertychange');
-$('.form-control-clear').click(function() {
-  $(this).siblings('input[type="text"]').val('')
-    .trigger('propertychange').focus();
-});
-
-
+    <cfquery name="collSearch" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+	SELECT
+		collection.institution,
+		collection.collection,
+		collection.collection_id,
+		collection.guid_prefix
+	FROM
+		collection
+	order by collection.collection
+	</cfquery>
+    <script>
 function deleteRow(evt) {
     var i = evt.target.parentNode.parentNode.rowIndex;
     document.getElementById('POITable').deleteRow(i);
@@ -157,113 +93,353 @@ function insRow() {
     button.onclick = function(it) {deleteRow(it)};
     x.appendChild( new_row );
 }
+function deleteRow2(evt) {
+    var i = evt.target.parentNode.parentNode.rowIndex;
+    document.getElementById('FUFtable').deleteRow(i);
+}
+function insRow2() {
+    var x = document.getElementById('FUFtable');
+    var new_row = x.rows[1].cloneNode(true);
+    var len = x.rows.length;
+    new_row.cells[0].innerHTML = len;
+    var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
+    inp1.id += len;
+    inp1.name += len;
+    inp1.value = '';
+    var inp2 = new_row.cells[2].getElementsByTagName('select')[0];
+    inp2.id += len;
+    inp2.name += len;
+    inp2.value = '';
+
+	var inp3 = new_row.cells[3].getElementsByTagName('select')[0];
+    inp3.id += len;
+    inp3.name += len;
+    inp3.value = '';
+
+	var inp4 = new_row.cells[4].getElementsByTagName('input')[0];
+    inp4.id += len;
+    inp4.name += len;
+    inp4.value = '';
+    var button = new_row.cells[5].getElementsByTagName('input')[0];
+    button.value = "* DELETE *";
+    button.onclick = function(it) {deleteRow(it)};
+    x.appendChild( new_row );
+}
 </script>
-
-
-	<div class="mb-3 mx-0 mt-075">
-		<button type="button" data-toggle="collapse" data-target="##collapseSearch" aria-controls="collapseSearch" class="fs-15 bbr-0">
-		   Advanced Search <i class="fa fa-sort fa-xs"></i>
-		</button>
+    <cfquery name="ctElevUnits" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select orig_elev_units from CTORIG_ELEV_UNITS
+       </cfquery>
+    <cfquery name="ctDepthUnits" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select depth_units from ctDepth_Units
+       </cfquery>
+    <cfquery name="ContOcean" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select continent_ocean from ctContinent ORDER BY continent_ocean
+       </cfquery>
+    <cfquery name="Country" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select distinct(country) from geog_auth_rec order by country
+       </cfquery>
+    <cfquery name="IslGrp" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select island_group from ctIsland_Group order by Island_Group
+       </cfquery>
+    <cfquery name="Feature" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select distinct(Feature) from geog_auth_rec order by Feature
+       </cfquery>
+    <cfquery name="Water_Feature" datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+				 select distinct(Water_Feature) from geog_auth_rec order by Water_Feature
+			 </cfquery>
+    <cfquery name="ctgeology_attribute"  datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select attribute from geology_attribute_hierarchy group by attribute order by attribute
+       </cfquery>
+    <cfquery name="ctgeology_attribute_val"  datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select attribute_value from geology_attribute_hierarchy group by attribute_value order by attribute_value
+       </cfquery>
+    <cfquery name="ctlat_long_error_units"  datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select lat_long_error_units from ctlat_long_error_units group by lat_long_error_units order by lat_long_error_units
+       </cfquery>
+    <cfquery name="ctverificationstatus"  datasource="user_login" username="#session.dbuser#" password="#decrypt(session.epw,cfid)#">
+       	select verificationstatus from ctverificationstatus group by verificationstatus order by verificationstatus
+       </cfquery>
+    <cfquery name="ctmedia_type" datasource="cf_dbuser" cachedwithin="#createtimespan(0,0,60,0)#">
+	select media_type from ctmedia_type order by media_type
+</cfquery>
+    <cfif isdefined("session.roles") and listfindnocase(session.roles,"coldfusion_user")>
+        <cfset oneOfUs = 1>
+        <cfset isClicky = "likeLink">
+        <cfelse>
+        <cfset oneOfUs = 0>
+        <cfset isClicky = "">
+    </cfif>
+    <div class="search-form-div pb-4 px-3">
+    <div class="container-fluid">
+    <div class="row">
+    <div class="col-md-11 col-sm-12">
+        <div class="jumbotron px-1 mt-1 mx-4">
+            <h2 class="">Search Specimen Records <span class="rec_count mx-0">(access to #getCount.cnt# records)</span> </h2>
+        </div>
     </div>
-
-<div class="container" style="margin-left:0;">
-<div class="row">
-<div class="collapse navbar-collapse" id="collapseSearch" style="align-items: left">
-<!---advanced search dropdown table below--->
-
+    <div class="col-md-11 col-sm-12">
+    <div class="tab-card-main mt-1 tab-card">
+    <div class="card-header tab-card-header w-100" style="padding-bottom: 0px;background-color: ##5B5B5B">
+        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+            <li class="nav-item col-sm-12 col-md-2 px-1"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="##one" role="tab" aria-controls="One" aria-selected="true" >Keyword</a> </li>
+            <li class="nav-item col-sm-12 col-md-3 px-1"> <a class="nav-link" id="two-tab" data-toggle="tab" href="##two" role="tab" aria-controls="Two" aria-selected="false">Search Builder</a> </li>
+            <li class="nav-item col-sm-12 col-md-3 px-1"> <a class="nav-link" id="four-tab" data-toggle="tab" href="##four" role="tab" aria-controls="Four" aria-selected="false">Custom Fixed Search</a> </li>
+        </ul>
+    </div>
+    <div class="tab-content pb-0" id="myTabContent">
+    <!---Keyword Search--->
+    <div class="tab-pane fade show active py-3 mx-sm-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+        <h5 class="card-title mx-2">Keyword Search</h5>
         <form id="searchForm">
-            <div id="POItablediv" class="bg-0" style="background-color: none;">
-                <table class="table responsive-table w-100 text-muted mb-3 rounded b-collapse-s" id="POITable" border="1" style="line-height:24px;">
-					<tbody>
-                    <tr class="first_row">
-                        <td style="display: none;">##</td>
-                        <td>and/or/not</td>
-                        <td>&nbsp;&nbsp;keyword</td>
-                        <td>contains/is</td>
-                        <td>&nbsp;&nbsp;value</td>
-                        <td>&nbsp;&nbsp;delete?</td>
-                    </tr>
-                    <tr class="rounded p-2 b-blue-gray p-2">
-                        <td style="display: none;">1</td>
-                        <td class="mx-1 p-0 border-0">
-							<select title="joinOperator" name="joinOperator" id="joinOperator" class="custom-select fw-510" style="min-width: 5em;">
-                                <option value="and">and</option>
-                                <option value="or">or</option>
-                                <option value="not">not</option>
-                            </select></td>
-                        <td class="mx-1 p-0 border-0">
-							<select title="searchField" name="searchField" id="searchField" class="custom-select fw-510" style="min-width: 9em;">
-								<option value="taxonomy">Taxonomy</option>
-								<option>Places</option>
-								<option>Media</option>
-								<option>Publications</option>
-								<option>Projects</option>
-								<option>Specimens</option>
-								<option>Dates</option>
-								<option>Parts</option>
-							</select>
-						</td>
-                        <td class="mx-1 p-0 border-0">
-							<select title="comparator" name="comparator" id="comparator" class="custom-select fw-510" style="min-width: 7em;">
-                                <option value="like">contains</option>
-                                <option value="eq">is</option>
-                            </select>
-						</td>
-                        <td class="mx-1 p-0 border-0">
-							<input type="text" class="text_search form-control flex enter-search mx-0" name="srchTxt" id="srchTxt" placeholder="Enter Value"/>
-						</td>
-                        <td class="mx-0 p-0 border-0 hello">
-                        	<input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" class="d-inline"/>
-							<input type="hidden" id="nextRowNum" value="1">
-						</td>
-                    <!---    <td class="mx-0 p-0 border-0">
-                        	<input type="submit" id="searchText" value="SEARCH" class="text-right has-clear d-inline blue-gray"/>
-                        </td>--->
-                    </tr>
-					</tbody>
-                </table>
+            <div class="col-xs-8 col-md-4 col-lg-6 col-xs-offset-2">
+                <div class="input-group">
+                    <div class="input-group-btn search-panel">
+                        <select class="dropdown-menu fs-14" role="menu" id="col-multi-select" multiple="multiple" >
+                            <cfloop query="collSearch">
+                                <option value="#collSearch.guid_prefix#"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
+                            </cfloop>
+                        </select>
+                        <script>
+	//// script for multiselect dropdown for collections
+$("##col-multi-select").multiselect({
+	header: !0,
+	height: 175,
+	minWidth: "200px",
+	classes: "float-sm-left float-md-right mx-0",
+	checkAllText: "Check all",
+	uncheckAllText: "Uncheck all",
+	noneSelectedText: "All Collections ",
+	selectedText: "## selected",
+	fontFamily: "Arial",
+	selectedList: 0,
+	show: null,
+	hide: null,
+	autoOpen: !1,
+	multiple: !0,
+	position: {}
+});
+</script> 
+                    </div>
+                    <input id="searchText" type="text" class="has-clear form-control form-control-borderless rounded" name="searchText" placeholder="Search term">
+                    <span class="input-group-btn">
+                    <button class="btn btn-custom blue-gray border-0" type="submit"><i class="fa fa-search text-body"></i></button>
+                    </span> </div>
+                <p class="px-1" style="line-height: 1.5em;padding-top: 1em;font-size: 13px;">Explanation of how keyword search works.... </p>
             </div>
         </form>
     </div>
-	</div>
-</div>
-</div>
+    <!---Search Builder--->
+    <div class="tab-pane fade show py-3 px-3" id="two" role="tabpanel" aria-labelledby="two-tab" >
+      
+        <form id="searchForm2">
+             <h5 class="card-title mx-2">Search Buider</h5>
+            <div id="POItablediv" class="bg-0 col-sm-12 col-md-10">
+                <div class="input-group d-md-flex d-sm-block">
+                    <div class="input-group-btn search-panel d-md-flex">
+                        <table class="table responsive-table w-100 text-muted mb-3 rounded b-collapse-s" id="POITable" border="1">
+                            <tbody>
+                                <tr class="first_row">
+                                    <td style="display: none;">##</td>
+                                    <td>and/or/not</td>
+                                    <td>&nbsp;&nbsp;keyword</td>
+                                    <td>contains/is</td>
+                                    <td>&nbsp;&nbsp;value</td>
+                                    <td>&nbsp;&nbsp;delete?</td>
+                                </tr>
+                                <tr class="rounded p-2 b-blue-gray p-2 ml-1">
+                                    <td style="display: none;">1</td>
+                                    <td class="mx-1 p-0 border-0"><select title="joinOperator" name="joinOperator" id="joinOperator" class="custom-select" style="min-width: 5em;">
+                                            <option value="and">and</option>
+                                            <option value="or">or</option>
+                                            <option value="not">not</option>
+                                        </select></td>
+                                    <td class="mx-1 p-0 border-0"><select title="searchField" name="searchField" id="searchField" class="custom-select" style="min-width: 9em;">
+                                            <option value="taxonomy">Taxonomy</option>
+                                            <option>Places</option>
+                                            <option>Media</option>
+                                            <option>Publications</option>
+                                            <option>Projects</option>
+                                            <option>Specimens</option>
+                                            <option>Dates</option>
+                                            <option>Parts</option>
+                                        </select></td>
+                                    <td class="mx-1 p-0 border-0"><select title="comparator" name="comparator" id="comparator" class="custom-select" style="min-width: 7em;">
+                                            <option value="like">contains</option>
+                                            <option value="eq">is</option>
+                                        </select></td>
+                                    <td class="mx-1 p-0 border-0"><input type="text" class="text_search form-control flex enter-search mx-0" name="srchTxt" id="srchTxt" placeholder="Enter Value"/></td>
+                                    <td class="mx-0 p-0 border-0"><input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" class="d-inline"/>
+                                        <input type="hidden" id="nextRowNum" value="1"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <span class="input-group-btn">
+                    <button class="btn btn-custom blue-gray border-0" type="submit"> <i class="fa fa-search text-body"></i></button>
+                    </span> </div>
+            </div>
+        </form>
+    </div>
+  
+    
+    <!---field rich search--->
+        
+    <div class="tab-pane fade p-3" id="four" role="tabpanel" aria-labelledby="four-tab">
+    <h5 class="card-title ml-2">Custom Fixed Search</h5>
+    <div class="container-fluid">
+    <form method="post" action="specimens.cfm" name="SpecData" id="searchForm4" class="form-horizontal" role="form">
 
+      
+        <div class="row px-4 pb-3">
+            <div class="custom-control custom-checkbox col-md-3 col-sm-12">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Include Observations?</label>
+            </div>
+            <div class="custom-control custom-checkbox col-md-3 col-sm-12">
+                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                <label class="custom-control-label" for="customCheck2">Require Tissues?</label>
+            </div>
+            <div class="custom-control custom-checkbox col-md-3 col-sm-12">
+                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                <label class="custom-control-label" for="customCheck3">Accent Insensitive?</label>
+            </div>
+             
+                    <select id="selectbasic" name="selectbasic" class="selectpicker border rounded">
+                <option value="none">Require Media?</option>
+                <option value="any">Any</option>
+                <cfloop query="ctmedia_type">
+                    <option value="#ctmedia_type.media_type#">#ctmedia_type.media_type#</option>
+                </cfloop>
+            </select>
+			
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <fieldset class="form-group">
+                    <label for="textarea" class="col-12"><strong>Catalog Number(s)</strong></label>
+                    <select class="col-12 fs-14 w-100" role="menu" id="col-multi-select2" multiple="multiple">
+                      
+                        <cfloop query="collSearch">
+                            <option value="#collSearch.guid_prefix#"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
+                        </cfloop>
+                    </select>
+                    <script>
+	//// script for multiselect dropdown for collections
+$("##col-multi-select2").multiselect({
+	header: !0,
+	height: 175,
+	minWidth: "300px",
+	classes: "",
+	checkAllText: "Check all",
+	uncheckAllText: "Uncheck all",
+	noneSelectedText: "All Collections ",
+	selectedText: "## selected",
+	fontFamily: "Arial",
+	selectedList: 0,
+	show: null,
+	hide: null,
+	autoOpen: !1,
+	multiple: !0,
+	position: {}
+});
+</script>
+   <textarea id="textarea" name="textarea" class="form-control-sm mb-3">Enter Catalog Numbers</textarea>
+        <label for="textarea" class="col-12"><strong>Other IDs</strong></label>
+                    <select class="selectpicker w-100 border rounded mb-0 fs-12" role="menu" id="col-multi-select3">
+                            <option value=""> </option>
+                            <option value="collector number">collector number </option>
+                            <option value="field number">field number</option>
+                    </select>
+                       <input type="text" class="input form-control-sm mb-3" placeholder="Other ID number">
+   <label class="col-12"><strong>Collectors</strong></label>
+   <input type="text" class="input form-control-sm mb-3" placeholder="Search Collectors">
+    
+               
+              
+                </fieldset>
+            </div>
+            <div  class="col-md-4 col-sm-12">
+                <fieldset class="form-group">
+                    <label class="col-4"><strong>Taxonomy</strong></label>
+                    <input id="taxa" class="form-control-sm mb-3" placeholder="enter taxonomy">
+                    <script>
+							$("##nicIssuedDate").prop('disabled', true);
+
+							</script>
+                   <div class="col-12 p-0" style="margin:0;padding:0;">
+                   <label class="d-inline col-12" for="date"><strong>Date Range (use one field for day) </strong></label>
+                    <div class="input-group float-left col-md-6 col-sm-12 p-0 mb-3 mt-2 mr-0">
+                        <input type="date" id ="DateRange1" class="form-control-sm" placeholder="" style="font-size: 12px;width: 80%;">
+                        <div class="input-group-append" style="padding: 0;"> 
+                              <span class="input-group-text" id="basic-addon2" style="padding: 3px"><span class="fa fa-calendar"></span></span> 
+                        </div>
+					</div>
+                    <div class="input-group float-left col-md-6 col-sm-12 p-0 mb-3 mt-2 mr-0">
+                        <input type="date" id ="DateRange2" class="form-control-sm" placeholder="" style="font-size: 12px;width: 80%">
+                        <div class="input-group-append" style="padding: 0;">
+							<span class="input-group-text" id="basic-addon3" style="padding: 3px"><span class="fa fa-calendar"></span></span> 
+                        </div>
+                    </div>
+					</div>
+                    <label class="col-12"><strong>Basis of Citation</strong></label>
+                    <select id="selectbasic2" name="selectbasic" class="selectpicker border rounded mb-3 fs-12">
+                        <option>Holotype</option>
+                        <option>Paratype</option>
+                        <option>Lectotype</option>
+                    </select>
+                </fieldset>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <fieldset class="form-group">
+                    <label class="col-12"><strong>Geography</strong></label>
+                    <input name="place" class="form-control-sm mb-3" placeholder="enter place">
+                    <label class="col-12"><strong>Part Name</strong></label>
+                    <input type="text" class="input form-control-sm mb-3" placeholder="Add Part Name">
+                    <label class="col-12"><strong>Disposition</strong></label>
+                    <select id="selectbasic3" name="selectbasic" class="selectpicker border rounded" style="margin-left: 5px;padding: 2px;">
+                        <option>in collection</option>
+                        <option>on loan</option>
+                        <option>deaccessioned</option>
+                        <option>other</option>
+                    </select>
+                </fieldset>
+             <span class="input-group-btn" style="float:right;">
+                    <button class="btn btn-custom blue-gray border-0" type="submit"> Search <i class="fa fa-search text-body"></i></button>
+                    </span> 
+            </div>
+        </div>
+    </div>
+    <!--/.row-->
+    </div>
+    
+    </div>
+    </div>
+    
+    </div>
+    </div>
+    </div>
+    
+    </div>
+    
     <!--Grid Related code below along with search handler for keyword search-->
     <div class="container-fluid">
-    <div class="row">
-    <div class="text-left col-md-12">
-            <main role="main">
-            <div class="px-4 w-100 mb-5">
-         <!---       <h3 style="float: left;width:220px;">All Records</h3>
-                <ul>
-                    <li class="searchfield"> <a href="##" style="color: ##1e1e1e;"> <i class="fas fa-download" ></i> </a> </li>
-                </ul>--->
-                <div class="row" style="clear:both;">
-                    <div id="jqxgrid" class="jqxGrid" style="width: 100%;min-height: 290px;">
-
-                 <!---   <div class='tableauPlaceholder' id='viz1555509433495' style='position: relative; align-content: center;margin:auto auto;'>
-                    <noscript>
-						<a href='##'><img alt='visualization of data' src='https://public.tableau.com/static/images/SC/SCXQGQQKW/1_rss.png' style='border: none' /></a>
-					</noscript>
-								<object class='tableauViz'  style='display:none;'>
-								<param name='host_url' value='https://public.tableau.com/' />
-								<param name='embed_code_version' value='3' />
-								<param name='path' value='shared/SCXQGQQKW' />
-								<param name='toolbar' value='yes' />
-								<param name='static_image' value='https://public.tableau.com/static/images/SC/SCXQGQQKW/1.png' />
-								<param name='animate_transition' value='yes' />
-								<param name='display_static_image' value='yes' />
-								<param name='display_spinner' value='yes' />
-								<param name='display_overlay' value='yes' />
-								<param name='display_count' value='yes' />
-                    </object>
-                    </div> --->
+        <div class="row">
+            <div class="text-left col-md-12">
+                <main role="main">
+                    <div class="px-4 w-100 mb-5">
+                        <h3 style="float: left;width:120px;">Results</h3>
+                        <ul>
+                            <li class="searchfield"> <a href="##" style="color: ##1e1e1e;"> <i class="fas fa-download" ></i> </a> </li>
+                        </ul>
+                        <div class="row" style="clear:both;">
+                            <div id="jqxgrid" class="jqxGrid" style="width: 100%;"> 
+                                <!---visualization of some sort---> 
+                            </div>
+                        </div>
                     </div>
-             </div>
-             </main>
+                </main>
+            </div>
         </div>
-  </div>
     </div>
     <script>
 		  $(document).ready(function() {
@@ -553,6 +729,6 @@ function activaTab(tab){
 
 });
 
-</script>
+</script> 
 </cfoutput>
 <cfinclude template="/redesign/includes/_footer.cfm">

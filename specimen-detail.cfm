@@ -7,18 +7,18 @@
 			select GUID from #session.flatTableName# where collection_object_id=#collection_object_id#
 		</cfquery>
         <!---<cfheader statuscode="301" statustext="Moved permanently">--->
-        <!---<cfheader name="Location" value="/redesign/specimen-detail-body.cfm?collection_object_id=#collection_object_id#">--->
+        <cfheader name="Location" value="/redesign/specimen-detail-body.cfm?collection_object_id=#collection_object_id#">
         <cfset guid = c.GUID>
         <!---<cfabort>--->
     </cfoutput>
 </cfif>
 <cfif isdefined("guid")>
-    <!---<cfif cgi.script_name contains "/redesign/specimen-details.cfm">
+    <cfif cgi.script_name contains "/redesign/specimen-details.cfm">
 		<cfheader statuscode="301" statustext="Moved permanently">
 		<cfheader name="Location" value="/redesign/guid/#guid#">
 		<cfabort>
-	</cfif>--->
-    <!---	<cfset checkSql(guid)>--->
+	</cfif>
+    	<!---<cfset checkSql(guid)>--->
     <cfif guid contains ":">
         <cfoutput>
             <cfset sql="select collection_object_id from
