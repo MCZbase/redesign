@@ -137,4 +137,6 @@
     <cfreturn getSBTHtmlThread.output>
 </cffunction>
 
+
+		  
 </cfcomponent>
