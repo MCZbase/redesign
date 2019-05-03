@@ -1,5 +1,5 @@
- $(document).ready(function () {  
-	 
+
+        $(document).ready(function () {
             var source =
             {
                 datatype: "json",
@@ -27,32 +27,68 @@
               loadError: function (xhr, status, error) { }
             });
 
-            // create grid.
-            $("#jqxgrid").jqxGrid(
+            var itemsInCart = 0;
+
+            $("#dataTable").jqxDataTable(
             {
-				width: '100%',
-				autoheight: 'true',
+                width: '100%',
                 source: dataAdapter,
-                filterable: false,
                 sortable: true,
-				pageable: true,
-                autoheight: true,
-				pagesize: '20',
-				showaggregates: true,
-				//pagesizeoptions: ['100', '200', '300', '400', '500','600','700','800','900'],
-                columnsresize: true,
-				
-                autoshowfiltericon: false,
+                pageable: true,
+                pageSize: 2,
+                pagerButtonsCount: 5,
+                enableHover: false,
+                selectionMode: 'none',
+                rendered: function () {
+                    $(".buy").jqxButton();
+                    $(".buy").click(function () {
+                        itemsInCart++;
+                        $(".cart-top p").html(itemsInCart + " products");
+                    });
+                },
                 columns: [
-				  { text: '+', datafield: 'collection_object_id', width: 10, 
-				   createwidget: function (row, column, value, htmlElement) {
-                   var datarecord = value;
-                   var linkurl = 'specimen-detail.cfm?collection_object_id=' + value;
-                   var link = '<div style="text-align:center;margin-top:8px;"><a href="' + linkurl + '">';
-                   var button = $(link + "<span><i class='fa fa-plus-circle'></span></a></div>");
-                   $(htmlElement).append(button);
-                      },
-				   initwidget: function (row, column, value, htmlElement) {  }},
+                  { text: '+', datafield: 'collection_object_id', width: 10, 
+				              cellsRenderer: function (row, column, value, rowData) {
+                              var laptops = rowData.laptops;
+                              var container = "<div>";
+                              for (var i = 0; i < laptops.length; i++) {
+                                  var laptop = laptops[i];
+                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
+                                  var imgurl = laptop.img;
+                                  var img = '<img width=160 height=120 style="display: block;" src="' + imgurl + '"/>';
+                                  image += img;
+                                  image += "</div>";
+
+                                  var info = "<div style='margin: 5px; margin-left: 10px; margin-bottom: 3px;'>";
+                                  info += "<div><i>" + laptop.model + "</i></div>";
+                                  info += "<div>Price: $" + laptop.price + "</div>";
+                                  info += "<div>RAM: " + laptop.ram + "</div>";
+                                  info += "<div>HDD: " + laptop.hdd + "</div>";
+                                  info += "<div>CPU: " + laptop.cpu + "</div>";
+                                  info += "<div>Display: " + laptop.display + "</div>";
+                                  info += "</div>";
+
+                                  var buy = "<button class='buy' style='margin: 5px; width: 80px; left: -40px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Buy</button>";
+
+                                  item += image;
+                                  item += info;
+                                  item += buy;
+                                  item += "</div>";
+                                  container += item;
+                              }
+                              container += "</div>";
+                              return container;
+                          },
+//				   createwidget: function (row, column, value, htmlElement) {
+//                   var datarecord = value;
+//                   var linkurl = 'specimen-detail.cfm?collection_object_id=' + value;
+//                   var link = '<div style="text-align:center;margin-top:8px;"><a href="' + linkurl + '">';
+//                   var button = $(link + "<span><i class='fa fa-plus-circle'></span></a></div>");
+//                   $(htmlElement).append(button);
+//                      },
+//				   initwidget: function (row, column, value, htmlElement) {  }
+				  },
                   { text: 'Collection', datafield: 'collection', width: 150  },
                   { text: 'Catalog Number', datafield: 'cat_num', width: 130  },
                   { text: 'Scientific Name', datafield: 'scientific_name', width: 250  },
@@ -61,9 +97,15 @@
                   { text: 'Collectors', datafield: 'collectors', width: 180 },
 				  { text: 'Verbatim Date', datafield: 'verbatim_date', width: 190  },
 				  { text: 'Disposition', datafield: 'coll_obj_disposition', width: 120  },
-				  { text: 'Other IDs', datafield: 'othercatalognumbers', width: 280  }
+				  { text: 'Other IDs', datafield: 'othercatalognumbers', width: 280  },
+                          // row - row's index.
+                          // column - column's data field.
+                          // value - cell's value.
+                          // rowData - rendered row's object.
+               
+                      }
                 ]
-                    
+                      
 
 
             });
@@ -191,7 +233,7 @@
 			  { label: 'Disposition', value: 'coll_obj_disposition' },
 			  { label: 'Other IDs', value: 'originalcatalognumbers'} ];
 
-			  $("#jqxlistbox2").jqxListBox({ source: listSource, width: 198, height: 300, theme: theme, checkboxes: true });
+			  $("#jqxlistbox2").jqxListBox({ source: listSource, width: 200, height: 200, theme: theme, checkboxes: true });
 			  $("#jqxlistbox2").jqxListBox('checkAll');
 			  $("#jqxlistbox2").on('checkChange', function (event) {
 			  $("#jqxgrid").jqxGrid('beginupdate');
@@ -205,7 +247,10 @@
 					
 			
             });
- 
+	 
+
+	 
+	 
 	   $('#eventsLog').jqxPanel({ width: 300, height: 80 });
             $("#grid").on("filter", function (event) {
                 $("#events").jqxPanel('clearcontent');
@@ -216,7 +261,25 @@
                     $('#eventLog').jqxPanel('prepend', '<div style="margin-top: 5px;">' + eventData + '</div>');
                 }
             });
- 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+
+	 
+
+             
+         
+	 
+	 
+	 
+	 
+	 
         });
 
 
