@@ -1,5 +1,5 @@
-<cfset pageTitle = "New Result Details - 3 columns">
-<cfinclude template = "/redesign/includes/_header.cfm">
+<cfset pageTitle = "Specimen Result Details-2 column">
+<cfinclude template = "/redesign/includes/_header-Kright.cfm">
 <cfif isdefined("collection_object_id")>
     <!---	<cfset checkSql(collection_object_id)>--->
     <cfoutput>
@@ -121,9 +121,8 @@
       <cfset  twotypes= '#replace(typestatusplain,"|","<br>","all")#'>
       <cfset typeName = '<br><span style="font-weight:bold;background-color:##fff;color: black;border: 1px solid ##333;margin-top:2em;padding: 5px;margin-top: .5em;width:100%;height:auto;display:block;margin-left: 4%;">#twotypes#  </span>'>
 <cfelse>
-
-<!---   <div class="defaultCont">
-      <div class="defaultType">--->
+      <cfset  twotypes= '#replace(typestatusplain,"|","<br>","all")#'>
+      <cfset typeName = '<br><span style="font-weight:bold;color: black;border: 1px solid ##333;margin-top:2em;padding: 5px;margin-top: .5em;"> </span>'>
  </cfif>
     
  <div style="padding: 0 15px">
@@ -176,13 +175,13 @@
             <div class="col-md-6">
                    <cfif isDefined("cited_as") and len(cited_as) gt 0>
                         <cfif toptypestatuskind eq 'Primary' >
-       					     <div class="card flex-md-row box-shadow h-md-250 no-card" style="background-color:transparent;">
+       					     <div class="card flex-md-row box-shadow h-md-250 no-card">
 						</cfif>
                         <cfif toptypestatuskind eq 'Secondary' >
-       				         <div class="card flex-md-row box-shadow h-md-250 no-card" style="background-color:transparent;">
+       				         <div class="card flex-md-row box-shadow h-md-250 no-card">
 						</cfif>
      				<cfelse>
-     					      <div class="card flex-md-row box-shadow h-md-250 no-card" style="background-color:transparent;">
+     					      <div class="card flex-md-row box-shadow h-md-250 no-card">
 					</cfif>    
                     <div class="card-body d-flex flex-column align-items-start">
                         <h5 class="mb-0" style="font-size: 17px;">#spec_locality#</h5>
@@ -269,7 +268,7 @@
 				$('##BTN_' + q, window.parent.document).addClass('activeButton');
 			}
 		</script>
-        <form name="incPg" method="post" action="/redesign/specimen-details.cfm">
+        <form name="incPg" method="post" action="/redesign/specimen-details2.cfm">
             <input type="hidden" name="collection_object_id" value="#collection_object_id#">
             <input type="hidden" name="suppressHeader" value="true">
             <input type="hidden" name="action" value="nothing">
@@ -306,23 +305,9 @@
                 <cfset isNext="">
                 <cfset isPrev="">
             </cfif>
-<!--- <div class="nav-scroller mb-2" style="width:100%;background-color: ##C6DCCA">
-                <nav class="nav d-flex justify-content-between" style="padding: 5px;width:90%;margin:0 auto;background-color: ##C6DCCA">
-                    <cfif isPrev is "yes">
-                    <button value="previous" onclick="document.location='/redesign/specimen-details-datatables.cfm?collection_object_id=#firstID#'" alt="[ First Record ]">
-                        <button value="previous"  onclick="document.location='/redesign/specimen-details-datatables.cfm?collection_object_id=#prevID#'" alt="[ Previous Record ]">
-                   <cfelse>
-                  </cfif>
-                    <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('editIdentification')" class="likeLink" id="BTN_editIdentification">Taxa</span></a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('addAccn')"	class="likeLink" id="BTN_addAccn">Accn</span></a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('changeCollEvent')" class="likeLink" id="BTN_changeCollEvent">Collecting Event</span> </a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('specLocality')" class="likeLink" id="BTN_specLocality">Locality</span></a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('editColls')" class="likeLink" id="BTN_editColls">Agents</span></a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('editRelationship')" class="likeLink" id="BTN_editRelationship">Relations</span></a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('editParts')" class="likeLink" id="BTN_editParts">Parts</span> </a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('findContainer')" class="likeLink" id="BTN_findContainer">Part Location</span> </a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('editBiolIndiv')" class="likeLink" id="BTN_editBiolIndiv">Attributes</span> </a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('editIdentifiers')"	class="likeLink" id="BTN_editIdentifiers">Other IDs</span></a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('MediaSearch')"	class="likeLink" id="BTN_MediaSearch">Media</span></a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('Encumbrances')" class="likeLink" id="BTN_Encumbrances">Encumbrances</span></a> <a class="p-2 text-muted" href="##"><span onclick="loadEditApp('catalog')" class="likeLink" id="BTN_catalog">Catalog</span></a>
-                    <cfif isNext is "yes">
-                  <button value="next record" onclick="document.location='/redesign/specimen-details-datatables.cfm?collection_object_id=#nextID#'" width="14" height="13" style="vertical-align: middle" alt="[ Next Record ]">
-                        <button value="next record" onclick="document.location='/redesign/specimen-details-datatables.cfm?collection_object_id=#lastID#'" alt="[ Last Record ]">
-                     <cfelse>
-                  </cfif>
-                </nav>
-            </div>--->
+
         </form>
     </cfif>
 </cfoutput>
-<cfinclude template="/redesign/specimen-detail-body.cfm">
+<cfinclude template="/redesign/specimen-detail-body2.cfm">
 <cfinclude template="/redesign/includes/_footer.cfm">
