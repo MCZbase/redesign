@@ -1,7 +1,14 @@
 <cfcomponent>
-<cffunction name="getDataTable" access="remote" returntype="any" returnformat="json">
+<cffunction name=”getSearchBuilderData” displayname="Get Search Field Data" access="remote" returntype="any" returnformat="json" >
+<cfargument name="testing" required="true" type="numeric" default="1" />
+<cfargument name="qry" required="true" type="numeric" />
 <cfset username="#session.dbuser#" />
 <cfset password="#decrypt(session.epw,cfid)#">
+
+
+
+
+
 <cfset listColumns ="ff.collection_object_id,ff.collection,ff.cat_num,ff.scientific_name,ff.spec_locality,ff.higher_geog,ff.collectors,ff.verbatim_date,ff.coll_obj_disposition,ff.othercatalognumbers" />
 <cfif isDefined("searchText") and len(searchText) gt 0>
 <cfquery name="qryLoc" datasource="uam_god">
