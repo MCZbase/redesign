@@ -6,26 +6,27 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="../../images/favicon.ico">
-<cfoutput><title>#pageTitle#</title>
+<cfoutput>
+    <title>#pageTitle#</title>
 </cfoutput>
 <link href="/redesign/includes/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="/redesign/includes/css/bootstrap-multiselect.css" rel="stylesheet">
 <link href="/redesign/includes/images/fontawesome/fontawesome-free-5.5.0-web/css/all.css" rel="stylesheet">
 <link href="/redesign/includes/JQWidgets/jqwidgets/styles/jqx.base.css" rel="stylesheet">
-<link href="/redesign/includes/css/jquery-ui.css" rel="stylesheet">   <!-- needed for dialog box -->
+<link href="/redesign/includes/css/jquery-ui.css" rel="stylesheet">
+<!-- needed for dialog box -->
 <script type="text/javascript" src="/redesign/includes/images/fontawesome/fontawesome-free-5.5.0-web/js/all.js"></script>
-<script type="text/javascript" src="/redesign/includes/js/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>  
+<!---<script type="text/javascript" src="/redesign/includes/js/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>--->
 <link href="/redesign/includes/css/custom-styles.css" rel="stylesheet">
-<script type="text/javascript" src="/redesign/includes/js/jquery-1.7.1.min.js"></script> <!-- needed for dialog box -->
-<script type="text/javascript" src="/redesign/includes/js/popper.js"></script>
-<script type="text/javascript" src="/redesign/includes/js/jquery-3.3.1.js"></script>	 <!-- needed for dialog box -->
-<script type="text/javascript" src="/redesign/includes/js/jquery-ui-1.12.1.js"></script>  <!-- needed for dialog box -->
+<script type="text/javascript" src="/redesign/includes/js/jquery-1.7.1.min.js"></script><!-- needed for dialog box -->
+<!---<script type="text/javascript" src="/redesign/includes/js/popper.js"></script>--->
+<script type="text/javascript" src="/redesign/includes/js/jquery-3.3.1.js"></script><!-- needed for dialog box -->
+<script type="text/javascript" src="/redesign/includes/js/jquery-ui-1.12.1.js"></script><!-- needed for dialog box -->
 <!---<script type="text/javascript" src="/redesign/includes/bootstrap/js/bootstrap.min.js"></script> --->
 <script type="text/javascript" src="/redesign/includes/js/bootstrap-multiselect.js"></script>
-  <link href="/redesign/includes/css/bootstrap-select.min.css" rel="stylesheet">
+<script type="text/javascript" src="/redesign/includes/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+<link href="/redesign/includes/css/bootstrap-select.min.css" rel="stylesheet">
 <script src="/redesign/includes/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="/redesign/includes/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>  
-
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxcore.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxdata.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxbuttons.js"></script>
@@ -42,43 +43,40 @@
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.edit.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.sort.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.selection.js"></script>
-<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.columnsresize.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxpanel.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxcheckbox.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.pager.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.grouping.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.aggregates.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxinput.js"></script>
-<!---<script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxcalendar.js"></script>--->
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxdragdrop.js"></script>
 <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.columnsresize.js"></script> 
+    <script type="text/javascript" src="/redesign/includes/JQWidgets/jqwidgets/jqxgrid.columnsreorder.js"></script> 
 <script type="text/javascript" src="/redesign/includes/JQWidgets/scripts/demos.js"></script>
 <script type="text/javascript" type="text/javascript" src="/redesign/includes/js/shared-scripts.js"></script>
-
-<script type="text/javascript" type="text/javascript" src="/redesign/includes/js/ajax.min.js?v=10.3262"></script>
+<!---<script type="text/javascript" type="text/javascript" src="/redesign/includes/js/ajax.min.js?v=10.3262"></script>--->
 <cfif pageTitle eq 'search specimens'>
-<!---<script type="text/javascript" type="text/javascript" src="/redesign/specimen-details-related/js/ajax.js"></script>--->
-<script type="text/javascript" type="text/javascript" src="/redesign/specimen-details-related/js/ajax_vis.js"></script>
-<!---<script type="text/javascript" type="text/javascript" src="/redesign/specimen-details-related/js/responsive_table.js"></script>--->
-<script type="text/javascript" src="/redesign/includes/js/jquery.multiselect.min.js"></script>
-<link rel="stylesheet" href="/redesign/includes/js/jquery-ui-1.12.1/jquery-ui.min.css" />
-<link rel="stylesheet" href="/redesign/includes/js/jquery.multiselect.css" />
-</cfif> 
+   <!--- <script type="text/javascript" type="text/javascript" src="/redesign/specimen-details-related/js/ajax-search.js"></script>--->
+    <script type="text/javascript" src="/redesign/includes/js/jquery.multiselect.min.js"></script>
+    <link rel="stylesheet" href="/redesign/includes/js/jquery-ui-1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/redesign/includes/js/jquery.multiselect.css" />
+</cfif>
 <cfif pageTitle eq 'search taxonomy'>
-<script type="text/javascript" type="text/javascript" src="/redesign/taxonomy-related/js/taxa-ajax.js"></script>
-</cfif> 
+    <script type="text/javascript" type="text/javascript" src="/redesign/taxonomy-related/js/taxa-ajax.js"></script>
+</cfif>
 <cfif pageTitle eq 'search media'>
-<script type="text/javascript" type="text/javascript" src="/redesign/media-related/js/media-ajax.js"></script>
-<script type="text/javascript" src="/redesign/includes/js/jquery.multiselect.min.js"></script>
-<link rel="stylesheet" href="/redesign/includes/js/jquery-ui-1.12.1/jquery-ui.min.css" />
-<link rel="stylesheet" href="/redesign/includes/js/jquery.multiselect.css" />
-</cfif> 
+    <script type="text/javascript" type="text/javascript" src="/redesign/media-related/js/media-ajax.js"></script>
+    <script type="text/javascript" src="/redesign/includes/js/jquery.multiselect.min.js"></script>
+    <link rel="stylesheet" href="/redesign/includes/js/jquery-ui-1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/redesign/includes/js/jquery.multiselect.css" />
+</cfif>
 <cfif pageTitle eq 'search projects'>
-<script type="text/javascript" type="text/javascript" src="/redesign/media-related/js/media-ajax.js"></script>
-<script type="text/javascript" src="/redesign/includes/js/jquery.multiselect.min.js"></script>
-<link rel="stylesheet" href="/redesign/includes/js/jquery-ui-1.12.1/jquery-ui.min.css" />
-<link rel="stylesheet" href="/redesign/includes/js/jquery.multiselect.css" />
-</cfif> 
+    <script type="text/javascript" type="text/javascript" src="/redesign/media-related/js/media-ajax.js"></script>
+    <script type="text/javascript" src="/redesign/includes/js/jquery.multiselect.min.js"></script>
+    <link rel="stylesheet" href="/redesign/includes/js/jquery-ui-1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/redesign/includes/js/jquery.multiselect.css" />
+</cfif>
 </head>
 <body class="default cbp-spmenu-push" >
 <header>
@@ -88,16 +86,14 @@
     </div>
     <nav class="navbar justify-content-start navbar-expand-md navbar-expand-sm navbar-harvard pt-2 pb-1" style="background-color: ##a51c30;margin-block-end:0px;padding: .5rem .25rem .7rem .5rem">
         <ul class="navbar col-lg-9 col-md-8 col-sm-9 pt-0 pb-0 mb-1">
-           <li class="nav-item mcz2"><a href="https://www.mcz.harvard.edu/" target="_blank">Museum of Comparative Zoology</a></li>
-           <li class="nav-item mczbase"><a href="/redesign/specimen-search.cfm" target="_blank">MCZbase: Database of Zoological Collections</a></li>
+            <li class="nav-item mcz2"><a href="https://www.mcz.harvard.edu/" target="_blank">Museum of Comparative Zoology</a></li>
+            <li class="nav-item mczbase"><a href="/redesign/specimen-search.cfm" target="_blank">MCZbase: Database of Zoological Collections</a></li>
         </ul>
-        <ul class="navbar col-lg-3 col-md-8 col-sm-3 pt-0 pb-0 mb-1" style="justify-content: flex-end"> 
-        <div class="mcz_logo">
-        <li class="nav-item" style="list-style: none;align-content: flex-end">
-            <a href="https://mcz.harvard.edu"><img class="mcz_logo_krono" src="includes/images/mcz_logo_white_left.png" width="160"></a>
-        </li>
-			</div>
-		</ul>    
+        <ul class="navbar col-lg-3 col-md-8 col-sm-3 pt-0 pb-0 mb-1" style="justify-content: flex-end">
+            <div class="mcz_logo">
+                <li class="nav-item" style="list-style: none;align-content: flex-end"> <a href="https://mcz.harvard.edu"><img class="mcz_logo_krono" src="includes/images/mcz_logo_white_left.png" width="160"></a> </li>
+            </div>
+        </ul>
     </nav>
     <nav class="navbar navbar-expand-md navbar-light bg-light py-0" style="border-bottom: 1px solid #f1f1f1;">
         <div class="container p-5px">
@@ -105,120 +101,96 @@
             <div class="col-md-10 col-lg-12 offset-lg-1 offset-md-0 collapse navbar-collapse" id="navbarTogglerDemo01">
                 <ul class="navbar-nav nav-fill w-100">
                     <li class="nav-item dropdown active"> <a class="nav-link dropdown-toggle" href="/redesign/specimen-search.cfm" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Specimen Data</a>
-                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> 
-                        <li></li>
-                        <li><a class="dropdown-item" href="/redesign/specimens.cfm">Specimens</a></li>
-                        <li><a class="dropdown-item" href="/redesign/media.cfm">Media</a></li>
-                        <li><a class="dropdown-item" href="/redesign/locality.cfm">Places</a></li>
-                        <li><a class="dropdown-item" href="/redesign/publications.cfm">Publications</a></li>
-						<li><a class="dropdown-item" href="/redesign/agents.cfm">Agents</a></li>
-                        <li><a class="dropdown-item" href="/redesign/taxonomy.cfm">Taxonomy</a></li>
-                      </ul>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li></li>
+                            <li><a class="dropdown-item" href="/redesign/specimens.cfm">Specimens</a></li>
+                            <li><a class="dropdown-item" href="/redesign/media.cfm">Media</a></li>
+                            <li><a class="dropdown-item" href="/redesign/locality.cfm">Places</a></li>
+                            <li><a class="dropdown-item" href="/redesign/publications.cfm">Publications</a></li>
+                            <li><a class="dropdown-item" href="/redesign/agents.cfm">Agents</a></li>
+                            <li><a class="dropdown-item" href="/redesign/taxonomy.cfm">Taxonomy</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item dropdown"> 
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Data Entry </a>
-                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> 
-						  <li></li>
-                          <li><a class="dropdown-item" href="/redesign/data-entry.cfm">Enter Single Records</a></li>
-                          <li><a class="dropdown-item" href="/redesign/bulkloader.cfm">Bulkload Records</a> </li>
-                          <li><a class="dropdown-item" href="/redesign/bulkload-specimens.cfm">Bulkload Builder</a></li> 
-                          <li><a class="dropdown-item" href="/redesign/bulkloader.cfm">Browse and Edit</a> </li>
-                          <li><a class="dropdown-item" href="/redesign/bulkloader-status.cfm">Bulkloader Status</a> </li>
-                          <li><a class="dropdown-item" href="#">Batch Tools</a></li>
-                      </ul>
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Data Entry </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li></li>
+                            <li><a class="dropdown-item" href="/redesign/data-entry.cfm">Enter Single Records</a></li>
+                            <li><a class="dropdown-item" href="/redesign/bulkloader.cfm">Bulkload Records</a> </li>
+                            <li><a class="dropdown-item" href="/redesign/bulkload-specimens.cfm">Bulkload Builder</a></li>
+                            <li><a class="dropdown-item" href="/redesign/bulkloader.cfm">Browse and Edit</a> </li>
+                            <li><a class="dropdown-item" href="/redesign/bulkloader-status.cfm">Bulkloader Status</a> </li>
+                            <li><a class="dropdown-item" href="#">Batch Tools</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item dropdown"> 
-        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage
-        			</a>
-        				<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li></li>
-           				
-          					<li><a class="dropdown-item" href="#">Projects</a></li>
-          					<li class="dropdown-submenu wd-130"><a class="wd-130 dropdown-item dropdown-toggle" href="#">Reports</a>
-             					<ul class="dropdown-menu">
-									<li></li>
-									<li><a class="dropdown-item" href="#">Statistics</a></li>
-									<li><a class="dropdown-item" href="#">Annual Reports</a></li>
-									<li class="dropdown-submenu wd-130"><a class="wd-130 dropdown-item dropdown-toggle" href="#">Shared Data</a>
-											<ul class="dropdown-menu">
-												<li></li>
-											  <li><a class="dropdown-item" href="#">Recently Georeferenced Localities</a></li>
-											  <li><a class="dropdown-item" href="#">Taxonomy Review</a></li>
-											</ul>
-                					</li>
-            					</ul>
-          					</li>
-          	
-		 			        <li><a class="dropdown-item" href="#">Object Tracking</a></li>
-        					<li><a class="dropdown-item" href="#">Encumbrances</a></li>
-       						<li><a class="dropdown-item" href="#">Record Review</a></li>
-        				</ul>
-      				</li>
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li></li>
+                            <li><a class="dropdown-item" href="#">Projects</a></li>
+                            <li class="dropdown-submenu wd-130"><a class="wd-130 dropdown-item dropdown-toggle" href="#">Reports</a>
+                                <ul class="dropdown-menu">
+                                    <li></li>
+                                    <li><a class="dropdown-item" href="#">Statistics</a></li>
+                                    <li><a class="dropdown-item" href="#">Annual Reports</a></li>
+                                    <li class="dropdown-submenu wd-130"><a class="wd-130 dropdown-item dropdown-toggle" href="#">Shared Data</a>
+                                        <ul class="dropdown-menu">
+                                            <li></li>
+                                            <li><a class="dropdown-item" href="#">Recently Georeferenced Localities</a></li>
+                                            <li><a class="dropdown-item" href="#">Taxonomy Review</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Object Tracking</a></li>
+                            <li><a class="dropdown-item" href="#">Encumbrances</a></li>
+                            <li><a class="dropdown-item" href="#">Record Review</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Transactions </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> 
-							<li></li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li></li>
                             <li><a class="dropdown-item" href="/redesign/accessions.cfm">Accessions</a> </li>
                             <li><a class="dropdown-item" href="/redesign/deaccessions.cfm">Deaccessions</a> </li>
                             <li><a class="dropdown-item" href="/redesign/borrows.cfm">Borrows</a> </li>
                             <li><a class="dropdown-item" href="/redesign/loans.cfm">Loans</a> </li>
                             <li><a class="dropdown-item" href="/redesign/permits.cfm;">Permits</a> </li>
-                         </ul>
+                        </ul>
                     </li>
-
                     <li class="nav-item"><a class="nav-link" href="https://code.mcz.harvard.edu/wiki/index.php/Main_Page">Help</a></li>
                 </ul>
             </div>
         </div>
         <ul id="profiles" class="nav justify-content-end col-sm-2 accn-icons  pt-1 " style="">
-            <li class="nav-item dropdown"> 
-                   <a href="#profileSettings" data-toggle="dropdown" role="button">
-                      <i class="fas fa-cog" style="color: #666;"></i> 
-                 </a> 
-            </li>
-            <li class="nav-item dropdown"> 
-                <a href="#formLogin" data-toggle="dropdown" role="button">
-							<i class="fas fa-user"></i> 
-						</a>
-         
-            </li>
+            <li class="nav-item dropdown"> <a href="#profileSettings" data-toggle="dropdown" role="button"> <i class="fas fa-cog" style="color: #666;"></i> </a> </li>
+            <li class="nav-item dropdown"> <a href="#formLogin" data-toggle="dropdown" role="button"> <i class="fas fa-user"></i> </a> </li>
         </ul>
     </nav>
-                <div class="dropdown-menu mt-1" id="formLogin">
-                        <div class="row">
-                            <div class="container-fluid">
-                                <form class="">
-                                    <div class="form-group">
-                                        <label class="">Username</label>
-                                        <input class="m-0 Uform-control" name="username" id="username" type="text">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="">Password</label>
-                                        <input class="m-0 form-control" name="password" id="password" type="password">
-                                        <br class="">
-                                    </div>
-                                    <button type="submit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
-                                    <button type="submit" id="btnLogin" class="btn btn-sm">Cancel</button>
-                                    
-                                     <button type="submit" id="btnLogin" class="btn btn-primary btn-sm float-right">Register</button>
-                                </form>
-                            </div>
-                        </div>
+    <div class="dropdown-menu mt-1" id="formLogin">
+        <div class="row">
+            <div class="container-fluid">
+                <form class="">
+                    <div class="form-group">
+                        <label class="">Username</label>
+                        <input class="m-0 Uform-control" name="username" id="username" type="text">
                     </div>
-                    
-                     <div class="dropdown-menu" id="profileSettings">
-                        <div class="row">
-                            <div class="container-fluid">
-                                <form class="">
-                                    <div class="form-group">
-										<a href="##">Profile Settings</a>
-                                  	<a href="https://mczbase-dev.rc.fas.harvard.edu/redesign/search-builder.cfm">Custom Fixed Search Builder</a>
-                                   <a href="##">Saved Searches</a>
-                                   <a href="##">Manage Collection Contact and Link info.</a>
-                                    </div>
-                                  
-                                </form>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label class="">Password</label>
+                        <input class="m-0 form-control" name="password" id="password" type="password">
+                        <br class="">
                     </div>
+                    <button type="submit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
+                    <button type="submit" id="btnLogin" class="btn btn-sm">Cancel</button>
+                    <button type="submit" id="btnLogin" class="btn btn-primary btn-sm float-right">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="dropdown-menu" id="profileSettings">
+        <div class="row">
+            <div class="container-fluid">
+                <form class="">
+                    <div class="form-group"> <a href="##">Profile Settings</a> <a href="https://mczbase-dev.rc.fas.harvard.edu/redesign/search-builder.cfm">Custom Fixed Search Builder</a> <a href="##">Saved Searches</a> <a href="##">Manage Collection Contact and Link info.</a> </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </header>
-

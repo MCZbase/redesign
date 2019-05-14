@@ -21,12 +21,11 @@
         </div>
         </div>
         <div class="branding-container">
-            <div class="copyright-bottom" style="text-align: center;"> Copyright © 2019 The President and Fellows of Harvard College.&nbsp; <a href="http://accessibility.harvard.edu/" style="color: white">Accessibility</a> | <a href="http://www.harvard.edu/reporting-copyright-infringements" style="color: white;">Report Copyright Infringement</a> </div>
+            <div class="copyright-bottom fs-012" style="text-align: center;"> Copyright © 2019 The President and Fellows of Harvard College.&nbsp; <a href="http://accessibility.harvard.edu/" style="color: white">Accessibility</a> | <a href="http://www.harvard.edu/reporting-copyright-infringements" style="color: white;">Report Copyright Infringement</a> </div>
         </div>
     </cfif>
     </div>
-    
- 
+
 <script>
 
 var	menuRight = document.getElementById( 'cbp-spmenu-s2' ),
@@ -34,7 +33,6 @@ var	menuRight = document.getElementById( 'cbp-spmenu-s2' ),
 	menuLeft = document.getElementById( 'cbp-spmenu-s3' ),
 	showLeftPush = document.getElementById( 'showLeftPush' ),
 	body = document.body;
-	
 
     showRightPush.onclick = function() {
 	classie.toggle( this, 'active' );
@@ -58,9 +56,6 @@ var	menuRight = document.getElementById( 'cbp-spmenu-s2' ),
 		classie.toggle( showRightPush, 'disabled' );
 	}
 }
-	
-	////////////////////
-
 /*!
  * classie - class helper functions
  * from bonzo https://github.com/ded/bonzo
@@ -70,7 +65,6 @@ var	menuRight = document.getElementById( 'cbp-spmenu-s2' ),
  * classie.remove( elem, 'my-unwanted-class' )
  * classie.toggle( elem, 'my-class' )
  */
-
 /*jshint browser: true, strict: true, undef: true */
 
 ( function( window ) {
@@ -131,7 +125,6 @@ window.classie = {
 };
 
 })( window );
-	</script>
-	<!--- <script src="/redesign/includes/bootstrap/js/bootstrap.min.js"></script> --->
+</script>
 </footer>
 </body></html>
