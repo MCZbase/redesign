@@ -63,9 +63,6 @@
 				  { text: 'Disposition', datafield: 'coll_obj_disposition', width: 120  },
 				  { text: 'Other IDs', datafield: 'othercatalognumbers', width: 280  }
                 ]
-                    
-
-
             });
 	 
 	  

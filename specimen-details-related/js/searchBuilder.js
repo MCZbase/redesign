@@ -559,10 +559,10 @@ var sortable = (function () {
                     if (event.buttons === 0) {
                         _filter(sortableContainer.children, store(sortableContainer).getConfig('items')).forEach(function (item) {
                             if (item !== event.target) {
-                                (_a = item.classList).remove.apply(_a, hoverClasses_1);
+                      //          (_a = item.classList).remove.apply(_a, hoverClasses_1);
                             }
                             else {
-                                (_b = item.classList).add.apply(_b, hoverClasses_1);
+                     //           (_b = item.classList).add.apply(_b, hoverClasses_1);
                             }
                             var _a, _b;
                         });
@@ -571,7 +571,7 @@ var sortable = (function () {
                 // remove class on leave
                 addEventListener(sortableContainer, 'mouseleave', function () {
                     _filter(sortableContainer.children, store(sortableContainer).getConfig('items')).forEach(function (item) {
-                        (_a = item.classList).remove.apply(_a, hoverClasses_1);
+                  //      (_a = item.classList).remove.apply(_a, hoverClasses_1);
                         var _a;
                     });
                 });
