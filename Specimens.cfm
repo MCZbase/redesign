@@ -20,11 +20,11 @@
 			<h4>Date</h4>
 			<div class="float-left wd-110p">
 				<label class="mb-1 ml-0">From</label>
-				<input id="began_date" type="text" name="began_date" class="ml-0 px-1 wd-100p rounded">
+				<input id="began_date" type="text" name="began_date" class="ml-0 px-1 rounded wd-100p">
 			</div>
 			<div class="float-left wd-100p">
 				<label class="mb-1 ml-1">To</label>
-				<input id="ended_date" name="ended_date" class="px-1 wd-100p rounded" type="text">
+				<input id="ended_date" name="ended_date" class="px-1 rounded wd-100p" type="text">
 			</div>
 			<div class="float-left ml-2 mt-8"> <a id="refine" value="Refine" href="##"/>Refine</a> </div>
 		</div>
@@ -112,7 +112,7 @@ select media_type from ctmedia_type order by media_type
 				<div class="col-md-11 col-sm-12">
 				<h1 class="h3 smallcaps mt-4 pl-1">Search Specimen Records <span class="mt-2 font-italic pb-4 color-green fs-15 mx-0">(access to #getCount.cnt# records)</span> </h1>
 				<div class="tab-card-main mt-1 tab-card">
-				<div class="card-header tab-card-header w-100 pb-0">
+				<div class="card-header tab-card-header pb-0 w-100">
 					<ul class="nav nav-tabs card-header-tabs pt-1" id="myTab" role="tablist">
 						<li class="nav-item col-sm-12 col-md-2 px-1"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="##one" role="tab" aria-controls="One" aria-selected="true" >Keyword</a> </li>
 						<li class="nav-item col-sm-12 col-md-3 px-1"> <a class="nav-link" id="two-tab" data-toggle="tab" href="##two" role="tab" aria-controls="Two" aria-selected="false">Search Builder</a> </li>
@@ -127,17 +127,19 @@ select media_type from ctmedia_type order by media_type
 						<div class="col-xs-8 col-md-4 col-lg-6 col-xs-offset-2">
 							<div class="input-group">
 								<div class="input-group-btn">
-									<select class="dropdown-menu fs-14" role="menu" id="col-multi-select" multiple="multiple" >
+									<select class="dropdown-menu fs-14" role="menu" id="col-multi-select" multiple="multiple">
 										<cfloop query="collSearch">
 											<option value="#collSearch.guid_prefix#"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
 										</cfloop>
 									</select>
-
 								</div>
 								<input id="searchText" type="text" class="has-clear form-control form-control-borderless rounded" name="searchText" placeholder="Search term">
 								<span class="input-group-btn">
-								<button class="btn bg-blue-gray py-45 px-3 border-0" type="submit"><i class="fa fa-search text-body"></i></button>
-								</span> </div>
+									<button class="btn bg-blue-gray py-45 px-3 border-0" type="submit">
+										<i class="fa fa-search text-body"></i>
+									</button>
+								</span> 
+							</div>
 						</div>
 					</form>
 				</div>
@@ -145,10 +147,10 @@ select media_type from ctmedia_type order by media_type
 				<div class="tab-pane fade show py-3 px-1" id="two" role="tabpanel" aria-labelledby="two-tab">
 					<form id="searchForm2">
 						<h2 class="h3 card-title ml-2">Search Buider</h2>
-						<div id="POItablediv" class="bg-0 col-sm-11 col-md-10">
+						<div id="POItablediv" class="bg-0 col-sm-11 col-md-11">
 							<div class="input-group d-md-flex d-sm-flex">
-								<div class="input-group-btn search-panel d-md-flex"> 
-									<table class="table responsive-table w-100 text-muted mb-3 rounded b-collapse-s" id="POITable" border="1">
+								<div class="d-md-flex rounded"> 
+									<table class="table responsive-table text-muted mb-3 rounded b-collapse-s float-left" id="POITable" border="1">
 										<tbody>
 											<tr class="d-none">
 												<td class="d-none;">##</td>
@@ -158,18 +160,20 @@ select media_type from ctmedia_type order by media_type
 												<td>&nbsp;&nbsp;value</td>
 												<td>&nbsp;&nbsp;delete?</td>
 											</tr>
-											<tr class="row_2 rounded p-2 border-blue-gray p-2 ml-0">
+											<tr class="row_2 rounded ml-0">
 												<td class="d-none">1</td>
-												<td class="mx-1 p-0 border-0"><select title="joinOperator" name="joinOperator" id="joinOperator" class="custom-select border mw-5e wd-15e">
-													<option value="">Select...</option>
+												<td class="mx-1 p-0 border-0">
+													<select title="joinOperator" name="joinOperator" id="joinOperator" class="custom-select border minw-field-sm w-field-sm">
+														<option value="">Select...</option>
 														<option value="and">and</option>
 														<option value="or">or</option>
 														<option value="not">not</option>
-													</select></td>
+													</select>
+												</td>
 												<td class="mx-1 p-0 border-0">
 													<div class="bg-white py-45 pr-2" id="dropDownButton">
 														<div id="jqxTree" class="border-0">
-															<ul class="w-280">
+															<ul class="w-100">
 																<li item-selected='true'>Select Type</li>
 																<li>Identifiers
 																	<ul>
@@ -425,22 +429,26 @@ select media_type from ctmedia_type order by media_type
 														</div>
 													</div>
 												<td class="mx-1 p-0 border-0">
-													<select title="comparator" name="comparator" id="comparator" class="custom-select border mw-5e wd-15e">
+													<select title="comparator" name="comparator" id="comparator" class="custom-select border minw-field-sm w-field-sm">
 														<option value="">Select...</option>
 														<option value="like">contains</option>
 														<option value="eq">is</option>
 													</select></td>
-												<td class="mx-1 p-0 border-0"><input type="text" class="form-control flex enter-search mx-0 w-300 px-1" name="srchTxt" id="srchTxt" placeholder="Enter Value"/></td>
-												<td class="mx-0 p-0 border-0  border-blue-gray">
-													<input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" class="float-right btn-default btn-sm mt-0"/>
+												<td class="mx-1 p-0 border-0">
+													<input type="text" class="form-control flex enter-search mx-0 minw-field w-field px-2" name="srchTxt" id="srchTxt" placeholder="Enter Value"/>
+												</td>
+												<td class="mx-0 p-0 border-0 ml-auto border-blue-gray">
+													<input type="button" id="delPOIbutton" value="ADD ROW" onclick="insRow()" class="float-right btn-default btn-sm mt-0 px-2"/>
 													<input type="hidden" id="nextRowNum" value="1" >
 												</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
-								<span class="input-group-btn">
-								<button class="btn py-45 px-3 bg-blue-gray border-0 mt-015" type="submit"> <i class="fa fa-search text-body"></i> </button>
+								<span class="">
+									<button class="btn py-45 px-3 bg-blue-gray border-0 mt-015" type="submit"> 
+										<i class="fa fa-search text-body"></i> 
+									</button>
 								</span> 
 							</div>
 						</div>
@@ -461,13 +469,12 @@ select media_type from ctmedia_type order by media_type
 											<option value="#collSearch.guid_prefix#"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
 										</cfloop>
 									</select>
-
 								</div>
 								<div class="col-6 px-0 mb-3 float-left d-inline">
 									<textarea id="textarea" name="textarea" class="form-control-sm rounded ml-1 text-muted">Enter Catalog Numbers</textarea>
 								</div>
 								<label for="textarea" class="col-12 pl-0 mb-0">Other IDs</label>
-								<select title="searchField" name="searchField" id="searchField" class="dropdown rounded float-left col-6 d-inline">
+								<select title="searchField" name="searchField" id="searchField" class="dropdown rounded float-left col-6 d-inline form-control-sm custom-select fs-13">
 									<option value="other id type">Other ID Type </option>
 									<option value="Collector Number">Collector Number </option>
 									<option value="field number">Field Number</option>
@@ -513,7 +520,6 @@ select media_type from ctmedia_type order by media_type
 			</div>
 		</div>
 	</div>
-
 	<!--Grid Related code below along with search handler for keyword search-->
 	<div class="container-fluid">
 		<div class="row">
@@ -524,6 +530,7 @@ select media_type from ctmedia_type order by media_type
 						<h2 class="float-left mt-3"><span class="pt-0 d-inline-block">Results</span>
 							<label for="">&nbsp;</label>
 							<input id="csvExport" class="float-right btn-default btn-sm ml-2 py-1 px-2" type="button" value="Download"/>
+							<input id="csvExport2" class="float-right btn-default btn-sm ml-2 py-1 px-2" type="button" value="Download Shown"/>
 							<input id="deleterowbutton" class="float-right btn-default btn-sm py-1 px-2" type="button" value="Remove Row"/>
 						</h2>
 						</div>
@@ -555,9 +562,6 @@ $("##col-multi-select").multiselect({
 	multiple: !0,
 	position: {}
 });
-</script> 
-	
-<script>
 // script for multiselect dropdown for collections
 $("##col-multi-select2").multiselect({
 	header: !0,
@@ -576,9 +580,6 @@ $("##col-multi-select2").multiselect({
 	multiple: !0,
 	position: {}
 });
-</script> 	
-	
-<script>
 function deleteRow(evt) {
 	var i = evt.target.parentNode.parentNode.rowIndex;
 	document.getElementById('POITable').deleteRow(i);
@@ -611,6 +612,7 @@ function insRow() {
 	button.onclick = function(it) {deleteRow(it)};
 	x.appendChild( new_row );
 }
+//// script for Search Builder Second dropdown for type
 $(document).ready(function () {
 	$("##dropDownButton").jqxDropDownButton({ width: 150, height: 25, theme: theme});
 	$('##jqxTree').bind('select', function (event) {
@@ -622,10 +624,7 @@ $(document).ready(function () {
 
 	$("##jqxTree").jqxTree({ width: 260, theme: theme});
 });
-	
-
-</script>
-<script>
+//// script for DatePicker
 $(function() {
 	$("##began_date").datepicker({ 
 		dateFormat: "yy-mm-dd", 
@@ -638,7 +637,6 @@ $(function() {
 		changeYear: true 
 	}).val()
 });
-
 //// script for multiselect dropdown for collections
 $("##col-multi-select").multiselect({
 	header: !0,
@@ -657,10 +655,6 @@ $("##col-multi-select").multiselect({
 	multiple: !0,
 	position: {}
 });
-
-</script>
-	
-<script>
 ///   JQXGRID -- for Keyword Search /////
 $(document).ready(function() {
 	$('##searchForm').bind('submit', function(evt){
@@ -933,17 +927,14 @@ $(document).ready(function() {
 					break;
 			}
 		});
-
 		// enable or disable the hover state.
 		$("##enablehover").on('change', function (event) {
 			$("##jqxgrid").jqxGrid('enablehover', event.args.checked);
 		});
-
 		// display selected row index.
 		$("##jqxgrid").on('rowselect', function (event) {
 			$("##selectrowindex").text(event.args.rowindex);
 		});
-
 		// display unselected row index.
 		$("##jqxgrid").on('rowunselect', function (event) {
 			$("##unselectrowindex").text(event.args.rowindex);
