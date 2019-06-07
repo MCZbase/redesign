@@ -121,13 +121,14 @@ select media_type from ctmedia_type order by media_type
 				</div>
 				<div class="tab-content pb-0" id="myTabContent">
 				<!---Keyword Search--->
+
 				<div class="tab-pane fade show active py-3 mx-sm-3 mb-3" id="one" role="tabpanel" aria-labelledby="one-tab">
 					<h2 class="h3 card-title ml-2">Keyword Search</h2>
 					<form id="searchForm">
 						<div class="col-xs-8 col-md-4 col-lg-6 col-xs-offset-2">
 							<div class="input-group">
 								<div class="input-group-btn">
-									<select class="dropdown-menu fs-14" role="menu" id="col-multi-select" multiple="multiple">
+									<select class="dropdown-menu fs-14 col-multi-select"  id="col-multi-select" role="menu" multiple="multiple">
 										<cfloop query="collSearch">
 											<option value="#collSearch.guid_prefix#"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
 										</cfloop>
@@ -463,15 +464,13 @@ select media_type from ctmedia_type order by media_type
 						<div class="col-md-4 col-sm-12">
 							<fieldset class="form-group">
 								<label for="textarea" class="col-12 pl-0 mb-1">Catalog Number(s)</label>
-								<div class="col-6 px-0 float-left d-inline">
-									<select class="dropdown border text-muted" role="menu" id="col-multi-select2" multiple="multiple">
-										<cfloop query="collSearch">
+								<select title="searchField" name="searchField" id="col-multi-select" role="menu" multiple="multiple" class="dropdown rounded float-left col-6 d-inline form-control-sm custom-select fs-13">
+									<cfloop query="collSearch">
 											<option value="#collSearch.guid_prefix#"> #collSearch.collection# (#collSearch.guid_prefix#)</option>
 										</cfloop>
-									</select>
-								</div>
-								<div class="col-6 px-0 mb-3 float-left d-inline">
-									<textarea id="textarea" name="textarea" class="form-control-sm rounded ml-1 text-muted">Enter Catalog Numbers</textarea>
+								</select>
+								<div class="col-6 px-0 mb-3 d-inline float-left">
+									<textarea id="textarea" type="text" name="textarea" class="input form-control-sm rounded border float-left d-inline ml-1" placeholder="Enter Other ID number"></textarea>
 								</div>
 								<label for="textarea" class="col-12 pl-0 mb-0">Other IDs</label>
 								<select title="searchField" name="searchField" id="searchField" class="dropdown rounded float-left col-6 d-inline form-control-sm custom-select fs-13">
@@ -495,7 +494,7 @@ select media_type from ctmedia_type order by media_type
 						<div class="col-md-3 col-sm-12">
 							<fieldset class="form-group">
 								<label class="col-12 px-0 mb-1">Collectors/Preparators</label>
-								<input id="taxa" class="form-control-sm mb-3 ml-0" placeholder="Enter Collectors/Preparators">
+								<input id="collectors" class="form-control-sm mb-3 ml-0" placeholder="Enter Collectors/Preparators">
 								<label class="col-12 pl-0 mb-1">Part Name</label>
 								<input type="text" class="input form-control-sm mb-3 ml-0 border"  placeholder="Part Name">
 							</fieldset>
@@ -543,118 +542,8 @@ select media_type from ctmedia_type order by media_type
 			</div>
 		</div>
 	</div>
-<script>
-//// script for multiselect dropdown for collections
-$("##col-multi-select").multiselect({
-	header: !0,
-	height: 175,
-	minWidth: "200px",
-	classes: "float-sm-left float-md-right mx-0",
-	checkAllText: "Check all",
-	uncheckAllText: "Uncheck all",
-	noneSelectedText: "All Collections ",
-	selectedText: "## selected",
-	fontFamily: "Arial",
-	selectedList: 0,
-	show: null,
-	hide: null,
-	autoOpen: !1,
-	multiple: !0,
-	position: {}
-});
-// script for multiselect dropdown for collections
-$("##col-multi-select2").multiselect({
-	header: !0,
-	height: 175,
-	minWidth: "300px",
-	classes: "float-sm-left float-md-right mx-0 multiselect2 pl-3",
-	checkAllText: "Check all",
-	uncheckAllText: "Uncheck all",
-	noneSelectedText: "All Collections ",
-	selectedText: "## selected",
-	fontFamily: "Arial",
-	selectedList: 0,
-	show: null,
-	hide: null,
-	autoOpen: !1,
-	multiple: !0,
-	position: {}
-});
-function deleteRow(evt) {
-	var i = evt.target.parentNode.parentNode.rowIndex;
-	document.getElementById('POITable').deleteRow(i);
-}
-function insRow() {
-	var x = document.getElementById('POITable');
-	var new_row = x.rows[1].cloneNode(true);
-	var len = x.rows.length;
-	new_row.cells[0].innerHTML = len;
-	var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
-	inp1.id += len;
-	inp1.name += len;
-	inp1.value = '';
-	var inp2 = new_row.cells[2].getElementsByTagName('div')[0];
-	inp2.id += len;
-	inp2.name += len;
-	inp2.value = '';
 
-	var inp3 = new_row.cells[3].getElementsByTagName('select')[0];
-	inp3.id += len;
-	inp3.name += len;
-	inp3.value = '';
-
-	var inp4 = new_row.cells[4].getElementsByTagName('input')[0];
-	inp4.id += len;
-	inp4.name += len;
-	inp4.value = '';
-	var button = new_row.cells[5].getElementsByTagName('input')[0];
-	button.value = "* DELETE *";
-	button.onclick = function(it) {deleteRow(it)};
-	x.appendChild( new_row );
-}
-//// script for Search Builder Second dropdown for type
-$(document).ready(function () {
-	$("##dropDownButton").jqxDropDownButton({ width: 150, height: 25, theme: theme});
-	$('##jqxTree').bind('select', function (event) {
-		var args = event.args;
-		var item = $('##jqxTree').jqxTree('getItem', args.element);
-		var dropDownContent = '<div class="mt-0 ml-2 position-relative py-1 bg-white">' + item.label + '</div>';
-		$("##dropDownButton").jqxDropDownButton('setContent', dropDownContent);
-	});
-
-	$("##jqxTree").jqxTree({ width: 260, theme: theme});
-});
-//// script for DatePicker
-$(function() {
-	$("##began_date").datepicker({ 
-		dateFormat: "yy-mm-dd", 
-		changeMonth: true,
-		changeYear: true 
-	}).val()
-	$("##ended_date").datepicker({ 
-		dateFormat: "yy-mm-dd", 
-		changeMonth: true,
-		changeYear: true 
-	}).val()
-});
-//// script for multiselect dropdown for collections
-$("##col-multi-select").multiselect({
-	header: !0,
-	height: 175,
-	minWidth: "200px",
-	classes: "float-sm-left float-md-right mx-0",
-	checkAllText: "Check all",
-	uncheckAllText: "Uncheck all",
-	noneSelectedText: "All Collections ",
-	selectedText: "## selected",
-	fontFamily: "Arial",
-	selectedList: 0,
-	show: null,
-	hide: null,
-	autoOpen: !1,
-	multiple: !0,
-	position: {}
-});
+	<script>
 ///   JQXGRID -- for Keyword Search /////
 $(document).ready(function() {
 	$('##searchForm').bind('submit', function(evt){
@@ -943,5 +832,105 @@ $(document).ready(function() {
 	});
 });
 </script> 
+	
+	
+	
+<script>
+
+function deleteRow(evt) {
+	var i = evt.target.parentNode.parentNode.rowIndex;
+	document.getElementById('POITable').deleteRow(i);
+}
+function insRow() {
+	var x = document.getElementById('POITable');
+	var new_row = x.rows[1].cloneNode(true);
+	var len = x.rows.length;
+	new_row.cells[0].innerHTML = len;
+	var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
+	inp1.id += len;
+	inp1.name += len;
+	inp1.value = '';
+	var inp2 = new_row.cells[2].getElementsByTagName('div')[0];
+	inp2.id += len;
+	inp2.name += len;
+	inp2.value = '';
+
+	var inp3 = new_row.cells[3].getElementsByTagName('select')[0];
+	inp3.id += len;
+	inp3.name += len;
+	inp3.value = '';
+
+	var inp4 = new_row.cells[4].getElementsByTagName('input')[0];
+	inp4.id += len;
+	inp4.name += len;
+	inp4.value = '';
+	var button = new_row.cells[5].getElementsByTagName('input')[0];
+	button.value = "* DELETE *";
+	button.onclick = function(it) {deleteRow(it)};
+	x.appendChild( new_row );
+}
+//// script for Search Builder Second dropdown for type
+$(document).ready(function () {
+	$("##dropDownButton").jqxDropDownButton({ width: 150, height: 25, theme: theme});
+	$('##jqxTree').bind('select', function (event) {
+		var args = event.args;
+		var item = $('##jqxTree').jqxTree('getItem', args.element);
+		var dropDownContent = '<div class="mt-0 ml-2 position-relative py-1 bg-white">' + item.label + '</div>';
+		$("##dropDownButton").jqxDropDownButton('setContent', dropDownContent);
+	});
+	$("##jqxTree").jqxTree({ width: 260, theme: theme});
+});
+//// script for DatePicker
+$(function() {
+	$("##began_date").datepicker({ 
+		dateFormat: "yy-mm-dd", 
+		changeMonth: true,
+		changeYear: true 
+	}).val()
+	$("##ended_date").datepicker({ 
+		dateFormat: "yy-mm-dd", 
+		changeMonth: true,
+		changeYear: true 
+	}).val()
+});
+//// script for multiselect dropdown for collections
+//// on keyword
+$("##col-multi-select").multiselect({
+	header: !0,
+	height: 175,
+	minWidth: "200px",
+	classes: "float-sm-left float-md-right mx-0",
+	checkAllText: "Check all",
+	uncheckAllText: "Uncheck all",
+	noneSelectedText: "All Collections ",
+	selectedText: "## selected",
+	fontFamily: "Arial",
+	selectedList: 0,
+	show: null,
+	hide: null,
+	autoOpen: !1,
+	multiple: !0,
+	position: {}
+});
+//// script for multiselect dropdown for collections
+//// on custom fixed search
+$("##second_multiselect").multiselect({
+	header: !0,
+	height: 175,
+	minWidth: "200px",
+	classes: "float-sm-left float-md-right mx-0 pl-3",
+	checkAllText: "Check all",
+	uncheckAllText: "Uncheck all",
+	noneSelectedText: "All Collections ",
+	selectedText: "## selected",
+	fontFamily: "Arial",
+	selectedList: 0,
+	show: null,
+	hide: null,
+	autoOpen: !1,
+	multiple: !0,
+	position: {}
+});
+</script>
 </cfoutput>
 <cfinclude template="/redesign/includes/_footer.cfm">
