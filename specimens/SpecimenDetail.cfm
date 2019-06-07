@@ -189,7 +189,7 @@
 		<cfelse>
 			<div class="mb-2 text-muted mt-2">#began_date# - #ended_date#</div>
 		</cfif>
-		<p class="card-text mb-1 mt-2 fs-16">#higher_geog#</p>
+		<p class="card-text mb-1 mt-1 fs-16">#higher_geog#</p>
 		<a href="##" class="fs-13 mt-0 d-block">Berkeley Mapper</a> 
 	</div>
 <img class="card-img-right flex-auto d-none d-md-block z-depth-2 p-3" src="/redesign/includes/images/locality.jpg" alt="map" width="150" height="150"> 
