@@ -116,7 +116,7 @@ select media_type from ctmedia_type order by media_type
 					<ul class="nav nav-tabs card-header-tabs pt-1" id="myTab" role="tablist">
 						<li class="nav-item col-sm-12 col-md-2 px-1"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="##one" role="tab" aria-controls="One" aria-selected="true" >Keyword</a> </li>
 						<li class="nav-item col-sm-12 col-md-3 px-1"> <a class="nav-link" id="two-tab" data-toggle="tab" href="##two" role="tab" aria-controls="Two" aria-selected="false">Search Builder</a> </li>
-						<li class="nav-item col-sm-12 col-md-3 px-1"> <a class="nav-link" id="three-tab" data-toggle="tab" href="##three" role="tab" aria-controls="Three" aria-selected="false">Custom Fixed Search</a> </li>
+						<li class="nav-item col-sm-12 col-md-4 px-1"> <a class="nav-link" id="three-tab" data-toggle="tab" href="##three" role="tab" aria-controls="Three" aria-selected="false">Custom Fixed Search</a> </li>
 					</ul>
 				</div>
 				<div class="tab-content pb-0" id="myTabContent">
@@ -372,7 +372,7 @@ select media_type from ctmedia_type order by media_type
 				<div class="container-fluid fs-13">
 				<form id="searchForm3">
 					<div class="row">
-						<div class="col-md-4 col-sm-12">
+						<div class="col-lg-4 col-sm-12">
 							<fieldset class="form-group">
 								<label for="guid_prefix" class="col-11 mb-1 pl-1 float-left">Select Collection</label>
 								<select class="dropdown-menu mb-3 col-md-5 col-sm-12 float-left" id="collmultiselect" role="menu" multiple="multiple">
@@ -414,7 +414,7 @@ select media_type from ctmedia_type order by media_type
 								</div>
 							</fieldset>
 						</div>
-						<div class="col-md-3 col-sm-12 pl-0">
+						<div class="col-lg-3 col-md-4 col-sm-12 pl-0">
 							<fieldset class="form-group">
 								<label class="col-12 mb-1 pl-1">Any Taxonomy</label>
 								<input id="taxa" class="w-100 border mb-3 rounded p-2">
@@ -422,7 +422,7 @@ select media_type from ctmedia_type order by media_type
 								<input type="text" class="w-100 border mb-3 rounded p-2 ml-1">
 							</fieldset>
 						</div>
-						<div class="col-md-3 col-sm-12 pl-0">
+						<div class="col-lg-3 col-md-4 col-sm-12 pl-0">
 							<fieldset class="form-group">
 								<label class="col-12 mb-1 pl-1">Collectors/Preparators</label>
 								<input id="collectors" class="w-100 border mb-3 rounded p-2">
@@ -430,7 +430,7 @@ select media_type from ctmedia_type order by media_type
 								<input type="text" class="w-100 border mb-3 rounded p-2 ml-1">
 							</fieldset>
 						</div>
-						<div class="col-md-2 col-sm-12 pl-0">
+						<div class="col-lg-2 col-md-4 col-sm-12 pl-0">
 							<fieldset class="form-group">
 								<label class="col-11 mb-1 pl-1">Loan Number</label>
 								<input name="place" class="w-100 border mb-3 rounded p-2">
