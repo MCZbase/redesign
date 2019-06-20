@@ -44,8 +44,20 @@ p {
 .w-267 {
 	width: 267px;
 }
-.w-300 {
-	width: 300px;
+.minw-field-sm {
+	width: 200px;
+}
+.w-field-sm {
+	width: 120px;
+}
+.minw-field {
+	width: 350px;
+}
+.w-field {
+	width: 400px;
+}
+.w-350 {
+	width: 350px;
 }
 .wd-90p {
 	width: 90px;
@@ -74,16 +86,15 @@ p {
 .ml-17 {
 	margin-left: 1.7em;
 }
-.py-45 {
-	padding-top: .45em;
-	padding-bottom: .45em;
-}
 .py-75 {
 	padding-top: .75em;
 	padding-bottom: .75em;
 }
 .ht-150p {
 	height: 150px;
+}
+.w-40 {
+	width: 40%;
 }
 .wd-50p {
 	width: 50px;
@@ -121,6 +132,12 @@ p {
 .fw-100 {
 	font-weight: 100
 }
+.border {
+	border-color: #bac5c6;
+	border-width: 1px;
+	border-style: solid;
+	border: 1px solid #bac5c6 !important;
+}
 /*************************/
 /*************************/
 /*************************/
@@ -134,6 +151,10 @@ p {
 }
 .bg-blue-gray {
 	background-color: #BAC5C6;
+}
+.button {
+	background-color: buttonface;
+	border: 1px solid #bac5c6 !important;
 }
 .border-blue-gray {
 	border: 1px solid #BAC5c6;
@@ -177,19 +198,23 @@ button.ui-multiselect.ui-state-default.multiselect2 {
 button.ui-multiselect.ui-state-default {
 	border: 1px solid #bac5c6;
 	border-radius: 5px;
+	border-color: #bac5c6;
 	background-color: white;
 	font-size: 14px;
 	padding: 8px 12px 7px 12px;
+	float: left;
 }
 button.ui-multiselect.ui-state-active {
 	color: #333;
 	border: 1px solid #bac5c6;
+	border-color: #bac5c6;
 	border-radius: 5px;
 	background-color: white;
 }
 button.ui-multiselect.ui-state-hover {
 	color: #333;
 	border: 1px solid #bac5c6;
+	border-color: #bac5c6;
 	border-radius: 5px;
 	background-color: white;
 }
@@ -496,7 +521,7 @@ override Bootstrap styles
 table#POITable {
 	display: block;
 	border: none;
-	width: 100%;
+/*	width: 100%;*/
 }
 #POITable select option {
 	font-size: 12px;
@@ -540,12 +565,12 @@ table#POITable {
 	z-index: 600;
 }
 section a#showRightPush {
-	width: 33px;
-	margin-left: -33px;
+	width: 32px;
+	margin-left: -32px;
 	writing-mode: vertical-rl;
 	z-index: 999;
 	margin-top: 147px;
-	padding: 7px 4px 7px 5px;
+	padding: 7px 3px 7px 5px;
 	position: relative;
 	letter-spacing: .07em;
 	font-weight: bold;
@@ -558,11 +583,11 @@ section a#showRightPush {
 	transition: all 0.3s ease;
 }
 section a#showLeftPush {
-	width: 33px;
-	margin-right: -33px;
+	width: 32px;
+	margin-right: -32px;
 	writing-mode: vertical-rl;
 	z-index: 999;
-	right: 33px;
+	right: 32px;
 	padding: 7px 2px 7px 5px;
 	position: relative;
 	letter-spacing: .07em;
@@ -674,14 +699,14 @@ section a#showLeftPush {
 	color: #555;
 	background-color: rgb(15, 13, 14);
 	box-shadow: rgb(204, 204, 204) 0px 0px 5px;
-	border-width: 4px 0 4px 4px;
+	border-width: 3px 0 3px 3px;
 }
 .black-columns-btn {
 	border-color: rgb(255, 255, 255);
 	color: #555555;
 	background-color: rgb(15, 13, 14);
 	box-shadow: rgb(204, 204, 204) 0px 0px 5px;
-	border-width: 4px 0 4px 4px;
+	border-width: 3px 0 3px 3px;
 }
 /*************************/
 /*****ABOVE:  filter and 
@@ -795,8 +820,8 @@ override Bootstrap styles
 	border: 1px solid #333;
 }
 .ui-widget-header {
-	border: 1px solid #1b1b1b;
-	background: #1b1b1b;
+/*	border: 1px solid #1b1b1b;
+	background: #1b1b1b;*/
 	color: #fff;
 	font-weight: bold;
 }
@@ -1058,6 +1083,7 @@ select {
 .tab-card-header {
 	background: none;
 	background-color: #3E6F7D;
+	padding-top: 1em;
 }
 .card-title:first-child {
 	padding-left: .5em;
@@ -1276,15 +1302,15 @@ thead tr {
 	top: -9999px;
 	left: -9999px;
 }
-tr {
+/*tr {
 	border: 1px solid #ccc;
-}
+}*/
 td {
 	border: none;
 	border-bottom: 1px solid #eee;
 	position: relative;
-	padding-left: 200px;
-	margin-left: 150px;
+/*	padding-left: 200px;*/
+/*	margin-left: 150px;*/
 }
 td:before {
 	position: absolute;
@@ -1400,6 +1426,7 @@ img.mcz_logo_krono {
 	color: white;
 	text-decoration: none;
 }
+	.w-300 {width: 350px;}
 img.mcz_logo_krono {
 	display: block;
 }
@@ -1496,6 +1523,7 @@ img.harvard-shield {
 	width: 24px;
 	margin-left: 4px;
 }
+
 .container {
 	margin-left: 0;
 }/*for menu toogle*/
@@ -1593,6 +1621,14 @@ nav.navbar-harvard li {
 	padding-right: 1.25em;
 	padding-left: 1.25em;
 }
+table#POITable {
+
+		padding: .5em .25em;
+	border: 1px solid #BAC5c6;
+	}
+table#POITable input.w-field, table#POITable input.minw-field {
+		width: 320px;
+	}
 }
 
 @media(max-width:414px) {
@@ -1649,10 +1685,25 @@ nav.navbar-harvard li {
 	border: 1px solid #ccc;
 	border-radius: 5px;
 }
+table#POITable {
+	padding: .5em .25em;
+	border: 1px solid #BAC5c6;
+}
+table#POITable input.w-field, table#POITable input.minw-field {
+	width: 248px;
+}
+
 }
 
 @media(max-width:320px) {
 header {
 	width: 108%;
+}
+	table#POITable {
+	padding: .5em .25em;
+	border: 1px solid #BAC5c6;
+}
+table#POITable input.w-field, table#POITable input.minw-field {
+	width: 248px;
 }
 }
