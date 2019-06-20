@@ -144,10 +144,10 @@ select media_type from ctmedia_type order by media_type
 					</form>
 				</div>
 				<!---Search Builder--->
-				<div class="tab-pane fade show py-3 mx-sm-3 mb-3" id="two" role="tabpanel" aria-labelledby="two-tab">
+				<div class="tab-pane fade show py-3 mx-3 mb-3" id="two" role="tabpanel" aria-labelledby="two-tab">
 					<form id="searchForm2">
 						<h2 class="h3 card-title ml-2">Search Builder</h2>
-						<div class="bg-0 col-sm-12 col-md-12">
+						<div class="bg-0 col-sm-12 col-md-12 pl-2">
 							<div class="input-group">
 								
 								<table class="form-table pb-2 col-md-12 col-sm-12" id="customFields">
@@ -169,7 +169,8 @@ select media_type from ctmedia_type order by media_type
 													<option>Scientific Name</option>
 													<option>Genus</option>
 													<option>Subgenus</option>		
-													<option>Species</option>		<option>Subspecies</option>
+													<option>Species</option>		
+													<option>Subspecies</option>
 													<option>Author Text</option>
 													<option>Infraspecific Author Text</option>		
 													<option>Class</option>
@@ -335,14 +336,14 @@ select media_type from ctmedia_type order by media_type
 												</optgroup>
 											</select>
 										</td>
-										<td class="mx-1 pr-1 border-0">
+										<td class="mr-1 pr-1 border-0 pl-0">
 											<select title="Select Comparator..." name="comparator" id="comparator" class="custom-select border d-flex">
 												<option value="">Compare with...</option>
 												<option value="like">contains</option>
 												<option value="eq">is</option>
 											</select>
 										</td>
-										<td class="mx-1 pr-1 border-0 w-40">
+										<td class="mr-1 pr-1 border-0">
 											<input type="text" class="form-control d-flex enter-search mx-0" name="srchTxt" id="srchTxt" placeholder="Enter Value"/>
 										</td>											
 										<td class="border-0 mx-1 pr-1 pt-1">
@@ -373,8 +374,8 @@ select media_type from ctmedia_type order by media_type
 					<div class="row">
 						<div class="col-md-4 col-sm-12">
 							<fieldset class="form-group">
-								<label for="guid_prefix" class="col-12 mb-1">Catalog Number(s)</label>
-								<select class="dropdown-menu mb-3 col-md-5 col-sm-12" id="collmultiselect" role="menu" multiple="multiple">
+								<label for="guid_prefix" class="col-11 mb-1 pl-1 float-left">Select Collection</label>
+								<select class="dropdown-menu mb-3 col-md-5 col-sm-12 float-left" id="collmultiselect" role="menu" multiple="multiple">
 								<cfloop query="collSearch">
 									<option value="#collSearch.guid_prefix#"> &nbsp;#collSearch.collection# (#collSearch.guid_prefix#)</option>
 								</cfloop>
@@ -389,7 +390,7 @@ select media_type from ctmedia_type order by media_type
 									classes: "col-md-5 col-sm-12 text-muted",
 									checkAllText: "Check all",
 									uncheckAllText: "Uncheck all",
-									noneSelectedText: "All Collections",
+									noneSelectedText: "All",
 									selectedText: "## selected",
 									fontFamily: "",
 									selectedList: 0,
@@ -400,43 +401,44 @@ select media_type from ctmedia_type order by media_type
 									position: {}
 								});
 								</script>	
-								<textarea id="textarea" type="text" rows="1" name="textarea" class="w-100 col-md-6 col-sm-12 pl-0 p-2 border mb-3 fs-14 rounded mx-1 float-left" placeholder="Enter catalog number"></textarea>
-								<label for="textarea" class="col-12 mb-1">Other IDs</label>
-								<select title="otherID" name="otherID" id="otherID" class="custom-select dropdown rounded float-left col-md-5 col-sm-12 w-100 p-2 fs-13 text-muted border" style="height: 2.9em;">
-									<option value="">Other ID Type</option>
+							
+								<textarea id="textarea" type="text" rows="1" name="textarea" class="w-100 col-md-6 col-sm-12 pl-0 p-2 border mb-3 fs-14 rounded mx-1 float-left" placeholder="Catalog ##(s)"></textarea>
+								<label for="textarea" class="col-12 mb-1 pl-1">Select Other ID Type</label>
+								<select title="otherID" name="otherID" id="otherID" class="custom-select dropdown rounded float-left col-md-5 col-sm-12 w-100 p-0 fs-13 text-muted border pl-2" style="height: 2.9em;">
+									<option value="">None</option>
 									<option value="Collector Number">Collector Number </option>
 									<option value="field number">Field Number</option>
 								</select>
 								<div class="col-md-7 col-sm-12 mb-3 pl-0 d-inline float-left">
-									<input type="text" class="w-100 border mb-3 rounded p-2" placeholder="Enter Other ID number">
+									<input type="text" class="w-100 border mb-3 rounded p-2" placeholder="Other ID(s)">
 								</div>
 							</fieldset>
 						</div>
-						<div class="col-md-3 col-sm-12">
+						<div class="col-md-3 col-sm-12 pl-0">
 							<fieldset class="form-group">
-								<label class="col-12 mb-1">Any Taxonomy</label>
-								<input id="taxa" class="w-100 border mb-3 rounded p-2" placeholder="Enter Taxonomy">
-								<label class="col-12 mb-1">Any Geography</label>
-								<input type="text" class="w-100 border mb-3 rounded p-2 ml-1"  placeholder="Enter Place">
+								<label class="col-12 mb-1 pl-1">Any Taxonomy</label>
+								<input id="taxa" class="w-100 border mb-3 rounded p-2">
+								<label class="col-12 mb-1 pl-1">Any Geography</label>
+								<input type="text" class="w-100 border mb-3 rounded p-2 ml-1">
 							</fieldset>
 						</div>
-						<div class="col-md-3 col-sm-12">
+						<div class="col-md-3 col-sm-12 pl-0">
 							<fieldset class="form-group">
-								<label class="col-12 mb-1">Collectors/Preparators</label>
-								<input id="collectors" class="w-100 border mb-3 rounded p-2" placeholder="Enter Collectors/Preparators">
-								<label class="col-12 mb-1 ml-1">Part Name</label>
-								<input type="text" class="w-100 border mb-3 rounded p-2 ml-1"  placeholder="Part Name">
+								<label class="col-12 mb-1 pl-1">Collectors/Preparators</label>
+								<input id="collectors" class="w-100 border mb-3 rounded p-2">
+								<label class="col-12 mb-1 pl-1">Part Name</label>
+								<input type="text" class="w-100 border mb-3 rounded p-2 ml-1">
 							</fieldset>
 						</div>
-						<div class="col-md-2 col-sm-12">
+						<div class="col-md-2 col-sm-12 pl-0">
 							<fieldset class="form-group">
-								<label class="col-12 mb-1">Loan Number</label>
-								<input name="place" class="w-100 border mb-3 rounded p-2" placeholder="Enter Loan Number">
-								<label class="col-12 mb-1">Years Collected</label>
-								<input type="text" class="w-100 border mb-3 rounded p-2 ml-1" placeholder="Enter Years Collected">
+								<label class="col-11 mb-1 pl-1">Loan Number</label>
+								<input name="place" class="w-100 border mb-3 rounded p-2">
+								<label class="col-12 mb-1 pl-1">When Collected</label>
+								<input type="text" class="w-100 border mb-3 rounded p-2 ml-1">
 							</fieldset>
 							<span class="input-group-btn float-right">
-							<button class="btn btn-custom bg-blue-gray py-1 px-2 border-0" type="submit"> Search <i class="fa fa-search text-body"></i></button>
+							<button class="btn button px-3" type="submit"> Search <i class="fa fa-search text-body"></i></button>
 							</span> </div>
 						<div class="menu_results"> </div>
 					</div>
