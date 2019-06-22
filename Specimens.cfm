@@ -1,11 +1,59 @@
 <cfset pageTitle = "search specimens">
 <cfinclude template = "/redesign/includes/_header.cfm">
+	 <script type="text/javascript">
+        $(document).ready(function () {
+            var viewModel = function (value, min, max) {
+                this.value = ko.observable(value);
+                this.min = ko.observable(1700);
+                this.max = ko.observable(max);
+                this.validateValue = function () {
+                    if (this.value() > this.max()) this.value(parseFloat(this.max()));
+                    if (this.value() < this.min()) this.value(parseFloat(this.min()));
+                }
+
+                this.setMax = ko.computed({
+                    read: this.max,
+                    write: function (value) {
+                        if (!isNaN(value))
+                            this.max(parseFloat(value)); // Write to underlying storage
+                        if (value < this.min()) this.max(parseFloat(this.min()) + 1);
+                        this.validateValue();
+                    },
+                    owner: this
+                });
+                this.setMin = ko.computed({
+                    read: this.min,
+                    write: function (value) {
+                        if (!isNaN(value))
+                            this.min(parseFloat(value)); // Write to underlying storage
+                        if (value > this.max()) this.max(parseFloat(value) + 1);
+
+                        this.validateValue();
+                    },
+                    owner: this
+                });
+                this.setValue = ko.computed({
+                    read: this.value,
+                    write: function (value) {
+                        if (!isNaN(value))
+                            this.value(parseFloat(value)); // Write to underlying storage
+                        this.validateValue();
+                    },
+                    owner: this
+                });
+                this.disabled = ko.observable(false);
+            };
+
+            ko.applyBindings(new viewModel(2019, 1700, 2019));
+        });
+    </script>
+	
 <cfoutput>
 	<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right zindex-sticky" id="cbp-spmenu-s2">
-	<section> <a id="showRightPush" class="btn black-filter-btn" role="button">Refine Results</a> </section>
+	<section> <a id="showRightPush" class="btn black-filter-btn hiddenclass" role="button">Refine Results</a> </section>
 	<h3 class="filters">Refine Results</h3>
-	<div class="col-md-3 py-4 mb-3 pl-3 bg-transparent">
-		<h4 class="mt-2 float-left w-267">By Columns and Values</h4>
+	<div class="col-md-3 py-2 px-4 mb-3 pl-3 bg-transparent">
+		<h4 class="mt-0 float-left w-267">By Columns and Values</h4>
 		<div class="float-left">
 			<div id="columnchooser" class="mb-1"></div>
 			<div class="mt-1 ml-0 d-inline float-left w-267" id="filterbox">
@@ -16,9 +64,9 @@
 				<input type="button" id="clearfilter" class="d-inline ml-0 mt-2 py-1 px-2 fs-14" value="Clear Filter"/>
 			</div>
 		</div>
-		<div class="float-left mt-3 w-267">
+		<div class="float-left mt-3 pt-0 w-267 rounded border-blue-gray"  style="padding: 0 10px 10px 10px;">
 			<h4>Date</h4>
-			<div class="float-left wd-110p">
+	<!---	<div class="float-left wd-110p">
 				<label class="mb-1 ml-0">From</label>
 				<input id="began_date" type="text" name="began_date" class="ml-0 px-1 rounded wd-100p border">
 			</div>
@@ -27,11 +75,30 @@
 				<input id="ended_date" name="ended_date" class="px-1 rounded wd-100p border" type="text">
 			</div>
 			<div class="float-left ml-2 mt-8"> <a id="refine" value="Refine" href="##"/>Refine</a> </div>
+		--->
+
+		    <div class="float-left" data-bind="jqxScrollBar: {min: min, max: max, value: value, theme: getDemoTheme(), disabled: disabled, width: 240, height: 22}"></div>
+				<div class="float-left">
+					<div class="float-left w-50">
+						<label class="pl-2 mb-0 fs-14"> Min</label>
+						<input class="rounded border px-1 w-75" data-bind="value: setMin" />
+					</div>
+					<div class="float-left w-50">
+						<label class="pl-2 mb-0 fs-14">Max</label>
+						<input class="rounded border px-1 w-75" data-bind="value: setMax" />
+					</div>
+					<div class="float-left w-50">
+						<label class="pl-2 mb-0 mt-1 fs-14">Value</label>
+						<input class="rounded border pl-1 w-75" data-bind="value: setValue" />
+					</div>
+					<div class="float-left w-50 mt-3 pt-1 fs-14">
+						<a class="btn float-left primary border py-1 px-3 button">Refine Date</a>
+					</div>
+			</div>
 		</div>
-	</div>
 	</nav>
 	<nav class="cbp-spmenu cbp-spmenu-vertical-left cbp-spmenu-left zindex-sticky" id="cbp-spmenu-s3">
-	<section> <a id="showLeftPush" class="btn black-columns-btn" role="button">Columns</a> </section>
+	<section> <a id="showLeftPush" class="btn black-columns-btn hiddenclass" role="button">Columns</a> </section>
 	<h3 class="columns">Display Columns</h3>
 	<div class="col-md-3 mb-3 pl-1 mt-2">
 		<ul class="checks">
@@ -135,7 +202,7 @@ select media_type from ctmedia_type order by media_type
 								</div>
 								<input id="searchText" type="text" class="has-clear form-control w-50 form-control-borderless rounded" name="searchText" placeholder="Search term">
 								<span class="input-group-btn">
-									<button class="btn button px-3 border-0" type="submit">
+									<button class="btn button px-3 border-0" id="keySearch" type="submit">
 										Search <i class="fa fa-search text-body"></i>
 									</button>
 								</span> 
@@ -458,15 +525,12 @@ select media_type from ctmedia_type order by media_type
 					 <div id="jqxWidget">
 					<div class="px-4 w-100 mb-5">
 						<div class="row">
-						<h2 class="float-left mt-3"><span class="pt-0 d-inline-block">Results</span>
-							<label for="">&nbsp;</label>
-							<input id="csvExport" class="float-right btn-default btn-sm ml-2 py-1 px-2" type="button" value="Download"/>
-					
-							<input id="deleterowbutton" class="float-right btn-default btn-sm py-1 px-2" type="button" value="Remove Row"/>
-						
+				<!---<h2 class="float-left mt-3"><span class="pt-0 d-inline-block">Results</span>
+					<input id="csvExport" class="float-right btn-default btn-sm ml-2 py-1 px-2" type="button" value="Download"/>
+					<input id="deleterowbutton" class="float-right btn-default btn-sm py-1 px-2" type="button" value="Remove Row"/>--->
 						</h2>
 						</div>
-						<div class="row">
+						<div class="row mt-4">
 							<div id="jqxgrid" class="jqxGrid w-100"> </div>
 							<div class="mt-005" id="enableselection"></div>
 						</div>
@@ -477,14 +541,40 @@ select media_type from ctmedia_type order by media_type
 		</div>
 	</div>
 
+
+
 <script>
+	
+
 ///   JQXGRID -- for Keyword Search /////
 $(document).ready(function() {
 	$('##searchForm').bind('submit', function(evt){
 	console.log($('##searchText').val());
 	var searchParam = $('##searchText').val();
+	var element = document.getElementById("showRightPush");
+	element.classList.remove("hiddenclass");
+	var element = document.getElementById("showLeftPush");
+	element.classList.remove("hiddenclass");
 	$('##searchText').jqxGrid('showloadelement');
 	$("##jqxgrid").jqxGrid('clearfilters');
+	
+//	var imgThumbnail = new Array();
+//		imgThumbnail[0] = { Image: 'avatar.png', Title: 'Avatar', Year: 2009 };
+//		imgThumbnail[1] = { Image: 'priest.png', Title: 'Priest', Year: 2006 };
+//		imgThumbnail[2] = { Image: 'endgame.png', Title: 'End Game', Year: 2006 };
+//		imgThumbnail[3] = { Image: 'unknown.png', Title: 'Unknown', Year: 2011 };
+//		imgThumbnail[4] = { Image: 'unstoppable.png', Title: 'Unstoppable', Year: 2010 };
+//		imgThumbnail[5] = { Image: 'twilight.png', Title: 'Twilight', Year: 2008 };
+//		imgThumbnail[6] = { Image: 'kungfupanda.png', Title: 'Kung Fu Panda', Year: 2008 };
+//		imgThumbnail[7] = { Image: 'knockout.png', Title: 'Knockout', Year: 2011 };
+//		imgThumbnail[8] = { Image: 'theplane.png', Title: 'The Plane', Year: 2010 };
+//		imgThumbnail[9] = { Image: 'bigdaddy.png', Title: 'Big Daddy', Year: 1999 };
+//
+//     var imagerenderer = function (row, datafield, value) {
+//          return '<img style="margin-left: 5px;" height="60" width="50" src="../../images/' + value + '"/>';
+//     }
+
+		
 	var search =
 		{
 			datatype: "json",
@@ -513,7 +603,6 @@ $(document).ready(function() {
 			loadError: function (xhr, status, error) { },
 		});
 		evt.preventDefault();
-
 	$("##jqxgrid").jqxGrid({
 		width: '100%',
 		autoheight: 'true',
@@ -532,6 +621,26 @@ $(document).ready(function() {
 		groupable: true,
 		selectionmode: 'checkbox',
 		altrows: true,
+		showtoolbar: true,
+        rendertoolbar: function (toolbar) {
+            var me = this;
+            var container = $("<div style='margin: .25em 1em .25em .5em;'></div>");
+            toolbar.append(container);
+			container.append('<h2 class="h3 float-left mt-0 pt-1 mr-4">Results</h2>');
+			container.append('<input id="deleterowbutton" class="btn btn-sm ml-2 fs-13 py-1 px-2" type="button" value="Delete Selected Row"/>');
+			container.append('<input id="csvExport" class="btn btn-sm ml-3 fs-13 py-1 px-2" type="button" value="Download"/>');
+			$("##csvExport").jqxButton();
+			$("##deleterowbutton").jqxButton();
+			// delete row.
+			$("##deleterowbutton").on('click', function () {
+				var selectedrowindex = $("##jqxgrid").jqxGrid('getselectedrowindex');
+				var rowscount = $("##jqxgrid").jqxGrid('getdatainformation').rowscount;
+				if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+					var id = $("##jqxgrid").jqxGrid('getrowid', selectedrowindex);
+					var commit = $("##jqxgrid").jqxGrid('deleterow', id);
+				}
+			});
+        },
 		columns: [
 	
 		{text: 'Link', datafield: 'collection_object_id', width: 100,
@@ -555,6 +664,7 @@ $(document).ready(function() {
 		{text: 'Other IDs', datafield: 'othercatalognumbers', width: 280}
 		]
 	});		
+	$("##deleterowbutton").jqxButton();
 	$("##deleterowbutton").on('click', function () {
 		var selectedrowindex = $("##jqxgrid").jqxGrid('getselectedrowindex');
 		var rowscount = $("##jqxgrid").jqxGrid('getdatainformation').rowscount;
@@ -568,35 +678,30 @@ $(document).ready(function() {
 	$("##csvExport").click(function () {
 		$("##jqxgrid").jqxGrid('exportdata', 'csv', 'jqxGrid');
 	});
-
 	$("##jqxgrid").on('columnreordered', function (event) {
 		var column = event.args.columntext;
 		var newindex = event.args.newindex
 		var oldindex = event.args.oldindex;
 		$("##eventlog").text("Column: " + column + ", " + "New Index: " + newindex + ", Old Index: " + oldindex);
 	});
-
 	$("##applyfilter").jqxButton({theme: 'Classic'});
 	$("##clearfilter").jqxButton({theme: 'Classic'});
-
 	$("##csvExport").jqxButton();
-
-	$("##filterbox").jqxListBox({ checkboxes: true, width: 280, height: 250 });
+	$("##filterbox").jqxListBox({ checkboxes: true, width: 275, height: 240 });
 	$("##columnchooser").jqxDropDownList({ autoDropDownHeight: true, selectedIndex: 0, width: 200, height: 25,
-	source: [
-		{label: 'Collectors', value: 'collectors'},
-		{label: 'Collection Object ID', value: 'collection_object_id'},
-		{label: 'Collection', value: 'collection'},
-		{label: 'Cat Num', value: 'cat_num'},
-		{label: 'Scientific Name', value: 'scientific_name'},
-		{label: 'Locality', value: 'spec_locality'},
-		{label: 'Higher Geography', value: 'higher_geog'},
-		{label: 'Verbatim Date',value: 'verbatim_date'},
-		{label: 'Disposition', value: 'coll_obj_disposition'},
-		{label: 'Other IDs', value: 'othercatalognumbers'}
-
-		]
-	});
+		source: [
+			{label: 'Collectors', value: 'collectors'},
+			{label: 'Collection Object ID', value: 'collection_object_id'},
+			{label: 'Collection', value: 'collection'},
+			{label: 'Cat Num', value: 'cat_num'},
+			{label: 'Scientific Name', value: 'scientific_name'},
+			{label: 'Locality', value: 'spec_locality'},
+			{label: 'Higher Geography', value: 'higher_geog'},
+			{label: 'Verbatim Date',value: 'verbatim_date'},
+			{label: 'Disposition', value: 'coll_obj_disposition'},
+			{label: 'Other IDs', value: 'othercatalognumbers'}
+			]
+		});
 	var updateFilterBox = function (datafield) {
 	var filterBoxAdapter = new $.jqx.dataAdapter(search,
 	{
@@ -634,7 +739,6 @@ $(document).ready(function() {
 			else {
 				$("##filterbox").jqxListBox('uncheckAll');
 			}
-
 			handleCheckChange = true;
 		}
 	});
@@ -643,7 +747,6 @@ $(document).ready(function() {
 		console.log(event);
 		updateFilterBox(event.args.item.value);
 	});
-
 			// builds and applies the filter.
 			var applyFilter = function (datafield) {
 			$("##jqxgrid").jqxGrid('clearfilters');
@@ -668,7 +771,6 @@ $(document).ready(function() {
 				}
 			}
 			$("##jqxgrid").jqxGrid('addfilter', datafield, filtergroup);
-
 			$("##jqxgrid").jqxGrid('applyfilters');
 			}
 			$("##clearfilter").click(function (datafield) {
@@ -681,7 +783,6 @@ $(document).ready(function() {
 			var dataField = $("##columnchooser").jqxDropDownList('getSelectedItem').value;
 			applyFilter(dataField);
 		});
-
 			var listSource = [
 				{ label: 'Collectors', value: 'collectors' },
 				{ label: 'Collection Object ID', value: 'collection_object_id' },
@@ -694,7 +795,6 @@ $(document).ready(function() {
 				{ label: 'Disposition', value: 'coll_obj_disposition' },
 				{ label: 'Other IDs', value: 'originalcatalognumbers'}
 			];
-
 			$("##jqxlistbox2").jqxListBox({ source: listSource, width: 198, height: 300, theme: theme, checkboxes: true });
 			$("##jqxlistbox2").jqxListBox('checkAll');
 			$("##jqxlistbox2").on('checkChange', function (event) {
@@ -707,25 +807,18 @@ $(document).ready(function() {
 			}
 				$("##jqxgrid").jqxGrid('endupdate');
 			});
+		
 
-		
-		
-		
-		
-		
-		
 		$("##clearselectionbutton").jqxButton({ theme: theme });
 		$("##enableselection").jqxDropDownList({
 			autoDropDownHeight: true, dropDownWidth: 230, width: 120, height: 25, selectedIndex: 1, source: ['none', 'single row', 'multiple rows',
 			'multiple rows extended', 'multiple rows advanced']
 		});
 		$("##enablehover").jqxCheckBox({  checked: true });
-
 		// clears the selection.
 		$("##clearselectionbutton").click(function () {
 			$("##jqxgrid").jqxGrid('clearselection');
 		});
-
 		// scroll to a row.
 		$("##scrolltobutton").click(function () {
 			var index = parseInt($("##rowindexinput2").val());
@@ -733,7 +826,6 @@ $(document).ready(function() {
 				$("##jqxgrid").jqxGrid('ensurerowvisible', index);
 			}
 		});
-
 		// enable or disable the selection.
 		$("##enableselection").on('select', function (event) {
 			var index = event.args.index;
@@ -769,10 +861,8 @@ $(document).ready(function() {
 		$("##jqxgrid").on('rowunselect', function (event) {
 			$("##unselectrowindex").text(event.args.rowindex);
 		});
-
 	});
 });
-
 </script> 
 	
 <script>
@@ -786,8 +876,6 @@ $(document).ready(function(){
 	});
 	
 </script>
-	
-
 <script>
 //// script for Search Builder Second dropdown for type
 //$(document).ready(function () {
@@ -813,7 +901,7 @@ $(function() {
 		changeYear: true 
 	}).val()
 });
-	</script>
+</script>
 <script>
 //// script for multiselect dropdown for collections
 //// on keyword
