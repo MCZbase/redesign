@@ -57,7 +57,9 @@
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxdropdownbutton.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxtree.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxcalendar.js"></script>
-	<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxchart.js"></script>
+<script type="text/javascript" src="/redesign/includes/js/knockout-2.2.1.js"></script>
+<script type="text/javascript" src="/redesign/lib/misc/knockout-2.2.1.js"></script>
+<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxknockout.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/scripts/demos.js"></script>
 <script type="text/javascript" src="/redesign/includes/js/shared-scripts.js"></script>
 <script type="text/javascript" src="/redesign/lib/jquery/jquery.multiselect.min.js"></script>
