@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 500;
 }
 p, dl, ol, ul {
-	font-size: .87rem;
+/*	font-size: .9rem;*/
 	margin-top: 0;
 	margin-bottom: 1rem;
 }
@@ -20,7 +20,6 @@ h1, .h1 {
 	font-size: 1.35rem;
 	margin-bottom: 1em;
 }
-
 .smallcaps {
 	font-variant: small-caps;
 }
@@ -42,8 +41,8 @@ h6, .h6 {
 p {
 	margin-bottom: .15em;
 }
-.w-267 {
-	width: 267px;
+.w-257 {
+	width: 257px;
 }
 .minw-field-sm {
 	width: 200px;
@@ -191,7 +190,7 @@ ul.ui-multiselect-checkboxes input {
 	float: left;
 }
 .ui-multiselect-header span.ui-icon {
-	top: 0;
+	top: -2px;
 }
 button.ui-multiselect.ui-state-default.multiselect2 {
 	padding: 4px 12px 4px 12px;
@@ -422,6 +421,8 @@ BELOW: SPECIMEN DETAIL STYLES
 	background: -webkit-linear-gradient(top, rgba(165,28,48,.3) 0%, rgba(160,77,88,0.12) 100%, rgba(109,0,25,0) 100%); /*Chrome10-25,Safari5.1-6*/
 	background: linear-gradient(to bottom, rgba(165,28,48,.3) 0%, rgba(160,77,88,0.12) 100%, rgba(109,0,25,0) 100%); /*W3C,IE10+,FF16+,Chrome26+, Opera12+,Safari7+ */
  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a51c30', endColorstr='#0a6d0019', GradientType=0 ); /* IE6-9 */
+	border: 2px dotted #a51c30;
+	margin-left: -10px;
 }
 .secondaryType {
 	background-color: white;
@@ -433,6 +434,8 @@ BELOW: SPECIMEN DETAIL STYLES
 	background: -webkit-linear-gradient(top, rgba(6,109,171,0.4) 0%, rgba(138,187,215,0.13) 100%, rgba(197,222,234,0) 100%);/*Chrome10-25,Safari5.1-6*/
 	background: linear-gradient(to bottom, rgba(6,109,171,0.4) 0%, rgba(138,187,215,0.13) 100%, rgba(197,222,234,0) 100%);/*W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6e066dab', endColorstr='#00c5deea', GradientType=0 );/*IE6-9 */
+	    border: 2px dotted #3580ad;
+	margin-left: -10px;
 }
 .ptype {
 	font-weight: bold;
@@ -559,6 +562,10 @@ table#POITable {
 .last_li:last-child {
 	margin-bottom: 1em;
 }
+body.modal-open {
+	padding: 0 !important;
+	overflow-y: scroll !important;
+}
 /************************************/
 /************************************/
 /* BELOW: filter and column slider menu styles */
@@ -570,7 +577,7 @@ section a#showRightPush {
 	margin-left: -32px;
 	writing-mode: vertical-rl;
 	z-index: 999;
-	margin-top: 147px;
+	margin-top: 158px;
 	padding: 7px 3px 7px 5px;
 	position: relative;
 	letter-spacing: .07em;
@@ -583,7 +590,6 @@ section a#showRightPush {
 	-moz-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-
 section a#showLeftPush {
 	width: 32px;
 	margin-right: -32px;
@@ -595,7 +601,7 @@ section a#showLeftPush {
 	letter-spacing: .07em;
 	font-weight: bold;
 	font-size: 1rem;
-	margin-top: 295px;
+	margin-top: 299px;
 	transform-origin: top right;
 	text-align: center;
 	color: white;
@@ -615,7 +621,7 @@ section a#showLeftPush {
 	margin: 0;
 	font-weight: 400;
 	background: #DEEBEC;
-	margin-top: -288px;
+	margin-top: -298px;
 }
 .cbp-spmenu a {
 	display: block;
@@ -647,6 +653,7 @@ section a#showLeftPush {
 	right: 0px;
 	border-left: 1px solid #ccc;
 	padding-right: 3px;
+	    transition: all 0.3s ease;
 }
 .cbp-spmenu, .cbp-spmenu-push {
 	-webkit-transition: all 0.3s ease;
@@ -660,16 +667,13 @@ section a#showLeftPush {
 	margin: 0;
 	font-weight: 400;
 	background: #DEEBEC;
-	margin-top: -390px;
+	margin-top: -392px;
 }
 .list-group-item {
 	background-color: transparent;
 }
 .cbp-spmenu-left {
 	right: -214px;
-}
-.cbp-spmenu-left.cbp-spmenu-open {
-	right: 0px;
 }
 .cbp-spmenu section a.disabled {
 	display: none;
@@ -688,6 +692,7 @@ section a#showLeftPush {
 	right: 0px;
 	border: 1px solid #ccc;
 	border-right: none;
+	    transition: all 0.3s ease;
 }
 #clearfilter {
 	margin-left: 1em;
@@ -930,8 +935,6 @@ ul.list-unstyled li.list-group-item:last-child {
 	border-radius: 5px;
 	margin-top: 1em;
 }
-
-
 .alert_box {
 	border: 3px solid red;
 	padding: 15px;
@@ -1157,7 +1160,7 @@ select {
 	cursor: pointer;
 }
 .jqx-grid-cell-selected-light a:focus, .jqx-fill-state-pressed a {
-	color: white !important;
+	color: blue !important;/*changed from white*/
 	text-decoration: underline;
 }
 select#lngbox::after {
@@ -1298,6 +1301,15 @@ li, li:hover, li:active {
 .list-reset {
 	list-style: none;
 	padding-left: 0;
+}
+@media only screen and (min-width: 1380px){
+.cbp-spmenu-push-toleft {
+	width: 81%;
+	left: 19%;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
 }
 
 @media only screen and (max-width: 990px) {
@@ -1472,12 +1484,6 @@ img.mcz_logo_krono {
 }
 .mcz_logo_krono {
 	margin-left: 1.75em;
-}
-}
-
-@media(max-width:1600px) {
-.mczbase {
-/*font-size: 1.75em;*/
 }
 }
 
