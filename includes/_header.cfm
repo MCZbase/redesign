@@ -20,6 +20,7 @@
 
 <script type="text/javascript" src="/redesign/lib/jquery/jquery-1.7.1.min.js"></script><!---don't know--->
 <script type="text/javascript" src="/redesign/includes/js/popper.js"></script>
+<!---	<link rel="stylesheet" href="/redesign/lib/JQWidgets/jqwidgets/styles/jqx.light.css" />--->
 <script type="text/javascript" src="/redesign/lib/jquery/jquery-3.3.1.js"></script><!---don't know --->
 <script type="text/javascript" src="/redesign/lib/jquery-ui-1.12.1/jquery-ui.js"></script><!---not there now--->
 <script type="text/javascript" src="/redesign/lib/bootstrap/js/bootstrap-multiselect.js"></script>
@@ -44,6 +45,7 @@
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxgrid.sort.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxgrid.selection.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxgrid.export.js"></script>
+<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxgrid.storage.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxpanel.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxcheckbox.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxgrid.pager.js"></script>
@@ -54,21 +56,28 @@
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/globalization/globalize.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxgrid.columnsresize.js"></script> 
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxgrid.columnsreorder.js"></script> 
-<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxdropdownbutton.js"></script>
-<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxtree.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxcalendar.js"></script>
+<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxdate.js"></script>
+<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxtree.js"></script>
+<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxdatetimeinput.js"></script>
+<script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxinput.js"></script>
 <script type="text/javascript" src="/redesign/includes/js/knockout-2.2.1.js"></script>
 <script type="text/javascript" src="/redesign/lib/misc/knockout-2.2.1.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/jqwidgets/jqxknockout.js"></script>
 <script type="text/javascript" src="/redesign/lib/JQWidgets/scripts/demos.js"></script>
 <script type="text/javascript" src="/redesign/includes/js/shared-scripts.js"></script>
 <script type="text/javascript" src="/redesign/lib/jquery/jquery.multiselect.min.js"></script>
+<script type="text/javascript" src="/redesign/specimens/js/dialogAjax.js"></script>
+
+
 <link rel="stylesheet" href="/redesign/lib/jquery-ui-1.12.1/jquery-ui.min.css" />
 <link rel="stylesheet" href="/redesign/lib/jquery/jquery.multiselect.css" />	
 <link rel="stylesheet" href="/redesign/includes/css/custom_styles.css">
 </head>
-<body class="default cbp-spmenu-push">
-<header>
+
+<body class="default cbp-spmenu-push cbp-spmenu-pushtoleft">
+
+<header id="header">
 <div class="branding-container clearfix">
 	<div class="branding-left justify-content-start"> 
 		<a href="http://www.harvard.edu/" > 
@@ -90,7 +99,7 @@
 		</div>
 	</ul>
 </nav>
-<nav class="navbar navbar-expand-md navbar-light bg-light py-1 border-bottom-header">
+<nav class="navbar navbar-expand-md navbar-light bg-light py-1 border-bottom">
 	<div class="container p-5px">
 		<button class="navbar-toggler" style="z-index:4000;" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
 		<div class="col-md-10 col-lg-12 offset-lg-1 offset-md-0 collapse navbar-collapse" id="navbarTogglerDemo01">
@@ -170,7 +179,7 @@
 		</li>
 	</ul>
 </nav>
-<div class="dropdown-menu mt-1" id="formLogin">
+<div class="dropdown-menu mt-1" id="formlogin">
 	<div class="row">
 		<div class="container-fluid">
 			<form class="">

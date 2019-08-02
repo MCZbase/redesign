@@ -1,27 +1,28 @@
  <footer class="footer">
     <div class="fixed-bottom bg-inverse">
     <cfif cgi.HTTP_HOST contains "harvard.edu" >
-       <div class="container">
-       <div class="row helplinks">
-        <div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
-        <a HREF="mailto:bhaley@oeb.harvard.edu">System Administrator</a>
+    
+		<div class="row helplinks border-top pt-3">
+        	<div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
+        		<a HREF="mailto:bhaley@oeb.harvard.edu">System Administrator</a>
+			</div>
+       		<div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
+        		<a href="/info/bugs.cfm">Feedback&#8202;/&#8202;Report Errors</a>
+			</div>
+        	<div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
+        		<a href="/Collections/index.cfm">Data Providers</a> 
+        	</div>
 		</div>
-       <div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
-        <a href="/info/bugs.cfm">Feedback&#8202;/&#8202;Report Errors</a>
-		</div>
-        <div class="col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
-        <a href="/Collections/index.cfm">Data Providers</a> 
-        </div>
-		   </div>
-		</div>
+
         <div class="row copyright_background">
             <div class="footer-col-4-md" align="center" style="width: 393px;"> <img alt="Harvard Museum of Comparative Zoology Logo" title="Harvard Museum of Comparative Zoology Logo" class="media-element file-default file-os-files-medium" src="/redesign/includes/images/harvard_museum.png">
-                <p class="agreements" style="font-size: smaller;"><a href="/redesign/affiliates.cfm" class="policy_link">Affiliates</a> <a>|</a> <a href="https://mcz.harvard.edu/privacy-policy" class="policy_link">Privacy</a> <a>|</a> <a href="https://mcz.harvard.edu/user-agreement" class="policy_link">User Agreement</a> </p>
+				<p class="agreements" style="font-size: smaller;"><a href="/redesign/Affiliates.cfm" class="policy_link">Affiliates</a> <a>|</a> <a href="https://mcz.harvard.edu/privacy-policy" class="policy_link">Privacy</a> <a>|</a> <a href="https://mcz.harvard.edu/user-agreement" class="policy_link">User Agreement</a> 
+				</p>
             </div>
         </div>
         </div>
         <div class="branding-container">
-            <div class="copyright-bottom fs-012" style="text-align: center;"> Copyright © 2019 The President and Fellows of Harvard College.&nbsp; <a href="http://accessibility.harvard.edu/" style="color: white">Accessibility</a> | <a href="http://www.harvard.edu/reporting-copyright-infringements" style="color: white;">Report Copyright Infringement</a> </div>
+            <div class="copyright-bottom fs-012 text-center"> Copyright © 2019 The President and Fellows of Harvard College.&nbsp; <a href="http://accessibility.harvard.edu/" class="text-white">Accessibility</a> | <a href="http://www.harvard.edu/reporting-copyright-infringements" class="text-white">Report Copyright Infringement</a> </div>
         </div>
     </cfif>
     </div>
@@ -38,12 +39,13 @@ var	menuRight = document.getElementById( 'cbp-spmenu-s2' ),
 	classie.toggle( this, 'active' );
 	classie.toggle( body, 'cbp-spmenu-push-toleft' );
 	classie.toggle( menuRight, 'cbp-spmenu-open' );
+	
 	disableOther( 'showRightPush' );
     };
 		
 	showLeftPush.onclick = function() {
 		classie.toggle( this, 'active' );
-			classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( body, 'cbp-spmenu-push-toright');
 		classie.toggle( menuLeft, 'cbp-spmenu-open' );
 		disableOther( 'showLeftPush' );
 	};
