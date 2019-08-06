@@ -8,7 +8,20 @@
 	            ff.higher_geog, ff.collectors, ff.verbatim_date, ff.coll_obj_disposition, ff.othercatalognumbers
 	    from #session.flatTableName# ff 
 	         left join FLAT_TEXT ft on ff.collection_object_id = ft.collection_object_id
-	    WHERE CONTAINS(ft.cat_num, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 1) > 0 
+	    WHERE 
+             CONTAINS(ft.lithostratigraphicterms, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 1) > 0 OR
+             CONTAINS(ft.verbatimlocality, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 2) > 0 OR
+             CONTAINS(ft.cat_num, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 3) > 0 OR
+             CONTAINS(ft.collectors, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 4) > 0 OR
+             CONTAINS(ft.preparators, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 5) > 0 OR
+             CONTAINS(ft.othercatalognumbers, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 6) > 0 OR
+             CONTAINS(ft.typestatusplain, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 7) > 0 OR
+             CONTAINS(ft.sex, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 8) > 0 OR
+             CONTAINS(ft.partdetail, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 9) > 0 OR
+             CONTAINS(ft.verbatimdate, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 10) > 0 OR
+             CONTAINS(ft.higher_geog, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 11) > 0 OR
+             CONTAINS(ft.spec_locality, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 12) > 0 OR
+             CONTAINS(ft.scientific_name, <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#searchText#">, 13) > 0 
 	    </cfquery>
 	<cfelse>
 	    <cfquery name="qryLoc" datasource="uam_god">
